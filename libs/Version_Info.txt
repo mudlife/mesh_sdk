@@ -1,4 +1,4 @@
-更新方式：git fetch origin master:master
+更新方式：git pull origin master
 
 文件：mesh_V1.0.0.LIB 
 日期：2019/7/19
