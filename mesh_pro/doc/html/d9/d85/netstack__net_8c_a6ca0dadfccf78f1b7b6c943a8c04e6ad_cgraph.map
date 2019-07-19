@@ -1,7 +1,0 @@
-<map id="net_group_clear" name="net_group_clear">
-<area shape="rect" id="node2" href="$d1/d4d/flash_8c.html#ad9da0c22889472ef97f7dc833a36132e" title="从flash中读取数据 " alt="" coords="185,5,291,32"/>
-<area shape="rect" id="node3" href="$d1/d4d/flash_8c.html#a8d77bd9b3691a7d765d50907b8b3cfd1" title="擦除 flash " alt="" coords="356,56,493,83"/>
-<area shape="rect" id="node4" href="$d1/d4d/flash_8c.html#aa17a77807a7aabec11fdebac1e638f82" title="往flash中写入数据 " alt="" coords="371,157,478,184"/>
-<area shape="rect" id="node5" href="$d9/d85/netstack__net_8c.html#a3ae3346a4646a946d75d4ab75131c4a8" title="更新本地信息 " alt="" coords="168,107,308,133"/>
-<area shape="rect" id="node6" href="$d1/d4d/flash_8c.html#af4b866c99ab487c79e433e86e6299d76" title="flash信息校验 " alt="" coords="387,107,462,133"/>
-</map>

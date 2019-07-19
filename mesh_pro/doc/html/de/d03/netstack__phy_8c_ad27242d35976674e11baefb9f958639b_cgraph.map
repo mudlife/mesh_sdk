@@ -1,8 +1,0 @@
-<map id="phy_init" name="phy_init">
-<area shape="rect" id="node2" href="$d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="449,86,523,113"/>
-<area shape="rect" id="node3" href="$df/d9a/netstack__app_8c.html#a349a8db678a7a80cd3ca2bb7f3def27f" title="毫秒延时 " alt="" coords="296,38,375,65"/>
-<area shape="rect" id="node4" href="$de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="127,184,230,210"/>
-<area shape="rect" id="node6" href="$de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="285,114,385,141"/>
-<area shape="rect" id="node7" href="$de/d03/netstack__phy_8c.html#a31edb1b3a1b65422ccc7bba69448fe04" title="寄存器检测 " alt="" coords="120,82,237,109"/>
-<area shape="rect" id="node5" href="$da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="433,142,539,169"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="dev/system.c" name="dev/system.c">
-<area shape="rect" id="node2" href="$dc/db2/system_8h.html" title="system.h" alt="" coords="5,80,81,107"/>
-<area shape="rect" id="node3" href="$db/d3e/network__conf_8h.html" title="network_conf.h" alt="" coords="106,80,215,107"/>
-<area shape="rect" id="node5" href="$d5/df5/netstack__phy_8h.html" title="netstack_phy.h" alt="" coords="104,229,215,256"/>
-<area shape="rect" id="node7" href="$da/d2d/netstack__net_8h.html" title="netstack_net.h" alt="" coords="199,155,307,181"/>
-<area shape="rect" id="node8" href="$d4/d82/netstack__mac_8h.html" title="netstack_mac.h" alt="" coords="290,229,405,256"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="F_Autosave" name="F_Autosave">
-<area shape="rect" id="node2" href="$da/d2d/netstack__net_8h.html#a3ae3346a4646a946d75d4ab75131c4a8" title="更新本地信息 " alt="" coords="144,56,284,83"/>
-<area shape="rect" id="node3" href="$d1/d4d/flash_8c.html#af4b866c99ab487c79e433e86e6299d76" title="flash信息校验 " alt="" coords="363,5,438,32"/>
-<area shape="rect" id="node4" href="$d1/d4d/flash_8c.html#a8d77bd9b3691a7d765d50907b8b3cfd1" title="擦除 flash " alt="" coords="332,56,469,83"/>
-<area shape="rect" id="node5" href="$d1/d4d/flash_8c.html#aa17a77807a7aabec11fdebac1e638f82" title="往flash中写入数据 " alt="" coords="347,107,454,133"/>
-</map>

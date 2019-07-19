@@ -1,8 +1,0 @@
-<map id="app/netstack_app.c" name="app/netstack_app.c">
-<area shape="rect" id="node3" href="$db/d3e/network__conf_8h.html" title="network_conf.h" alt="" coords="191,80,301,107"/>
-<area shape="rect" id="node9" href="$d7/d08/netstack__app_8h.html" title="netstack_app.h" alt="" coords="324,155,435,181"/>
-<area shape="rect" id="node10" href="$d0/dff/os_8h.html" title="os.h" alt="" coords="449,229,496,256"/>
-<area shape="rect" id="node5" href="$d5/df5/netstack__phy_8h.html" title="netstack_phy.h" alt="" coords="73,229,184,256"/>
-<area shape="rect" id="node7" href="$da/d2d/netstack__net_8h.html" title="netstack_net.h" alt="" coords="192,155,300,181"/>
-<area shape="rect" id="node8" href="$d4/d82/netstack__mac_8h.html" title="netstack_mac.h" alt="" coords="259,229,374,256"/>
-</map>
