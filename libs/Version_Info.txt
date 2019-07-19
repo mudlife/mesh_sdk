@@ -1,3 +1,5 @@
+更新方式：git fetch origin master:master
+
 文件：mesh_V1.0.0.LIB 
 日期：2019/7/19
 说明：该版本支持手机APP和遥控器控制，增加了ALL控制功能
