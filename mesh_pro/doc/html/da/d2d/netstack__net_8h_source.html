@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: inc/netstack_net.h æºæ–‡ä»¶</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- åˆ¶ä½œè€… Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>é¦–é¡µ</span></a></li>
+      <li><a href="../../annotated.html"><span>ç»“æ„ä½“</span></a></li>
+      <li class="current"><a href="../../files.html"><span>æ–‡ä»¶</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>æ–‡ä»¶åˆ—è¡¨</span></a></li>
+      <li><a href="../../globals.html"><span>å…¨å±€å®šä¹‰</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">netstack_net.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../da/d2d/netstack__net_8h.html">æµè§ˆè¯¥æ–‡ä»¶çš„æ–‡æ¡£.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __NETSTACK_NET_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __NETSTACK_NET_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;HC_DEFINE.H&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d4/d82/netstack__mac_8h.html">netstack_mac.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#a0494c221bf4b1035549accc07a6ee386">   11</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_NET_STA     (0)</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#ae0ba6b35a60c054dced2eb514a98cba2">   12</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_SETTING     (1)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#a3417fba0fd997546e0aeff7537124d87">   13</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_LOW_POWER  (2)</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#abf7a867e58114a0429d4e7c3cb6959fb">   14</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_FRIENDSHIP (3)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#a6f2b3504816835260e9fceaf73007a9a">   15</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_LEARN            (4)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="../../da/d2d/netstack__net_8h.html#ab35ea6f60e87a265480f472090474ffc">   16</a></span>&#160;<span class="preprocessor">#define NET_FEATURE_NET             (5)</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html">   20</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../da/d64/structnetstack__local.html">netstack_local</a>{</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a5240750187512430533e69dcfa1154ce">   21</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a5240750187512430533e69dcfa1154ce">mac_addr</a>[6];             </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#acbf1d85decf93257d71d6e141f3b7dde">   22</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#acbf1d85decf93257d71d6e141f3b7dde">pass</a>[6];                     </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">   23</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[2];     </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">   24</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">channel</a>;                     </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#ae3da275aea26e41f260707a93e9116eb">   25</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#ae3da275aea26e41f260707a93e9116eb">group_count</a>;             </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#ace1889a4f2786a2e3090eac30a5a2cec">   26</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#ace1889a4f2786a2e3090eac30a5a2cec">seq</a>;                             </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#ab20f0732711ac1310a972a5d5653a261">   27</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#ab20f0732711ac1310a972a5d5653a261">nid</a>;                             </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a8cda1440e866c700056d2f6f4accada7">   28</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a8cda1440e866c700056d2f6f4accada7">net_sta</a>;                     </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#aa0016822c962278eae36884803d5ce65">   29</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#aa0016822c962278eae36884803d5ce65">dst</a>[3];                      </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#ab973683deae2934696d7a7ce0d21e740">   30</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#ab973683deae2934696d7a7ce0d21e740">repeat</a>;                      </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#aa706f030faf68438b5a811883b8f66a2">   31</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#aa706f030faf68438b5a811883b8f66a2">uuid</a>[2];                     </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#aec32af339e4725549e34c8b72e8739d5">   32</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#aec32af339e4725549e34c8b72e8739d5">device_sta_adv_pram</a>[10]; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#ad6e2198d1c6275c815f2812c8df66304">   33</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#ad6e2198d1c6275c815f2812c8df66304">device_sta_adv_len</a>;          </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a7e932f8a275aacc949e370754d468554">   34</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a7e932f8a275aacc949e370754d468554">pair_time</a>;                               </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a20d1adc2991cc404c6bb6424e3dc38f4">   35</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a20d1adc2991cc404c6bb6424e3dc38f4">update_flag</a>;                         </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#aaea1419d764fbdceff50600dbb6bd644">   36</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#aaea1419d764fbdceff50600dbb6bd644">admin_id</a>[3];                         </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#a75cbb2130d5cf65f40a41ab145abdf39">   37</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#a75cbb2130d5cf65f40a41ab145abdf39">pweron</a>;                                  </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">    #if defined(NET_RESET)</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    u8 reboot_cnt;                          </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">    #endif </span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="../../da/d64/structnetstack__local.html#af6c534283c4f1109070b2595454617d4">   41</a></span>&#160;    u8 <a class="code" href="../../da/d64/structnetstack__local.html#af6c534283c4f1109070b2595454617d4">flash_crc_val</a>;                       </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="../../d6/d1b/structnetstack__rx__flag.html">   46</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../d6/d1b/structnetstack__rx__flag.html">netstack_rx_flag</a>{</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="../../d6/d1b/structnetstack__rx__flag.html#acd905d18599eb5d34d70a11f294085b5">   47</a></span>&#160;    u8 <a class="code" href="../../d6/d1b/structnetstack__rx__flag.html#acd905d18599eb5d34d70a11f294085b5">src</a>[3];                          </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="../../d6/d1b/structnetstack__rx__flag.html#ace1889a4f2786a2e3090eac30a5a2cec">   48</a></span>&#160;    u8 <a class="code" href="../../d6/d1b/structnetstack__rx__flag.html#ace1889a4f2786a2e3090eac30a5a2cec">seq</a>;                                 </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="../../d4/dac/structgroup__member.html">   52</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../d4/dac/structgroup__member.html">group_member</a>{</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="../../d4/dac/structgroup__member.html#af0cd3c7bf06f6c4eb37170d7cf2dfe50">   53</a></span>&#160;    u8 <a class="code" href="../../d4/dac/structgroup__member.html#af0cd3c7bf06f6c4eb37170d7cf2dfe50">user_id</a>[3];              </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="../../d4/dac/structgroup__member.html#af93f6cc40416a634103fe798902442e0">   54</a></span>&#160;    u8 <a class="code" href="../../d4/dac/structgroup__member.html#af93f6cc40416a634103fe798902442e0">device_id</a>;                   </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="../../d2/dc2/structgroup__t.html">   58</a></span>&#160;<span class="keyword">struct </span><a class="code" href="../../d2/dc2/structgroup__t.html">group_t</a>{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">union </span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="../../d2/dc2/structgroup__t.html#afdfa9774b1d02d28d3d8a08705599793">   60</a></span>&#160;        u8 <span class="keywordtype">id</span>[4];                               </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="../../d2/dc2/structgroup__t.html#acead98bb8305f2d7e30aa829a28bec7a">   61</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="../../d4/dac/structgroup__member.html">group_member</a> <a class="code" href="../../d2/dc2/structgroup__t.html#acead98bb8305f2d7e30aa829a28bec7a">gm</a>; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }<a class="code" href="../../d2/dc2/structgroup__t.html#aa4994641a04688873d15e5d67f6d89d1">g</a>;                                             </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;u8 <a class="code" href="../../da/d2d/netstack__net_8h.html#ae7cc4f67364767fc61c17382c11c392f">net_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">//void net_set_mac_addr(const u8 *addr);</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;u8 <a class="code" href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698">net_input</a>(u8 *src_addr,<a class="code" href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a> *net_pdu,u8 len);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;u8 <a class="code" href="../../da/d2d/netstack__net_8h.html#a29d6c9815da8ae61c9b13495ddb3a1e7">net_output</a>(u8 *addr,<a class="code" href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a> *net_pdu,u8 pkt_type,u8 count);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d2d/netstack__net_8h.html#a3ae3346a4646a946d75d4ab75131c4a8">net_updat_local_info</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;u8 <a class="code" href="../../da/d2d/netstack__net_8h.html#aa85d3baaf5a0ba28c9397e61535bf06a">net_set_adv_param_len</a>(u8 len);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> *<a class="code" href="../../da/d2d/netstack__net_8h.html#a0413a533fbf469c99c315c0379f24bec">net_get_adv_param_buf</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="structnetstack__local_html_ab20f0732711ac1310a972a5d5653a261"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#ab20f0732711ac1310a972a5d5653a261">netstack_local::nid</a></div><div class="ttdeci">u8 nid</div><div class="ttdoc">ÍøÂçID. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00027">netstack_net.h:27</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a7e932f8a275aacc949e370754d468554"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a7e932f8a275aacc949e370754d468554">netstack_local::pair_time</a></div><div class="ttdeci">u8 pair_time</div><div class="ttdoc">Åä¶Ô³¬Ê±Ê±¼ä </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00034">netstack_net.h:34</a></div></div>
+<div class="ttc" id="structnetstack__local_html_aaea1419d764fbdceff50600dbb6bd644"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#aaea1419d764fbdceff50600dbb6bd644">netstack_local::admin_id</a></div><div class="ttdeci">u8 admin_id[3]</div><div class="ttdoc">¹ÜÀíÔ±ID </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00036">netstack_net.h:36</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_ae7cc4f67364767fc61c17382c11c392f"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#ae7cc4f67364767fc61c17382c11c392f">net_init</a></div><div class="ttdeci">u8 net_init(void)</div><div class="ttdoc">ç½‘ç»œå±‚åˆå§‹åŒ– </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00251">netstack_net.c:251</a></div></div>
+<div class="ttc" id="structnetstack__local_html_af6c534283c4f1109070b2595454617d4"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#af6c534283c4f1109070b2595454617d4">netstack_local::flash_crc_val</a></div><div class="ttdeci">u8 flash_crc_val</div><div class="ttdoc">ĞÅÏ¢Ğ£Ñé </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00041">netstack_net.h:41</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a5240750187512430533e69dcfa1154ce"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a5240750187512430533e69dcfa1154ce">netstack_local::mac_addr</a></div><div class="ttdeci">u8 mac_addr[6]</div><div class="ttdoc">±¾µØMACµØÖ· </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00021">netstack_net.h:21</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_a8c94131e6631e732540808e310ed3698"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698">net_input</a></div><div class="ttdeci">u8 net_input(u8 *src_addr, NET_PDU *net_pdu, u8 len)</div><div class="ttdoc">ç½‘ç»œå±‚è¾“å…¥ </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00366">netstack_net.c:366</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_a3ae3346a4646a946d75d4ab75131c4a8"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#a3ae3346a4646a946d75d4ab75131c4a8">net_updat_local_info</a></div><div class="ttdeci">void net_updat_local_info(void)</div><div class="ttdoc">æ›´æ–°æœ¬åœ°ä¿¡æ¯ </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00201">netstack_net.c:201</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a83650714a9e9005c5d227c1fc9741c0d"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">netstack_local::company_id</a></div><div class="ttdeci">u8 company_id[2]</div><div class="ttdoc">¹«Ë¾id </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00023">netstack_net.h:23</a></div></div>
+<div class="ttc" id="structnetstack__rx__flag_html_ace1889a4f2786a2e3090eac30a5a2cec"><div class="ttname"><a href="../../d6/d1b/structnetstack__rx__flag.html#ace1889a4f2786a2e3090eac30a5a2cec">netstack_rx_flag::seq</a></div><div class="ttdeci">u8 seq</div><div class="ttdoc">ĞòÁĞºÅ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00048">netstack_net.h:48</a></div></div>
+<div class="ttc" id="structgroup__member_html"><div class="ttname"><a href="../../d4/dac/structgroup__member.html">group_member</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00052">netstack_net.h:52</a></div></div>
+<div class="ttc" id="structnetstack__local_html_aa0016822c962278eae36884803d5ce65"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#aa0016822c962278eae36884803d5ce65">netstack_local::dst</a></div><div class="ttdeci">u8 dst[3]</div><div class="ttdoc">Ä¿±êµØÖ· </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00029">netstack_net.h:29</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a8cda1440e866c700056d2f6f4accada7"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a8cda1440e866c700056d2f6f4accada7">netstack_local::net_sta</a></div><div class="ttdeci">u8 net_sta</div><div class="ttdoc">ÍøÂç×´Ì¬ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00028">netstack_net.h:28</a></div></div>
+<div class="ttc" id="structnetstack__local_html_ae3da275aea26e41f260707a93e9116eb"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#ae3da275aea26e41f260707a93e9116eb">netstack_local::group_count</a></div><div class="ttdeci">u8 group_count</div><div class="ttdoc">×é¸öÊı </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00025">netstack_net.h:25</a></div></div>
+<div class="ttc" id="netstack__mac_8h_html"><div class="ttname"><a href="../../d4/d82/netstack__mac_8h.html">netstack_mac.h</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_aa85d3baaf5a0ba28c9397e61535bf06a"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#aa85d3baaf5a0ba28c9397e61535bf06a">net_set_adv_param_len</a></div><div class="ttdeci">u8 net_set_adv_param_len(u8 len)</div><div class="ttdoc">è®¾ç½®è®¾å¤‡å¹¿æ’­æ•°æ®é•¿åº¦ </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00739">netstack_net.c:739</a></div></div>
+<div class="ttc" id="structnetstack__local_html_acbf1d85decf93257d71d6e141f3b7dde"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#acbf1d85decf93257d71d6e141f3b7dde">netstack_local::pass</a></div><div class="ttdeci">u8 pass[6]</div><div class="ttdoc">ÃÜ³× </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00022">netstack_net.h:22</a></div></div>
+<div class="ttc" id="structnetstack__local_html_aa706f030faf68438b5a811883b8f66a2"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#aa706f030faf68438b5a811883b8f66a2">netstack_local::uuid</a></div><div class="ttdeci">u8 uuid[2]</div><div class="ttdoc">Éè±¸UUID. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00031">netstack_net.h:31</a></div></div>
+<div class="ttc" id="structgroup__t_html_aa4994641a04688873d15e5d67f6d89d1"><div class="ttname"><a href="../../d2/dc2/structgroup__t.html#aa4994641a04688873d15e5d67f6d89d1">group_t::g</a></div><div class="ttdeci">union group_t::@2 g</div><div class="ttdoc">¹²ÓÃÌå </div></div>
+<div class="ttc" id="structnetstack__local_html_ad6e2198d1c6275c815f2812c8df66304"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#ad6e2198d1c6275c815f2812c8df66304">netstack_local::device_sta_adv_len</a></div><div class="ttdeci">u8 device_sta_adv_len</div><div class="ttdoc">Éè±¸¹ã²¥²ÎÊı³¤¶È </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00033">netstack_net.h:33</a></div></div>
+<div class="ttc" id="structgroup__member_html_af0cd3c7bf06f6c4eb37170d7cf2dfe50"><div class="ttname"><a href="../../d4/dac/structgroup__member.html#af0cd3c7bf06f6c4eb37170d7cf2dfe50">group_member::user_id</a></div><div class="ttdeci">u8 user_id[3]</div><div class="ttdoc">ÓÃ»§ID. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00053">netstack_net.h:53</a></div></div>
+<div class="ttc" id="structnetstack__local_html"><div class="ttname"><a href="../../da/d64/structnetstack__local.html">netstack_local</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00020">netstack_net.h:20</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a20d1adc2991cc404c6bb6424e3dc38f4"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a20d1adc2991cc404c6bb6424e3dc38f4">netstack_local::update_flag</a></div><div class="ttdeci">u8 update_flag</div><div class="ttdoc">¸úĞÂ±êÖ¾ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00035">netstack_net.h:35</a></div></div>
+<div class="ttc" id="structnetstack__local_html_aec32af339e4725549e34c8b72e8739d5"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#aec32af339e4725549e34c8b72e8739d5">netstack_local::device_sta_adv_pram</a></div><div class="ttdeci">u8 device_sta_adv_pram[10]</div><div class="ttdoc">Éè±¸¹ã²¥²ÎÊı </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00032">netstack_net.h:32</a></div></div>
+<div class="ttc" id="structgroup__member_html_af93f6cc40416a634103fe798902442e0"><div class="ttname"><a href="../../d4/dac/structgroup__member.html#af93f6cc40416a634103fe798902442e0">group_member::device_id</a></div><div class="ttdeci">u8 device_id</div><div class="ttdoc">Éè±¸ID. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00054">netstack_net.h:54</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a75cbb2130d5cf65f40a41ab145abdf39"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a75cbb2130d5cf65f40a41ab145abdf39">netstack_local::pweron</a></div><div class="ttdeci">u8 pweron</div><div class="ttdoc">Ó¦ÓÃ²ãÊ¹ÓÃ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00037">netstack_net.h:37</a></div></div>
+<div class="ttc" id="structgroup__t_html"><div class="ttname"><a href="../../d2/dc2/structgroup__t.html">group_t</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00058">netstack_net.h:58</a></div></div>
+<div class="ttc" id="struct_n_e_t___p_d_u_html"><div class="ttname"><a href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00052">netstack_mac.h:52</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_a0413a533fbf469c99c315c0379f24bec"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#a0413a533fbf469c99c315c0379f24bec">net_get_adv_param_buf</a></div><div class="ttdeci">void * net_get_adv_param_buf(void)</div><div class="ttdoc">è·å–è®¾å¤‡å¹¿æ’­ç¼“å­˜ </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00756">netstack_net.c:756</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_a29d6c9815da8ae61c9b13495ddb3a1e7"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#a29d6c9815da8ae61c9b13495ddb3a1e7">net_output</a></div><div class="ttdeci">u8 net_output(u8 *addr, NET_PDU *net_pdu, u8 pkt_type, u8 count)</div><div class="ttdoc">ç½‘ç»œå±‚è¾“å‡º </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00631">netstack_net.c:631</a></div></div>
+<div class="ttc" id="structnetstack__local_html_ace1889a4f2786a2e3090eac30a5a2cec"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#ace1889a4f2786a2e3090eac30a5a2cec">netstack_local::seq</a></div><div class="ttdeci">u8 seq</div><div class="ttdoc">ĞòÁĞºÅ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00026">netstack_net.h:26</a></div></div>
+<div class="ttc" id="structgroup__t_html_acead98bb8305f2d7e30aa829a28bec7a"><div class="ttname"><a href="../../d2/dc2/structgroup__t.html#acead98bb8305f2d7e30aa829a28bec7a">group_t::gm</a></div><div class="ttdeci">struct group_member gm</div><div class="ttdoc">×é³ÉÔ± </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00061">netstack_net.h:61</a></div></div>
+<div class="ttc" id="structnetstack__rx__flag_html"><div class="ttname"><a href="../../d6/d1b/structnetstack__rx__flag.html">netstack_rx_flag</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00046">netstack_net.h:46</a></div></div>
+<div class="ttc" id="structnetstack__rx__flag_html_acd905d18599eb5d34d70a11f294085b5"><div class="ttname"><a href="../../d6/d1b/structnetstack__rx__flag.html#acd905d18599eb5d34d70a11f294085b5">netstack_rx_flag::src</a></div><div class="ttdeci">u8 src[3]</div><div class="ttdoc">Ô´µØÖ· </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00047">netstack_net.h:47</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a994f6c98dd079996515c90406d3f3d0b"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">netstack_local::channel</a></div><div class="ttdeci">u8 channel</div><div class="ttdoc">ĞÅµÀ </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00024">netstack_net.h:24</a></div></div>
+<div class="ttc" id="structnetstack__local_html_ab973683deae2934696d7a7ce0d21e740"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#ab973683deae2934696d7a7ce0d21e740">netstack_local::repeat</a></div><div class="ttdeci">u8 repeat</div><div class="ttdoc">ÖØ·¢´ÎÊı </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00030">netstack_net.h:30</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+åˆ¶ä½œè€… &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

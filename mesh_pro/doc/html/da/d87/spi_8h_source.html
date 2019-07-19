@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: dev/spi.h 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_5fc0168d11760b9445bd29fa15d9290f.html">dev</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">spi.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../da/d87/spi_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __SPI_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __SPI_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;HC_DEFINE.H&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * SPI pins.</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//#define SPI_SS      P0_4</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">//#define SPI_SCK     P0_5</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//#define SPI_MOSI    P0_6</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//#define SPI_MISO    P0_7</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a81f0aae3c3a2adba06ac3b802b38915a">   15</a></span>&#160;<span class="preprocessor">#define SPI_SS      P0_5</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a750ca7c9b92cfc9e57272ff3a49db48b">   16</a></span>&#160;<span class="preprocessor">#define SPI_SCK     P2_1</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a7dbebab5f7dd57885adccf6711b13592">   17</a></span>&#160;<span class="preprocessor">#define SPI_MOSI    P0_7</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#ab142cc77dfa97010c9d2b616d0992b64">   18</a></span>&#160;<span class="preprocessor">#define SPI_MISO    P2_0</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/* PKT_FLAG interrupt */</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//#define RF_PKT_FLAG_PIN     P2_6</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">/* Chip enable */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a5179ca6f823fcc808fbd2de249d8bf25">   26</a></span>&#160;<span class="preprocessor">#define RF_CE_PIN           P0_6</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/* Enable RF */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a035e8e4cf28c4338dc74f46ce5abd59f">   29</a></span>&#160;<span class="preprocessor">#define RF_ENABLE() \</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">    RF_CE_PIN = 1; \</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">        P0_0 = ~P0_0</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">/* Disable RF */</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#aa9f0c2c2ff5f72da9462be6622a14202">   34</a></span>&#160;<span class="preprocessor">#define RF_DISABLE() \</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">    RF_CE_PIN = 0</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* Select WL1670 SPI */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a1746600dfa0e07d471822a6c0490c909">   39</a></span>&#160;<span class="preprocessor">#define RF_SPI_SELECT() \</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">    SPI_SS = 0</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">/* Deselect WL1670 SPI */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="../../da/d87/spi_8h.html#a5605cd2943779e3a26c4535983d62c3b">   43</a></span>&#160;<span class="preprocessor">#define RF_SPI_DESELECT() \</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">    SPI_SS = 1; </span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d87/spi_8h.html#ae909944aa85ae98323073c628be541aa">spi_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;u8 <a class="code" href="../../da/d87/spi_8h.html#a09b82cf9ac6119c1080b9f3d615c02e6">spi_read_write</a>(u8 val);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="spi_8h_html_a09b82cf9ac6119c1080b9f3d615c02e6"><div class="ttname"><a href="../../da/d87/spi_8h.html#a09b82cf9ac6119c1080b9f3d615c02e6">spi_read_write</a></div><div class="ttdeci">u8 spi_read_write(u8 val)</div><div class="ttdoc">读写一个byte </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d00/spi_8c_source.html#l00072">spi.c:72</a></div></div>
+<div class="ttc" id="spi_8h_html_ae909944aa85ae98323073c628be541aa"><div class="ttname"><a href="../../da/d87/spi_8h.html#ae909944aa85ae98323073c628be541aa">spi_init</a></div><div class="ttdeci">void spi_init(void)</div><div class="ttdoc">SPI初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d00/spi_8c_source.html#l00057">spi.c:57</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: mac/netstack_mac.c 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_2ac391ad55c056cf22300c181fd83614.html">mac</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">netstack_mac.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../da/d7b/netstack__mac_8c.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../db/d3e/network__conf_8h.html">network_conf.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../dd/dee/delay_8h.html">delay.h</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../de/df7/flash_8h.html">flash.h</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">   20</a></span>&#160;u8 data <a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>[<a class="code" href="../../db/d3e/network__conf_8h.html#af7bcf925b540392822c775688076024e">VAR_RX_BUF_SIZE</a>];<span class="comment">// _at_ VAR_RX_BUF_D;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="../../d9/d85/netstack__net_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">   22</a></span>&#160;<span class="comment"></span>u8 data <a class="code" href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a>[<a class="code" href="../../db/d3e/network__conf_8h.html#a862555b7f04e47a74f870634a67e32ca">VAR_TX_BUF_SIZE</a>];<span class="comment">// _at_ VAR_TX_BUF_D;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">   27</a></span>&#160;<span class="preprocessor">#define RF_CHN_TO_PLL_CHN(_x_)  ((_x_) * 2) </span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//#define ble_fast_dewhiten   ble_fast_whiten</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ab7f6bf8df35486f1d7c1ea59b71aa448">   35</a></span>&#160;<span class="preprocessor">#define LO(x)       (unsigned char)((x) &amp; 0xff)                     </span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a1f50870cb2b769df20f828db480c96a0">   36</a></span>&#160;<span class="preprocessor">#define MID(x)  (unsigned char)(((x) &gt;&gt; 8) &amp; 0xff)    </span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a464086719dcbec3a5447a3e76dd2e935">   37</a></span>&#160;<span class="preprocessor">#define HI(x)       (unsigned char)(((x) &gt;&gt; 16) &amp; 0xff)   </span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a9c5ad7b3bcc2a977ada85e1a409c039f">   42</a></span>&#160;<span class="preprocessor">const u8 code tpl_channels[] = {</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(0),    </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(12),   </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(39)    </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">   49</a></span>&#160;<span class="keyword">const</span> u8 code <a class="code" href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">tpl_whiten</a>[] = {0xd3,0xb3,0xf3};</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ac730945ba650da1de8aff5bfcb81c221">   53</a></span>&#160;code  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#ac730945ba650da1de8aff5bfcb81c221">crc24q</a>[256] = {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;0x00000000, 0x0000065B, 0x00000CB6, 0x00000AED, </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;0x0000196C, 0x00001F37, 0x000015DA, 0x00001381, </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;0x000032D8, 0x00003483, 0x00003E6E, 0x00003835, </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;0x00002BB4, 0x00002DEF, 0x00002702, 0x00002159, </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;0x000065B0, 0x000063EB, 0x00006906, 0x00006F5D, </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;0x00007CDC, 0x00007A87, 0x0000706A, 0x00007631, </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;0x00005768, 0x00005133, 0x00005BDE, 0x00005D85, </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;0x00004E04, 0x0000485F, 0x000042B2, 0x000044E9, </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;0x0000CB60, 0x0000CD3B, 0x0000C7D6, 0x0000C18D, </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;0x0000D20C, 0x0000D457, 0x0000DEBA, 0x0000D8E1, </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;0x0000F9B8, 0x0000FFE3, 0x0000F50E, 0x0000F355, </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;0x0000E0D4, 0x0000E68F, 0x0000EC62, 0x0000EA39, </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;0x0000AED0, 0x0000A88B, 0x0000A266, 0x0000A43D, </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;0x0000B7BC, 0x0000B1E7, 0x0000BB0A, 0x0000BD51, </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;0x00009C08, 0x00009A53, 0x000090BE, 0x000096E5, </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;0x00008564, 0x0000833F, 0x000089D2, 0x00008F89, </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;0x000196C0, 0x0001909B, 0x00019A76, 0x00019C2D, </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;0x00018FAC, 0x000189F7, 0x0001831A, 0x00018541, </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;0x0001A418, 0x0001A243, 0x0001A8AE, 0x0001AEF5, </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;0x0001BD74, 0x0001BB2F, 0x0001B1C2, 0x0001B799, </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;0x0001F370, 0x0001F52B, 0x0001FFC6, 0x0001F99D, </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;0x0001EA1C, 0x0001EC47, 0x0001E6AA, 0x0001E0F1, </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;0x0001C1A8, 0x0001C7F3, 0x0001CD1E, 0x0001CB45, </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;0x0001D8C4, 0x0001DE9F, 0x0001D472, 0x0001D229, </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;0x00015DA0, 0x00015BFB, 0x00015116, 0x0001574D, </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;0x000144CC, 0x00014297, 0x0001487A, 0x00014E21, </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;0x00016F78, 0x00016923, 0x000163CE, 0x00016595, </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;0x00017614, 0x0001704F, 0x00017AA2, 0x00017CF9, </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;0x00013810, 0x00013E4B, 0x000134A6, 0x000132FD, </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;0x0001217C, 0x00012727, 0x00012DCA, 0x00012B91, </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;0x00010AC8, 0x00010C93, 0x0001067E, 0x00010025, </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;0x000113A4, 0x000115FF, 0x00011F12, 0x00011949, </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;0x00032D80, 0x00032BDB, 0x00032136, 0x0003276D, </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;0x000334EC, 0x000332B7, 0x0003385A, 0x00033E01, </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;0x00031F58, 0x00031903, 0x000313EE, 0x000315B5, </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;0x00030634, 0x0003006F, 0x00030A82, 0x00030CD9, </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;0x00034830, 0x00034E6B, 0x00034486, 0x000342DD, </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;0x0003515C, 0x00035707, 0x00035DEA, 0x00035BB1, </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;0x00037AE8, 0x00037CB3, 0x0003765E, 0x00037005, </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;0x00036384, 0x000365DF, 0x00036F32, 0x00036969, </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;0x0003E6E0, 0x0003E0BB, 0x0003EA56, 0x0003EC0D, </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;0x0003FF8C, 0x0003F9D7, 0x0003F33A, 0x0003F561, </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;0x0003D438, 0x0003D263, 0x0003D88E, 0x0003DED5, </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;0x0003CD54, 0x0003CB0F, 0x0003C1E2, 0x0003C7B9, </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;0x00038350, 0x0003850B, 0x00038FE6, 0x000389BD, </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;0x00039A3C, 0x00039C67, 0x0003968A, 0x000390D1, </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;0x0003B188, 0x0003B7D3, 0x0003BD3E, 0x0003BB65, </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;0x0003A8E4, 0x0003AEBF, 0x0003A452, 0x0003A209, </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;0x0002BB40, 0x0002BD1B, 0x0002B7F6, 0x0002B1AD, </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;0x0002A22C, 0x0002A477, 0x0002AE9A, 0x0002A8C1, </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;0x00028998, 0x00028FC3, 0x0002852E, 0x00028375, </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;0x000290F4, 0x000296AF, 0x00029C42, 0x00029A19, </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;0x0002DEF0, 0x0002D8AB, 0x0002D246, 0x0002D41D, </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;0x0002C79C, 0x0002C1C7, 0x0002CB2A, 0x0002CD71, </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;0x0002EC28, 0x0002EA73, 0x0002E09E, 0x0002E6C5, </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;0x0002F544, 0x0002F31F, 0x0002F9F2, 0x0002FFA9, </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;0x00027020, 0x0002767B, 0x00027C96, 0x00027ACD, </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;0x0002694C, 0x00026F17, 0x000265FA, 0x000263A1, </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;0x000242F8, 0x000244A3, 0x00024E4E, 0x00024815, </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;0x00025B94, 0x00025DCF, 0x00025722, 0x00025179, </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;0x00021590, 0x000213CB, 0x00021926, 0x00021F7D, </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;0x00020CFC, 0x00020AA7, 0x0002004A, 0x00020611, </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;0x00022748, 0x00022113, 0x00022BFE, 0x00022DA5, </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;0x00023E24, 0x0002387F, 0x00023292, 0x000234C9, </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; };</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a341d737f70480ae31911485e942d060f">  129</a></span>&#160;u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#a341d737f70480ae31911485e942d060f">mac_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a4d193e8205661f6479386352cf7716d3">  140</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a4d193e8205661f6479386352cf7716d3">mac_set_power</a>(u8 power)</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;{</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(18,power);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345">  153</a></span>&#160;<span class="keyword">static</span> u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345">swap_bits</a>(u8 byte)</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;{</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    byte = (byte &lt;&lt; 4) | (byte &gt;&gt; 4);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    byte = ((byte &lt;&lt; 2) &amp; 0xCC) | ((byte &gt;&gt; 2) &amp; 0x33);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    byte = ((byte &lt;&lt; 1) &amp; 0xAA) | ((byte &gt;&gt; 1) &amp; 0x55);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">return</span> (byte);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00">  167</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00">swap_crc_bits</a>(u8 *crc)</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;{</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    u8 i;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; 3; ++i) {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        *crc = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345">swap_bits</a>(*crc);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        crc++;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d">  182</a></span>&#160;<span class="keyword">static</span> u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d">reflected</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b)    </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;{      </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> c = 0;      </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> i;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">for</span>(i=0; i&lt;8; i++)        </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    {          </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        c &lt;&lt;= 1;          </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordflow">if</span> (b&amp;1) </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            c|=1;          </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        b &gt;&gt;= 1;      </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    }      </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordflow">return</span> c;  </div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;} </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112">  203</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112">crc24q_hash</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *dat, <span class="keywordtype">int</span> len)</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;{</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> d;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> crc = 0x555555;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">for</span> (i = 0; i &lt; len; i++) {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            d = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d">reflected</a>(dat[i]);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            crc = (crc &lt;&lt; 8) ^ crc24q[d ^ (unsigned char)(crc &gt;&gt; 16)];</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    crc = (crc &amp; 0x00ffffff);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordflow">return</span> crc;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;}</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">  227</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">ble_calc_adv_crc_tab</a>(<span class="keyword">const</span> u8 *adv_pdu, u8 len, u8 *crc_c)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;{</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> crc = 0;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    crc = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112">crc24q_hash</a>(adv_pdu, len);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    crc_c[0] = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a464086719dcbec3a5447a3e76dd2e935">HI</a>(crc);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    crc_c[1] = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a1f50870cb2b769df20f828db480c96a0">MID</a>(crc);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    crc_c[2] = <a class="code" href="../../da/d7b/netstack__mac_8c.html#ab7f6bf8df35486f1d7c1ea59b71aa448">LO</a>(crc);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00">swap_crc_bits</a>(crc_c);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
+<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f">  247</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f">mac_pack_packet</a>(u8 *addr,u8 len) </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;{</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    u8 *crc_ptr;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      <a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *pkt = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">/* Fill PDU */</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        memcpy(pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a>,addr,6);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="comment">//    memcpy(&amp;pkt-&gt;adv_ind.len, advd, advd_size);</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[0] = 0x02;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[1] = 0x01;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[2] = 0x06;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    </div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a34923af2855ec28604554d526eb97c33">type</a> = 0xFF;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[0] = <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[0];</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[1] = <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[1];</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[0] = <a class="code" href="../../d4/d82/netstack__mac_8h.html#a3bf5150888e994492b814c0bf004f0cf">PDU_HDR_TYPE_ADV_NONCONN_IND</a> | 0x40;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1] = <a class="code" href="../../d4/d82/netstack__mac_8h.html#a7b9e7ea0eef63159b50bb147a092d04d">DEV_ADDR_LEN</a> + len+4;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="comment">/* Get the address for CRC */</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    crc_ptr = pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a> + pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1];</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="comment">/* Packet length for later use */</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a> = <a class="code" href="../../d4/d82/netstack__mac_8h.html#a5e8c36eaf4eeb49cfcecb646ffecbb0c">PDU_HEADER_LEN</a> +</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1] + <a class="code" href="../../d4/d82/netstack__mac_8h.html#abdd3907fd23a4d3d6f52262c47359ddc">CRC_LEN</a> ;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="comment">/* Calculate CRC */</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                        </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <a class="code" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">ble_calc_adv_crc_tab</a>((u8 *)&amp;(pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>),</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            <a class="code" href="../../d4/d82/netstack__mac_8h.html#a5e8c36eaf4eeb49cfcecb646ffecbb0c">PDU_HEADER_LEN</a> + pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1], crc_ptr);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263">  288</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263">tpl_rx_mode</a>(u8 ch)</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;{</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(14,0,0);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(15,0x80|ch);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;}</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc">  300</a></span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc">tpl_tx_mode</a>(u8 ch)</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;{</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(15,ch);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(14,0,1);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;}</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
+<div class="line"><a name="l00312"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#aeacdee97c5e1934263c550d733584559">  312</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#aeacdee97c5e1934263c550d733584559">mac_load_packet</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;{</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        <a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *pkt = <a class="code" href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a>;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(15,7,0);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(14,0,0);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(104,0x80);<span class="comment">//reset fifo wr ptr</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(105,0x80);<span class="comment">// reset fifo rd ptr</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(95,0x80|pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a>);<span class="comment">//使能数据包长度//写长度</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4">phy_write_fifo</a>(100,<a class="code" href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a>,pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a>);<span class="comment">//写数据</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00328"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d">  328</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d">mac_send_packet</a>(u8 channel)</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;{</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(71,<a class="code" href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">tpl_whiten</a>[channel]);<span class="comment">//白化</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(105,0x80);<span class="comment">// reset fifo rd ptr</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(104,0x80);<span class="comment">// reset fifo wr ptr</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <a class="code" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc">tpl_tx_mode</a>(<a class="code" href="../../da/d7b/netstack__mac_8c.html#a9c5ad7b3bcc2a977ada85e1a409c039f">tpl_channels</a>[channel]);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <a class="code" href="../../d3/d0f/delay_8c.html#ab63c881c7370f9c01bfd8c20827b4ec6">delay_0_5_ms</a>(1);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">//  phy_write_reg_bit(14,0,0);//使能发射</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;}</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
+<div class="line"><a name="l00344"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496">  344</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496">mac_listen_packet</a>(u8 channel)</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;{</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(15,7,0);</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(14,0,0);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="comment">//      phy_write_reg(82,0x70);//使能数据包长度  0x31</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(71,<a class="code" href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">tpl_whiten</a>[channel]);<span class="comment">//白化</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(95,0x80|0x29);<span class="comment">//使能数据包长度</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(104,0x80);<span class="comment">//reset fifo wr ptr</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(105,0x80);<span class="comment">// reset fifo rd ptr</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(37, 1, 1);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <a class="code" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263">tpl_rx_mode</a>(<a class="code" href="../../da/d7b/netstack__mac_8c.html#a9c5ad7b3bcc2a977ada85e1a409c039f">tpl_channels</a>[channel]);</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
+<div class="line"><a name="l00363"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316">  363</a></span>&#160;<span class="keyword">static</span> u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316">g24_crc</a>(u8 *dat,u8 len)</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;{</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    u8 i,crc=0;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">for</span>(i=0;i&lt;len;i++){</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        crc ^= dat[i];</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    }</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordflow">return</span> crc;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9">  379</a></span>&#160;<span class="keyword">static</span> u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9">mac_read_packet</a>(<span class="keywordtype">void</span>) </div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;{</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    u8 i;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    u8 crc_buf[3];</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    u8 *crc_s;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    u8 check=0;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *buf = (<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *)<a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        i = <a class="code" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0">phy_read_reg</a>(104);</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <span class="keywordflow">if</span>(i&lt;=0x2E){</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;            <a class="code" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a>(100,<a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>, 4);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>[1] == 0xFF &amp;&amp; <a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>[2] == 0x4E &amp;&amp; <a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>[3] == 0x00){<span class="comment">//2.4G数据</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                memcpy(&amp;buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>,<a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>,4);</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;                <a class="code" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a>(100,buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a74968e6ffd97f034b3fe0acfe318525c">dat</a>, buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>);</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;                crc_s = &amp;buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a> + buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>+1;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;                memset(buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a>,0,6);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[0] = 0x42;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1] = buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>+10;</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[0] = 0x02;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[1] = 0x01;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">adv_flag</a>[2] = 0x06;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                crc_buf[0] = <a class="code" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316">g24_crc</a>(&amp;buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>,buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">len</a>+1);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a> = buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1]-13;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;                <span class="keywordflow">if</span>(crc_buf[0] == crc_s[0]){</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;                    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;                }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;                    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                }</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;            }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160; <span class="comment">//ble 数据</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                <a class="code" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a>(100,&amp;buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a>[2], 11);</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                <span class="keywordflow">if</span>(buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[0] == <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[0] &amp;&amp; buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[1] == <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">company_id</a>[1]){</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                    <a class="code" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a>(100,&amp;buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a74968e6ffd97f034b3fe0acfe318525c">dat</a>[0], i-15);</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                    crc_s = buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a> + buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1];</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                    <a class="code" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">ble_calc_adv_crc_tab</a>((u8 *)&amp;(buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>),<a class="code" href="../../d4/d82/netstack__mac_8h.html#a5e8c36eaf4eeb49cfcecb646ffecbb0c">PDU_HEADER_LEN</a> + buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1],crc_buf);</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                    buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a> = buf-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">header</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">bytes</a>[1]-13;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;                }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                }</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;            }</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;            </div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;            <span class="keywordflow">if</span>(memcmp(crc_buf,crc_s,3)==0)</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            {</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;            }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    }</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keywordflow">return</span> (0);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;}</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
+<div class="line"><a name="l00436"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6">  436</a></span>&#160;<span class="keyword">static</span> u8 <a class="code" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6">mac_packet_deal</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;{</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        <a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *rx_pkt;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;        </div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(37,1,1);</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="comment">//读取接收到的数据</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9">mac_read_packet</a>()){</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;            </div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;            rx_pkt = (<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html">BLE_PKT</a> *)<a class="code" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a>;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;            <a class="code" href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698">net_input</a>(rx_pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">mac_addr</a>,(<a class="code" href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a> *)rx_pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">adv_ind</a>.<a class="code" href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a74968e6ffd97f034b3fe0acfe318525c">dat</a>,rx_pkt-&gt;<a class="code" href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">len</a>);</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        }</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        <a class="code" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496">mac_listen_packet</a>(<a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">channel</a>);<span class="comment">//进入接收模式</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;}</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;</div>
+<div class="line"><a name="l00456"></a><span class="lineno"><a class="line" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a">  456</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a">mac_process</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;{</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0">phy_read_reg</a>(97)&amp;0x40){</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;            <a class="code" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6">mac_packet_deal</a>();</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;        }</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        </div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;}</div>
+<div class="ttc" id="netstack__phy_8h_html_a1c12a824aee6841bf873c3874acd3b52"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a></div><div class="ttdeci">void phy_write_reg(u8 reg, u8 val)</div><div class="ttdoc">写RF寄存器 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00148">netstack_phy.c:148</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a0adea6008de0733b5b37ecfaba32a345"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345">swap_bits</a></div><div class="ttdeci">static u8 swap_bits(u8 byte)</div><div class="ttdoc">Swap bits between MSB and LSB of a given byte. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00153">netstack_mac.c:153</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a38d715b974d2ac09e9a08d6af349226a"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a">mac_process</a></div><div class="ttdeci">void mac_process(void)</div><div class="ttdoc">MAC 进程 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00456">netstack_mac.c:456</a></div></div>
+<div class="ttc" id="netstack__mac_8h_html_a3bf5150888e994492b814c0bf004f0cf"><div class="ttname"><a href="../../d4/d82/netstack__mac_8h.html#a3bf5150888e994492b814c0bf004f0cf">PDU_HDR_TYPE_ADV_NONCONN_IND</a></div><div class="ttdeci">#define PDU_HDR_TYPE_ADV_NONCONN_IND</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00088">netstack_mac.h:88</a></div></div>
+<div class="ttc" id="struct___b_l_e___p_k_t_html"><div class="ttname"><a href="../../de/d64/struct___b_l_e___p_k_t.html">_BLE_PKT</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00117">netstack_mac.h:117</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a75cbc145251b10cf3b87b693d6fb57e9"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9">mac_read_packet</a></div><div class="ttdeci">static u8 mac_read_packet(void)</div><div class="ttdoc">读取接收到的数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00379">netstack_mac.c:379</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a211eaf75cafc03d002beafff0b389ebb"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">tpl_whiten</a></div><div class="ttdeci">const u8 code tpl_whiten[]</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00049">netstack_mac.c:49</a></div></div>
+<div class="ttc" id="netstack__mac_8h_html_abdd3907fd23a4d3d6f52262c47359ddc"><div class="ttname"><a href="../../d4/d82/netstack__mac_8h.html#abdd3907fd23a4d3d6f52262c47359ddc">CRC_LEN</a></div><div class="ttdeci">#define CRC_LEN</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00031">netstack_mac.h:31</a></div></div>
+<div class="ttc" id="netstack__net_8h_html_a8c94131e6631e732540808e310ed3698"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698">net_input</a></div><div class="ttdeci">u8 net_input(u8 *src_addr, NET_PDU *net_pdu, u8 len)</div><div class="ttdoc">网络层输入 </div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00366">netstack_net.c:366</a></div></div>
+<div class="ttc" id="network__conf_8h_html_a862555b7f04e47a74f870634a67e32ca"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html#a862555b7f04e47a74f870634a67e32ca">VAR_TX_BUF_SIZE</a></div><div class="ttdeci">#define VAR_TX_BUF_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d3e/network__conf_8h_source.html#l00042">network_conf.h:42</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_ac730945ba650da1de8aff5bfcb81c221"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ac730945ba650da1de8aff5bfcb81c221">crc24q</a></div><div class="ttdeci">code unsigned long crc24q[256]</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00053">netstack_mac.c:53</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a83650714a9e9005c5d227c1fc9741c0d"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a83650714a9e9005c5d227c1fc9741c0d">netstack_local::company_id</a></div><div class="ttdeci">u8 company_id[2]</div><div class="ttdoc">��˾id </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00023">netstack_net.h:23</a></div></div>
+<div class="ttc" id="netstack__mac_8h_html_a7b9e7ea0eef63159b50bb147a092d04d"><div class="ttname"><a href="../../d4/d82/netstack__mac_8h.html#a7b9e7ea0eef63159b50bb147a092d04d">DEV_ADDR_LEN</a></div><div class="ttdeci">#define DEV_ADDR_LEN</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00033">netstack_mac.h:33</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_a74968e6ffd97f034b3fe0acfe318525c"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a74968e6ffd97f034b3fe0acfe318525c">_ADV_IND_PDU::dat</a></div><div class="ttdeci">u8 dat[27]</div><div class="ttdoc">数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00112">netstack_mac.h:112</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a85e4da2dccafd4c5e7b1a5c8eff13496"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496">mac_listen_packet</a></div><div class="ttdeci">void mac_listen_packet(u8 channel)</div><div class="ttdoc">开始接收 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00344">netstack_mac.c:344</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_aeed9d40cfc4421734ee374565c5bb556"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#aeed9d40cfc4421734ee374565c5bb556">_ADV_IND_PDU::mac_addr</a></div><div class="ttdeci">u8 mac_addr[DEV_ADDR_LEN]</div><div class="ttdoc">蓝牙MAC地址 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00107">netstack_mac.h:107</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_ab7f6bf8df35486f1d7c1ea59b71aa448"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ab7f6bf8df35486f1d7c1ea59b71aa448">LO</a></div><div class="ttdeci">#define LO(x)</div><div class="ttdoc">取0-7位 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00035">netstack_mac.c:35</a></div></div>
+<div class="ttc" id="network__conf_8h_html_a39b8005db999d19671b4bd82c63ef945"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a></div><div class="ttdeci">struct netstack_local local_info</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00069">netstack_net.c:69</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a9c5ad7b3bcc2a977ada85e1a409c039f"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a9c5ad7b3bcc2a977ada85e1a409c039f">tpl_channels</a></div><div class="ttdeci">const u8 code tpl_channels[]</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00042">netstack_mac.c:42</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_ae7ba3d9941f6e981417bb317a1aee0e0"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0">phy_read_reg</a></div><div class="ttdeci">u8 phy_read_reg(u8 reg)</div><div class="ttdoc">读RF寄存器 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00121">netstack_phy.c:121</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a794b07380997066fa4902f43916cf97d"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d">mac_send_packet</a></div><div class="ttdeci">void mac_send_packet(u8 channel)</div><div class="ttdoc">发送数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00328">netstack_mac.c:328</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_a83650714a9e9005c5d227c1fc9741c0d"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a83650714a9e9005c5d227c1fc9741c0d">_ADV_IND_PDU::company_id</a></div><div class="ttdeci">u8 company_id[2]</div><div class="ttdoc">公司ID </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00111">netstack_mac.h:111</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a564e1e53209be4e2ef3d5b41a9f598cc"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc">tpl_tx_mode</a></div><div class="ttdeci">static void tpl_tx_mode(u8 ch)</div><div class="ttdoc">进入发送模式 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00300">netstack_mac.c:300</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_a30a9d43dcf8f624291b31b6fedb879b4"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4">phy_write_fifo</a></div><div class="ttdeci">void phy_write_fifo(u8 reg, u8 *buf, u8 len)</div><div class="ttdoc">往RF FIFO中写数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00220">netstack_phy.c:220</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_ad096a9f1d5b7f24931d2e9b4f5f2879c"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a></div><div class="ttdeci">#define RF_CHN_TO_PLL_CHN(_x_)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00027">netstack_mac.c:27</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_aeacdee97c5e1934263c550d733584559"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#aeacdee97c5e1934263c550d733584559">mac_load_packet</a></div><div class="ttdeci">void mac_load_packet(void)</div><div class="ttdoc">把数据加载到RF的FIFO中 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00312">netstack_mac.c:312</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a1f50870cb2b769df20f828db480c96a0"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a1f50870cb2b769df20f828db480c96a0">MID</a></div><div class="ttdeci">#define MID(x)</div><div class="ttdoc">取8-15位 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00036">netstack_mac.c:36</a></div></div>
+<div class="ttc" id="network__conf_8h_html_af7bcf925b540392822c775688076024e"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html#af7bcf925b540392822c775688076024e">VAR_RX_BUF_SIZE</a></div><div class="ttdeci">#define VAR_RX_BUF_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="../../db/d3e/network__conf_8h_source.html#l00038">network_conf.h:38</a></div></div>
+<div class="ttc" id="delay_8c_html_ab63c881c7370f9c01bfd8c20827b4ec6"><div class="ttname"><a href="../../d3/d0f/delay_8c.html#ab63c881c7370f9c01bfd8c20827b4ec6">delay_0_5_ms</a></div><div class="ttdeci">void delay_0_5_ms(u16 t)</div><div class="ttdoc">0.5毫秒延时 </div><div class="ttdef"><b>Definition:</b> <a href="../../d3/d0f/delay_8c_source.html#l00041">delay.c:41</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a464086719dcbec3a5447a3e76dd2e935"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a464086719dcbec3a5447a3e76dd2e935">HI</a></div><div class="ttdeci">#define HI(x)</div><div class="ttdoc">取16-23位 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00037">netstack_mac.c:37</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_a34923af2855ec28604554d526eb97c33"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a34923af2855ec28604554d526eb97c33">_ADV_IND_PDU::type</a></div><div class="ttdeci">u8 type</div><div class="ttdoc">ibeacon type </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00110">netstack_mac.h:110</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a9d35377c4b3cfe48d5d2c6105ca0fd28"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a></div><div class="ttdeci">u8 data var_tx_buf[VAR_TX_BUF_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00022">netstack_mac.c:22</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_aa300e4d3fccc70adc22aeb89d7d2087a"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a></div><div class="ttdeci">u8 data var_rx_buf[VAR_RX_BUF_SIZE]</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00020">netstack_mac.c:20</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a4d193e8205661f6479386352cf7716d3"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a4d193e8205661f6479386352cf7716d3">mac_set_power</a></div><div class="ttdeci">void mac_set_power(u8 power)</div><div class="ttdoc">设置RF的发射功率 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00140">netstack_mac.c:140</a></div></div>
+<div class="ttc" id="delay_8h_html"><div class="ttname"><a href="../../dd/dee/delay_8h.html">delay.h</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a10a7f891db1bb62ddc6a70862dc5a8b6"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6">mac_packet_deal</a></div><div class="ttdeci">static u8 mac_packet_deal(void)</div><div class="ttdoc">接收处理 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00436">netstack_mac.c:436</a></div></div>
+<div class="ttc" id="network__conf_8h_html"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html">network_conf.h</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a341d737f70480ae31911485e942d060f"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a341d737f70480ae31911485e942d060f">mac_init</a></div><div class="ttdeci">u8 mac_init(void)</div><div class="ttdoc">mac 初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00129">netstack_mac.c:129</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a9ca2291cc6aba52914784b9927fbd112"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112">crc24q_hash</a></div><div class="ttdeci">static unsigned long crc24q_hash(unsigned char *dat, int len)</div><div class="ttdoc">CRC hash. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00203">netstack_mac.c:203</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_ab98d797c14ce3ad49ccfefe34540d69f"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f">mac_pack_packet</a></div><div class="ttdeci">void mac_pack_packet(u8 *addr, u8 len)</div><div class="ttdoc">蓝牙数据打包 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00247">netstack_mac.c:247</a></div></div>
+<div class="ttc" id="netstack__mac_8h_html_a5e8c36eaf4eeb49cfcecb646ffecbb0c"><div class="ttname"><a href="../../d4/d82/netstack__mac_8h.html#a5e8c36eaf4eeb49cfcecb646ffecbb0c">PDU_HEADER_LEN</a></div><div class="ttdeci">#define PDU_HEADER_LEN</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00029">netstack_mac.h:29</a></div></div>
+<div class="ttc" id="struct_n_e_t___p_d_u_html"><div class="ttname"><a href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00052">netstack_mac.h:52</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_a498eb802a1be656069fa29cb4319bc3d"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a498eb802a1be656069fa29cb4319bc3d">_ADV_IND_PDU::bytes</a></div><div class="ttdeci">u8 bytes[2]</div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00105">netstack_mac.h:105</a></div></div>
+<div class="ttc" id="struct___b_l_e___p_k_t_html_a886775100bce2d68b6120f91998c6856"><div class="ttname"><a href="../../de/d64/struct___b_l_e___p_k_t.html#a886775100bce2d68b6120f91998c6856">_BLE_PKT::adv_ind</a></div><div class="ttdeci">ADV_IND_PDU adv_ind</div><div class="ttdoc">�������ݰ� </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00118">netstack_mac.h:118</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_ac1ff360971024fe9b7a1afef1f20b827"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a></div><div class="ttdeci">void phy_write_reg_bit(u8 reg, u8 bits, u8 val)</div><div class="ttdoc">写RF寄存器某一位 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00168">netstack_phy.c:168</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_a6d46f3dd17d106fb1a80483ba97afbb9"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a></div><div class="ttdeci">void phy_read_fifo(u8 reg, u8 *buf, u8 len)</div><div class="ttdoc">读取RF的FIFO值 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00198">netstack_phy.c:198</a></div></div>
+<div class="ttc" id="struct___b_l_e___p_k_t_html_afbf3f3230446569534d5f466aaf4c23b"><div class="ttname"><a href="../../de/d64/struct___b_l_e___p_k_t.html#afbf3f3230446569534d5f466aaf4c23b">_BLE_PKT::len</a></div><div class="ttdeci">u8 len</div><div class="ttdoc">���ݳ��� </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00120">netstack_mac.h:120</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_ae5ad8ca6d7da05492c2d8c6da3b6f5c2"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#ae5ad8ca6d7da05492c2d8c6da3b6f5c2">_ADV_IND_PDU::adv_flag</a></div><div class="ttdeci">u8 adv_flag[3]</div><div class="ttdoc">ibeacon flag </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00108">netstack_mac.h:108</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_ab0a8e4824e5b365194c87cc2067d9316"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316">g24_crc</a></div><div class="ttdeci">static u8 g24_crc(u8 *dat, u8 len)</div><div class="ttdoc">2.4G 数据CRC校验 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00363">netstack_mac.c:363</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a0d1ba0483affda2654dcf7dc6fd960b7"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">ble_calc_adv_crc_tab</a></div><div class="ttdeci">static void ble_calc_adv_crc_tab(const u8 *adv_pdu, u8 len, u8 *crc_c)</div><div class="ttdoc">CRC 查表 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00227">netstack_mac.c:227</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a4d9c5ea82344d997a616afd4bb176d1d"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d">reflected</a></div><div class="ttdeci">static u8 reflected(unsigned char b)</div><div class="ttdoc">高低位交换 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00182">netstack_mac.c:182</a></div></div>
+<div class="ttc" id="flash_8h_html"><div class="ttname"><a href="../../de/df7/flash_8h.html">flash.h</a></div></div>
+<div class="ttc" id="netstack__mac_8c_html_a33ff31e508adf099e47eba17b8c5e263"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263">tpl_rx_mode</a></div><div class="ttdeci">static void tpl_rx_mode(u8 ch)</div><div class="ttdoc">进入接收模式 </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00288">netstack_mac.c:288</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a994f6c98dd079996515c90406d3f3d0b"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">netstack_local::channel</a></div><div class="ttdeci">u8 channel</div><div class="ttdoc">�ŵ� </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00024">netstack_net.h:24</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_afbf3f3230446569534d5f466aaf4c23b"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#afbf3f3230446569534d5f466aaf4c23b">_ADV_IND_PDU::len</a></div><div class="ttdeci">u8 len</div><div class="ttdoc">ibeacon len </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00109">netstack_mac.h:109</a></div></div>
+<div class="ttc" id="struct___a_d_v___i_n_d___p_d_u_html_a4496cd384751e73634e818e6135a16a3"><div class="ttname"><a href="../../d0/d97/struct___a_d_v___i_n_d___p_d_u.html#a4496cd384751e73634e818e6135a16a3">_ADV_IND_PDU::header</a></div><div class="ttdeci">union _ADV_IND_PDU::@1 header</div><div class="ttdoc">头部 </div></div>
+<div class="ttc" id="netstack__mac_8c_html_ad781d2550631c94dfdf7693fd3e6eb00"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00">swap_crc_bits</a></div><div class="ttdeci">static void swap_crc_bits(u8 *crc)</div><div class="ttdoc">Swap bits for 3-byte CRC. </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00167">netstack_mac.c:167</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

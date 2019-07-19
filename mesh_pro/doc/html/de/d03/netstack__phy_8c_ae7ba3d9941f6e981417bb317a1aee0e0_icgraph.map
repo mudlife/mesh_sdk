@@ -1,0 +1,19 @@
+<map id="phy_read_reg" name="phy_read_reg">
+<area shape="rect" id="node2" href="$da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="644,347,769,373"/>
+<area shape="rect" id="node4" href="$da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="1245,169,1345,196"/>
+<area shape="rect" id="node6" href="$de/d03/netstack__phy_8c.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="153,169,276,196"/>
+<area shape="rect" id="node17" href="$de/d03/netstack__phy_8c.html#a31edb1b3a1b65422ccc7bba69448fe04" title="寄存器检测 " alt="" coords="156,397,273,424"/>
+<area shape="rect" id="node18" href="$de/d03/netstack__phy_8c.html#ad27242d35976674e11baefb9f958639b" title="物理层初始化 " alt="" coords="337,397,404,424"/>
+<area shape="rect" id="node3" href="$da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="1073,169,1197,196"/>
+<area shape="rect" id="node5" href="$d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1393,271,1444,297"/>
+<area shape="rect" id="node7" href="$da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263" title="进入接收模式 " alt="" coords="324,245,417,272"/>
+<area shape="rect" id="node8" href="$da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="465,195,596,221"/>
+<area shape="rect" id="node14" href="$da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc" title="进入发送模式 " alt="" coords="324,93,417,120"/>
+<area shape="rect" id="node16" href="$da/d7b/netstack__mac_8c.html#aeacdee97c5e1934263c550d733584559" title="把数据加载到RF的FIFO中 " alt="" coords="469,144,593,171"/>
+<area shape="rect" id="node9" href="$d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="956,271,1020,297"/>
+<area shape="rect" id="node10" href="$d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="665,144,748,171"/>
+<area shape="rect" id="node11" href="$d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="951,144,1025,171"/>
+<area shape="rect" id="node12" href="$d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="817,144,903,171"/>
+<area shape="rect" id="node13" href="$d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="824,245,896,272"/>
+<area shape="rect" id="node15" href="$da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d" title="发送数据 " alt="" coords="467,93,595,120"/>
+</map>

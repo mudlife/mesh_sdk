@@ -1,0 +1,552 @@
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE NETSTACK_MAC
+OBJECT MODULE PLACED IN .\Objects\netstack_mac.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE mac\netstack_mac.c LARGE OPTIMIZE(6,SPEED) INCDIR(.\app;.\dev;.\os;.\inc
+                    -) DEFINE(LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\netstack_mac.lst) TABS(2) OBJECT(.\Objects\netstack_mac.obj)
+
+line level    source
+
+   1          /**
+   2           * @file netstack_mac.c
+   3           * @brief MAC层文件
+   4           * @details 用于数据收发，打包和解包
+   5           * @author mudlife
+   6           * @par Copyright (c):
+   7           *      上海晶曦微电子科技有限公司
+   8           * @version 1.0.0
+   9           * @date 2019-06-02
+  10           */
+  11          #include <string.h>
+  12          #include "network_conf.h"
+  13          #include "delay.h"
+  14          #include "flash.h"
+  15          
+  16          
+  17          
+  18          
+  19          /** 接收缓存 */
+  20          u8 data var_rx_buf[VAR_RX_BUF_SIZE];// _at_ VAR_RX_BUF_D;
+  21          /** 发送缓存 */
+  22          u8 data var_tx_buf[VAR_TX_BUF_SIZE];// _at_ VAR_TX_BUF_D;
+  23          
+  24          
+  25          
+  26          /** 信道2倍频 */
+  27          #define RF_CHN_TO_PLL_CHN(_x_)  ((_x_) * 2) 
+  28          
+  29          //#define ble_fast_dewhiten   ble_fast_whiten
+  30          
+  31          /**
+  32           * @name 获取数据的一段数据
+  33           * @{
+  34           */
+  35          #define LO(x)   (unsigned char)((x) & 0xff)           ///< 取0-7位
+  36          #define MID(x)  (unsigned char)(((x) >> 8) & 0xff)    ///< 取8-15位
+  37          #define HI(x)   (unsigned char)(((x) >> 16) & 0xff)   ///< 取16-23位
+  38          /** @} */
+  39          
+  40          
+  41          /** 蓝牙广播信道 */
+  42          const u8 code tpl_channels[] = {
+  43              RF_CHN_TO_PLL_CHN(0),    ///< 37信道
+  44              RF_CHN_TO_PLL_CHN(12),   ///< 38信道
+  45              RF_CHN_TO_PLL_CHN(39)    ///< 39信道
+  46            
+  47          //    RF_CHN_TO_PLL_CHN(2),    ///< 37信道
+  48          //    RF_CHN_TO_PLL_CHN(15),   ///< 38信道
+  49          //    RF_CHN_TO_PLL_CHN(35)    ///< 39信道
+  50          };
+  51          
+  52          /** 白化种子 */
+  53          const u8 code tpl_whiten[] = {0xd3,0xb3,0xf3};
+  54          
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 2   
+
+  55          
+  56          /** CRC hash表 */
+  57          code  unsigned long crc24q[256] = {
+  58          0x00000000, 0x0000065B, 0x00000CB6, 0x00000AED, 
+  59          0x0000196C, 0x00001F37, 0x000015DA, 0x00001381, 
+  60          0x000032D8, 0x00003483, 0x00003E6E, 0x00003835, 
+  61          0x00002BB4, 0x00002DEF, 0x00002702, 0x00002159, 
+  62          0x000065B0, 0x000063EB, 0x00006906, 0x00006F5D, 
+  63          0x00007CDC, 0x00007A87, 0x0000706A, 0x00007631, 
+  64          0x00005768, 0x00005133, 0x00005BDE, 0x00005D85, 
+  65          0x00004E04, 0x0000485F, 0x000042B2, 0x000044E9, 
+  66          0x0000CB60, 0x0000CD3B, 0x0000C7D6, 0x0000C18D, 
+  67          0x0000D20C, 0x0000D457, 0x0000DEBA, 0x0000D8E1, 
+  68          0x0000F9B8, 0x0000FFE3, 0x0000F50E, 0x0000F355, 
+  69          0x0000E0D4, 0x0000E68F, 0x0000EC62, 0x0000EA39, 
+  70          0x0000AED0, 0x0000A88B, 0x0000A266, 0x0000A43D, 
+  71          0x0000B7BC, 0x0000B1E7, 0x0000BB0A, 0x0000BD51, 
+  72          0x00009C08, 0x00009A53, 0x000090BE, 0x000096E5, 
+  73          0x00008564, 0x0000833F, 0x000089D2, 0x00008F89, 
+  74          0x000196C0, 0x0001909B, 0x00019A76, 0x00019C2D, 
+  75          0x00018FAC, 0x000189F7, 0x0001831A, 0x00018541, 
+  76          0x0001A418, 0x0001A243, 0x0001A8AE, 0x0001AEF5, 
+  77          0x0001BD74, 0x0001BB2F, 0x0001B1C2, 0x0001B799, 
+  78          0x0001F370, 0x0001F52B, 0x0001FFC6, 0x0001F99D, 
+  79          0x0001EA1C, 0x0001EC47, 0x0001E6AA, 0x0001E0F1, 
+  80          0x0001C1A8, 0x0001C7F3, 0x0001CD1E, 0x0001CB45, 
+  81          0x0001D8C4, 0x0001DE9F, 0x0001D472, 0x0001D229, 
+  82          0x00015DA0, 0x00015BFB, 0x00015116, 0x0001574D, 
+  83          0x000144CC, 0x00014297, 0x0001487A, 0x00014E21, 
+  84          0x00016F78, 0x00016923, 0x000163CE, 0x00016595, 
+  85          0x00017614, 0x0001704F, 0x00017AA2, 0x00017CF9, 
+  86          0x00013810, 0x00013E4B, 0x000134A6, 0x000132FD, 
+  87          0x0001217C, 0x00012727, 0x00012DCA, 0x00012B91, 
+  88          0x00010AC8, 0x00010C93, 0x0001067E, 0x00010025, 
+  89          0x000113A4, 0x000115FF, 0x00011F12, 0x00011949, 
+  90          0x00032D80, 0x00032BDB, 0x00032136, 0x0003276D, 
+  91          0x000334EC, 0x000332B7, 0x0003385A, 0x00033E01, 
+  92          0x00031F58, 0x00031903, 0x000313EE, 0x000315B5, 
+  93          0x00030634, 0x0003006F, 0x00030A82, 0x00030CD9, 
+  94          0x00034830, 0x00034E6B, 0x00034486, 0x000342DD, 
+  95          0x0003515C, 0x00035707, 0x00035DEA, 0x00035BB1, 
+  96          0x00037AE8, 0x00037CB3, 0x0003765E, 0x00037005, 
+  97          0x00036384, 0x000365DF, 0x00036F32, 0x00036969, 
+  98          0x0003E6E0, 0x0003E0BB, 0x0003EA56, 0x0003EC0D, 
+  99          0x0003FF8C, 0x0003F9D7, 0x0003F33A, 0x0003F561, 
+ 100          0x0003D438, 0x0003D263, 0x0003D88E, 0x0003DED5, 
+ 101          0x0003CD54, 0x0003CB0F, 0x0003C1E2, 0x0003C7B9, 
+ 102          0x00038350, 0x0003850B, 0x00038FE6, 0x000389BD, 
+ 103          0x00039A3C, 0x00039C67, 0x0003968A, 0x000390D1, 
+ 104          0x0003B188, 0x0003B7D3, 0x0003BD3E, 0x0003BB65, 
+ 105          0x0003A8E4, 0x0003AEBF, 0x0003A452, 0x0003A209, 
+ 106          0x0002BB40, 0x0002BD1B, 0x0002B7F6, 0x0002B1AD, 
+ 107          0x0002A22C, 0x0002A477, 0x0002AE9A, 0x0002A8C1, 
+ 108          0x00028998, 0x00028FC3, 0x0002852E, 0x00028375, 
+ 109          0x000290F4, 0x000296AF, 0x00029C42, 0x00029A19, 
+ 110          0x0002DEF0, 0x0002D8AB, 0x0002D246, 0x0002D41D, 
+ 111          0x0002C79C, 0x0002C1C7, 0x0002CB2A, 0x0002CD71, 
+ 112          0x0002EC28, 0x0002EA73, 0x0002E09E, 0x0002E6C5, 
+ 113          0x0002F544, 0x0002F31F, 0x0002F9F2, 0x0002FFA9, 
+ 114          0x00027020, 0x0002767B, 0x00027C96, 0x00027ACD, 
+ 115          0x0002694C, 0x00026F17, 0x000265FA, 0x000263A1, 
+ 116          0x000242F8, 0x000244A3, 0x00024E4E, 0x00024815, 
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 3   
+
+ 117          0x00025B94, 0x00025DCF, 0x00025722, 0x00025179, 
+ 118          0x00021590, 0x000213CB, 0x00021926, 0x00021F7D, 
+ 119          0x00020CFC, 0x00020AA7, 0x0002004A, 0x00020611, 
+ 120          0x00022748, 0x00022113, 0x00022BFE, 0x00022DA5, 
+ 121          0x00023E24, 0x0002387F, 0x00023292, 0x000234C9, 
+ 122          
+ 123           };
+ 124          
+ 125           
+ 126          /**
+ 127           * @brief mac 初始化
+ 128           *
+ 129           * @return 返回初始化结果
+ 130           *   @retval 0 初始化成功
+ 131           *   @retval 1 初始化失败 
+ 132           */
+ 133          u8 mac_init(void)
+ 134          {
+ 135   1        return 0;
+ 136   1      }
+ 137          
+ 138          /**
+ 139           * @brief 设置RF的发射功率
+ 140           *
+ 141           * @param power 发射功率
+ 142           * @return 无
+ 143           */
+ 144          void mac_set_power(u8 power)
+ 145          {
+ 146   1        phy_write_reg(18,power);
+ 147   1      }
+ 148          
+ 149          
+ 150          /**
+ 151           * @brief Swap bits between MSB and LSB of a given byte.
+ 152           *
+ 153           * @param byte The byte to tx_beacon processed.
+ 154           *
+ 155           * @return The byte with swapped bits.
+ 156           */
+ 157          static u8 swap_bits(u8 byte)
+ 158          {
+ 159   1          byte = (byte << 4) | (byte >> 4);
+ 160   1          byte = ((byte << 2) & 0xCC) | ((byte >> 2) & 0x33);
+ 161   1          byte = ((byte << 1) & 0xAA) | ((byte >> 1) & 0x55);
+ 162   1      
+ 163   1          return (byte);
+ 164   1      }
+ 165          
+ 166          /**
+ 167           * @brief Swap bits for 3-byte CRC.
+ 168           *
+ 169           * @param crc The pointer to a 3-byte CRC that is to tx_beacon bit-swapped.
+ 170           */
+ 171          static void swap_crc_bits(u8 *crc)
+ 172          {
+ 173   1          u8 i;
+ 174   1          
+ 175   1          for (i = 0; i < 3; ++i) {
+ 176   2              *crc = swap_bits(*crc);
+ 177   2              crc++;
+ 178   2          }
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 4   
+
+ 179   1      }
+ 180          /**
+ 181           * @brief 高低位交换
+ 182           *
+ 183           * @param b 数据
+ 184           * @return 交换结果
+ 185           */
+ 186          static u8 reflected(unsigned char b)    
+ 187          {      
+ 188   1        unsigned char c = 0;      
+ 189   1        unsigned char i;
+ 190   1        for(i=0; i<8; i++)        
+ 191   1        {          
+ 192   2          c <<= 1;          
+ 193   2          if (b&1) 
+ 194   2            c|=1;          
+ 195   2          b >>= 1;      
+ 196   2        }      
+ 197   1        return c;  
+ 198   1      } 
+ 199          
+ 200          /**
+ 201           * @brief CRC hash 
+ 202           *
+ 203           * @param dat 数据
+ 204           * @param len 数据长度
+ 205           * @return 返回计算结果
+ 206           */
+ 207          static unsigned long crc24q_hash(unsigned char *dat, int len)
+ 208          {
+ 209   1          int i;
+ 210   1          unsigned char d;
+ 211   1          unsigned long crc = 0x555555;
+ 212   1      
+ 213   1          for (i = 0; i < len; i++) {
+ 214   2            d = reflected(dat[i]);
+ 215   2            crc = (crc << 8) ^ crc24q[d ^ (unsigned char)(crc >> 16)];
+ 216   2          }
+ 217   1      
+ 218   1          crc = (crc & 0x00ffffff);
+ 219   1      
+ 220   1          return crc;
+ 221   1      }
+ 222          
+ 223          /**
+ 224           * @brief CRC 查表
+ 225           *
+ 226           * @param adv_pdu 数据
+ 227           * @param len 数据长度
+ 228           * @param crc_c CRC计算结果
+ 229           * @return 无
+ 230           */
+ 231          static void ble_calc_adv_crc_tab(const u8 *adv_pdu, u8 len, u8 *crc_c)
+ 232          {
+ 233   1      
+ 234   1        unsigned long crc = 0;
+ 235   1          crc = crc24q_hash(adv_pdu, len);
+ 236   1      
+ 237   1          crc_c[0] = HI(crc);
+ 238   1          crc_c[1] = MID(crc);
+ 239   1          crc_c[2] = LO(crc);
+ 240   1          swap_crc_bits(crc_c);
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 5   
+
+ 241   1        
+ 242   1      }
+ 243          
+ 244          /**
+ 245           * @brief 蓝牙数据打包
+ 246           *
+ 247           * @param addr 地址
+ 248           * @param len 数据长度
+ 249           * @return 无
+ 250           */
+ 251          void mac_pack_packet(u8 *addr,u8 len) 
+ 252          {
+ 253   1          u8 *crc_ptr;
+ 254   1          BLE_PKT *pkt = var_tx_buf;
+ 255   1          /* Fill PDU */
+ 256   1          memcpy(pkt->adv_ind.mac_addr,addr,6);
+ 257   1      
+ 258   1      //    memcpy(&pkt->adv_ind.len, advd, advd_size);
+ 259   1          pkt->adv_ind.adv_flag[0] = 0x02;
+ 260   1          pkt->adv_ind.adv_flag[1] = 0x01;
+ 261   1          pkt->adv_ind.adv_flag[2] = 0x06;
+ 262   1        
+ 263   1          pkt->adv_ind.type = 0xFF;
+ 264   1          pkt->adv_ind.company_id[0] = local_info.company_id[0];
+ 265   1          pkt->adv_ind.company_id[1] = local_info.company_id[1];
+ 266   1        
+ 267   1          pkt->adv_ind.header.bytes[0] = PDU_HDR_TYPE_ADV_NONCONN_IND | 0x40;
+ 268   1          pkt->adv_ind.header.bytes[1] = DEV_ADDR_LEN + len+4;
+ 269   1        
+ 270   1      
+ 271   1          /* Get the address for CRC */
+ 272   1          crc_ptr = pkt->adv_ind.mac_addr + pkt->adv_ind.header.bytes[1];
+ 273   1      
+ 274   1          /* Packet length for later use */
+ 275   1          pkt->len = PDU_HEADER_LEN +
+ 276   1                  pkt->adv_ind.header.bytes[1] + CRC_LEN ;
+ 277   1      
+ 278   1          /* Calculate CRC */
+ 279   1                  
+ 280   1          ble_calc_adv_crc_tab((u8 *)&(pkt->adv_ind),
+ 281   1                  PDU_HEADER_LEN + pkt->adv_ind.header.bytes[1], crc_ptr);
+ 282   1      }
+ 283          
+ 284          
+ 285          
+ 286          
+ 287          /**
+ 288           * @brief 进入接收模式
+ 289           * @param ch 信道
+ 290           * @return 无
+ 291           */
+ 292          static void tpl_rx_mode(u8 ch)
+ 293          {
+ 294   1        phy_write_reg_bit(14,0,0);
+ 295   1        phy_write_reg(15,0x80|ch);
+ 296   1      }
+ 297          
+ 298          
+ 299          /**
+ 300           * @brief 进入发送模式
+ 301           * @param ch 信道
+ 302           * @return 无
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 6   
+
+ 303           */
+ 304          static void tpl_tx_mode(u8 ch)
+ 305          {
+ 306   1        phy_write_reg(15,ch);
+ 307   1        phy_write_reg_bit(14,0,1);
+ 308   1      }
+ 309          
+ 310          
+ 311          u8 mac_scan_rssi(u8 ch)
+ 312          {
+ 313   1        u8 rssi;
+ 314   1        phy_write_reg_bit(15,7,0);
+ 315   1        phy_write_reg_bit(14,0,0);
+ 316   1        phy_write_reg(104,0x80);//reset fifo wr ptr
+ 317   1        phy_write_reg(105,0x80);// reset fifo rd ptr
+ 318   1        phy_write_reg(86,0x80|tpl_channels[ch]);
+ 319   1        delay_us(100);
+ 320   1        while((phy_read_reg(97)&0x40) == 0);
+ 321   1        rssi = phy_read_reg(100);
+ 322   1      
+ 323   1        return rssi;
+ 324   1      }
+ 325          
+ 326          /**
+ 327           * @brief 把数据加载到RF的FIFO中
+ 328           *
+ 329           * @return 无
+ 330           */
+ 331          void mac_load_packet(void)
+ 332          {
+ 333   1          BLE_PKT *pkt = var_tx_buf;
+ 334   1          phy_write_reg_bit(15,7,0);
+ 335   1          phy_write_reg_bit(14,0,0);
+ 336   1          phy_write_reg(104,0x80);//reset fifo wr ptr
+ 337   1          phy_write_reg(105,0x80);// reset fifo rd ptr
+ 338   1          phy_write_reg(95,0x80|pkt->len);//使能数据包长度//写长度
+ 339   1          phy_write_fifo(100,var_tx_buf,pkt->len);//写数据
+ 340   1      }
+ 341          
+ 342          /**
+ 343           * @brief 发送数据
+ 344           * @param channel 信道
+ 345           * @return 无
+ 346           */
+ 347          void mac_send_packet(u8 channel)
+ 348          {
+ 349   1        phy_write_reg(71,tpl_whiten[channel]);//白化
+ 350   1        phy_write_reg(105,0x80);// reset fifo rd ptr
+ 351   1        phy_write_reg(104,0x80);// reset fifo wr ptr
+ 352   1        tpl_tx_mode(tpl_channels[channel]);
+ 353   1        delay_0_5_ms(1);
+ 354   1      //  phy_write_reg_bit(14,0,0);//使能发射
+ 355   1      }
+ 356          
+ 357          
+ 358          /**
+ 359           * @brief 开始接收
+ 360           * @param channel 信道
+ 361           * @return 无
+ 362           */
+ 363          void mac_listen_packet(u8 channel)
+ 364          {
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 7   
+
+ 365   1          phy_write_reg_bit(15,7,0);
+ 366   1          phy_write_reg_bit(14,0,0);
+ 367   1      //    phy_write_reg(82,0x70);//使能数据包长度  0x31
+ 368   1          phy_write_reg(71,tpl_whiten[channel]);//白化
+ 369   1          phy_write_reg(95,0x80|0x29);//使能数据包长度
+ 370   1          phy_write_reg(104,0x80);//reset fifo wr ptr
+ 371   1          phy_write_reg(105,0x80);// reset fifo rd ptr
+ 372   1          phy_write_reg_bit(37, 1, 1);
+ 373   1          tpl_rx_mode(tpl_channels[channel]);
+ 374   1      }
+ 375          
+ 376          /**
+ 377           * @brief 2.4G 数据CRC校验
+ 378           * @param dat 数据
+ 379           * @param len 数据长度
+ 380           * @return 校验结果
+ 381           */
+ 382          static u8 g24_crc(u8 *dat,u8 len)
+ 383          {
+ 384   1        u8 i,crc=0;
+ 385   1        for(i=0;i<len;i++){
+ 386   2          crc ^= dat[i];
+ 387   2        }
+ 388   1        return crc;
+ 389   1      }
+ 390          
+ 391          /**
+ 392           * @brief 读取接收到的数据
+ 393           *
+ 394           * @return 返回接收结果
+ 395           * @retval 0 无效数据
+ 396           * @retval 1 有效数据
+ 397           */
+ 398          static u8 mac_read_packet(void) 
+ 399          {
+ 400   1        u8 i;
+ 401   1        u8 crc_buf[3];
+ 402   1        u8 *crc_s;
+ 403   1        u8 check=0;
+ 404   1        BLE_PKT *buf = (BLE_PKT *)var_rx_buf;
+ 405   1          i = phy_read_reg(104);
+ 406   1      
+ 407   1          if(i<=0x2E){
+ 408   2            phy_read_fifo(100,var_rx_buf, 4);
+ 409   2            if(var_rx_buf[1] == 0xFF && var_rx_buf[2] == 0x4E && var_rx_buf[3] == 0x00){//2.4G数据
+ 410   3              memcpy(&buf->adv_ind.len,var_rx_buf,4);
+ 411   3              phy_read_fifo(100,buf->adv_ind.dat, buf->adv_ind.len);
+ 412   3              crc_s = &buf->adv_ind.len + buf->adv_ind.len+1;
+ 413   3              memset(buf->adv_ind.mac_addr,0,6);
+ 414   3              buf->adv_ind.header.bytes[0] = 0x42;
+ 415   3              buf->adv_ind.header.bytes[1] = buf->adv_ind.len+10;
+ 416   3              buf->adv_ind.adv_flag[0] = 0x02;
+ 417   3              buf->adv_ind.adv_flag[1] = 0x01;
+ 418   3              buf->adv_ind.adv_flag[2] = 0x06;
+ 419   3              crc_buf[0] = g24_crc(&buf->adv_ind.len,buf->adv_ind.len+1);
+ 420   3              buf->len = buf->adv_ind.header.bytes[1]-13;
+ 421   3              if(crc_buf[0] == crc_s[0]){
+ 422   4                return 1;
+ 423   4              }else{
+ 424   4                return 0;
+ 425   4              }
+ 426   3            }else{
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 8   
+
+ 427   3       //ble 数据
+ 428   3              phy_read_fifo(100,&buf->adv_ind.mac_addr[2], 11);
+ 429   3              if(buf->adv_ind.company_id[0] == local_info.company_id[0] && buf->adv_ind.company_id[1] == local_info.
+             -company_id[1]){
+ 430   4                phy_read_fifo(100,&buf->adv_ind.dat[0], i-15);
+ 431   4                crc_s = buf->adv_ind.mac_addr + buf->adv_ind.header.bytes[1];
+ 432   4                ble_calc_adv_crc_tab((u8 *)&(buf->adv_ind),PDU_HEADER_LEN + buf->adv_ind.header.bytes[1],crc_buf);
+ 433   4                buf->len = buf->adv_ind.header.bytes[1]-13;
+ 434   4              }else{
+ 435   4                return 0;
+ 436   4              }
+ 437   3            }
+ 438   2            
+ 439   2            if(memcmp(crc_buf,crc_s,3)==0)
+ 440   2            {
+ 441   3              return 1;
+ 442   3            }
+ 443   2        }
+ 444   1        
+ 445   1          return (0);
+ 446   1      }
+ 447          
+ 448          
+ 449          /**
+ 450           * @brief 接收处理
+ 451           *
+ 452           * @return 返回处理结果
+ 453           * @retval 0 处理成功
+ 454           */
+ 455          static u8 mac_packet_deal(void)
+ 456          {
+ 457   1          BLE_PKT *rx_pkt;
+ 458   1          
+ 459   1          phy_write_reg_bit(37,1,1);
+ 460   1          //读取接收到的数据
+ 461   1          if(mac_read_packet()){
+ 462   2            
+ 463   2            rx_pkt = (BLE_PKT *)var_rx_buf;
+ 464   2            net_input(rx_pkt->adv_ind.mac_addr,(NET_PDU *)rx_pkt->adv_ind.dat,rx_pkt->len);
+ 465   2          }
+ 466   1          mac_listen_packet(local_info.channel);//进入接收模式
+ 467   1          return 0;
+ 468   1      }
+ 469          
+ 470          /**
+ 471           * @brief MAC 进程
+ 472           *
+ 473           * @return 无
+ 474           */
+ 475          void mac_process(void)
+ 476          {
+ 477   1          if(phy_read_reg(97)&0x40){
+ 478   2            mac_packet_deal();
+ 479   2          }
+ 480   1          
+ 481   1      }
+ 482          
+ 483          /**
+ 484           * @brief 进入direct mode 
+ 485           *
+ 486           * @return 无
+ 487           */
+C51 COMPILER V9.53.0.0   NETSTACK_MAC                                                      07/19/2019 10:23:34 PAGE 9   
+
+ 488          void mac_direct_mode_enter(void)
+ 489          {
+ 490   1        phy_write_reg(1,0xF9);
+ 491   1        phy_write_reg(65,0x01);
+ 492   1        phy_write_reg(68,0xB0);
+ 493   1        phy_write_reg(22,0x83);
+ 494   1        //频率设置  2402
+ 495   1        phy_write_reg(14,0x04);
+ 496   1        phy_write_reg(15,0x4B);
+ 497   1      }
+ 498          
+ 499          /**
+ 500           * @brief 退出direct mode 
+ 501           *
+ 502           * @return 无
+ 503           */
+ 504          void mac_direct_mode_break(void)
+ 505          {
+ 506   1        phy_write_reg(1,0xE9);
+ 507   1        phy_write_reg(65,0x00);
+ 508   1        phy_write_reg(68,0x30);
+ 509   1        phy_write_reg(22,0x03);
+ 510   1        
+ 511   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1959    ----
+   CONSTANT SIZE    =   1030    ----
+   XDATA SIZE       =   ----      58
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     94    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

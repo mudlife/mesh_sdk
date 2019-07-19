@@ -1,0 +1,14 @@
+TRANSFER
+".\Objects\STARTUP.obj",
+".\Objects\mian.obj",
+".\Objects\delay.obj",
+".\Objects\spi.obj",
+".\Objects\flash.obj",
+".\Objects\system.obj",
+".\Objects\memory.obj",
+".\Objects\uart.obj",
+".\netstack\netstack_lib.LIB",
+".\Objects\netstack_app.obj",
+".\Objects\os.obj",
+".\Objects\led.obj" 
+TO ".\Objects\netstack_lib.LIB"

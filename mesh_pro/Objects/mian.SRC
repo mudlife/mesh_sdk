@@ -1,0 +1,749 @@
+; .\Objects\mian.SRC generated from: src\mian.c
+; COMPILER INVOKED BY:
+;        C:\Keil_v5\C51\BIN\C51.EXE src\mian.c LARGE OPTIMIZE(6,SPEED) BROWSE INCDIR(.\app;.\dev;.\inc;.\os;.\examples) DEFINE(LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\mian.lst) TABS(2) SRC(.\Objects\mian.SRC)
+
+$NOMOD51
+
+NAME	MIAN
+
+P0	DATA	080H
+P1	DATA	090H
+P2	DATA	0A0H
+AC	BIT	0D0H.6
+EA	BIT	0A8H.7
+PWM0DTH	DATA	0E7H
+T3	DATA	0CAH
+PWM1DTH	DATA	0EFH
+SPCTL	DATA	0ACH
+T4	DATA	0CDH
+WDTRF	BIT	0F8H.4
+PWM2DTH	DATA	0F7H
+T5	DATA	0C2H
+FE	BIT	098H.7
+PWM0DTL	DATA	0E6H
+TXCOL	BIT	098H.5
+PWM1DTL	DATA	0EEH
+PWM2DTL	DATA	0F6H
+EADC	BIT	0B8H.5
+IE	DATA	0A8H
+P0_0	BIT	080H.0
+SPOVF	BIT	0F8H.1
+IAP_CMD	DATA	0FCH
+P1_0	BIT	090H.0
+P0_1	BIT	080H.1
+P2_0	BIT	0A0H.0
+P1_1	BIT	090H.1
+P0_2	BIT	080H.2
+P2_1	BIT	0A0H.1
+P0_3	BIT	080H.3
+RSTFR	DATA	0F8H
+P2_2	BIT	0A0H.2
+P0_4	BIT	080H.4
+P2_3	BIT	0A0H.3
+P0_5	BIT	080H.5
+P2_4	BIT	0A0H.4
+P0_6	BIT	080H.6
+P2_5	BIT	0A0H.5
+P0_7	BIT	080H.7
+P2_6	BIT	0A0H.6
+P2_7	BIT	0A0H.7
+RI	BIT	098H.0
+ADCR	DATA	0B6H
+EX8_15	BIT	0B8H.7
+CY	BIT	0D0H.7
+TI	BIT	098H.1
+IAP_ADDRH	DATA	0FAH
+CRCH	DATA	0BFH
+RXROV	BIT	098H.6
+SP	DATA	081H
+IAP_ADDRL	DATA	0F9H
+OV	BIT	0D0H.2
+CRCL	DATA	0BEH
+RCAP5H	DATA	0C5H
+RCAP5L	DATA	0C4H
+BORF	BIT	0F8H.5
+LVDC	DATA	0BBH
+CRCR	DATA	0BEH
+SBUF	DATA	099H
+PCON	DATA	087H
+ESPI	BIT	0B8H.0
+PWM0DH	DATA	0E5H
+PWM1DH	DATA	0EDH
+PINTF0	DATA	096H
+WDTC	DATA	0BDH
+PLVRSTF	BIT	0F8H.0
+PWM2DH	DATA	0F5H
+SCON	DATA	098H
+PINTF1	DATA	097H
+EWDT	BIT	0A8H.5
+TMOD	DATA	089H
+TCON	DATA	088H
+PWM0DL	DATA	0E4H
+PWM1DL	DATA	0ECH
+PORF	BIT	0F8H.7
+PWM2DL	DATA	0F4H
+PWM0EN	DATA	0E1H
+PWM1EN	DATA	0E9H
+PWM2EN	DATA	0F1H
+DPTR	DATA	082H
+ADCC0	DATA	0B4H
+CLKCON	DATA	08FH
+ADCC1	DATA	0B5H
+PWM0DT	DATA	0E6H
+PWM0PH	DATA	0E3H
+PWM1DT	DATA	0EEH
+PWM1PH	DATA	0EBH
+IE1	DATA	0B8H
+PWM2DT	DATA	0F6H
+PWM2PH	DATA	0F3H
+B	DATA	0F0H
+PWM0PL	DATA	0E2H
+SWRF	BIT	0F8H.3
+PWM1PL	DATA	0EAH
+PWM2PL	DATA	0F2H
+ACC	DATA	0E0H
+ET0	BIT	0A8H.1
+ES1	BIT	0A8H.4
+IP0	DATA	0A9H
+TF0	BIT	088H.5
+ET1	BIT	0A8H.3
+ES2	BIT	0A8H.6
+IP1	DATA	0AAH
+TF1	BIT	088H.7
+IP2	DATA	0B9H
+RB8	BIT	098H.2
+ET3	BIT	0B8H.1
+TH0	DATA	08CH
+IP3	DATA	0BAH
+INSCON	DATA	0A2H
+ET4	BIT	0B8H.2
+EX0	BIT	0A8H.0
+TH1	DATA	08DH
+TB8	BIT	098H.3
+ET5	BIT	0B8H.4
+EX1	BIT	0A8H.2
+P	BIT	0D0H.0
+TH3	DATA	0CBH
+TH4	DATA	0CEH
+TL0	DATA	08AH
+TH5	DATA	0C3H
+TL1	DATA	08BH
+TL3	DATA	0CAH
+TL4	DATA	0CDH
+RS0	BIT	0D0H.3
+TL5	DATA	0C2H
+TR0	BIT	088H.4
+RS1	BIT	0D0H.4
+IAP_DATA	DATA	0FBH
+TR1	BIT	088H.6
+IAP_ADDR	DATA	0F9H
+IAP_CMDH	DATA	0FDH
+CLKSWR	DATA	08EH
+RCAP5	DATA	0C4H
+IAP_CMDL	DATA	0FCH
+DPH	DATA	083H
+EXRSTF	BIT	0F8H.6
+DPL	DATA	082H
+SPSTAT	DATA	0ADH
+ADCRH	DATA	0B7H
+REN	BIT	098H.4
+EX2_7	BIT	0B8H.6
+SCON2	DATA	09EH
+ADCRL	DATA	0B6H
+PWM0C	DATA	0DAH
+T3CON	DATA	0C9H
+PWM0D	DATA	0E4H
+PWM1C	DATA	0DBH
+T4CON	DATA	0CCH
+PWM1D	DATA	0ECH
+PWM2C	DATA	0DCH
+T5CON	DATA	0C1H
+PWM2D	DATA	0F4H
+PWM3C	DATA	0DDH
+PWM3D	DATA	0DFH
+SADEN	DATA	09BH
+SADDR	DATA	09AH
+F0	BIT	0D0H.5
+PWM0P	DATA	0E2H
+F1	BIT	0D0H.1
+PWM1P	DATA	0EAH
+PWM2P	DATA	0F2H
+PWM3P	DATA	0DEH
+PSW	DATA	0D0H
+SPDAT	DATA	0ABH
+?PR?main?MIAN        SEGMENT CODE 
+?C_INITSEG           SEGMENT CODE 
+?CO?MIAN             SEGMENT CODE 
+?XD?MIAN             SEGMENT XDATA 
+	EXTRN	CODE (_mac_listen_packet)
+	EXTRN	CODE (mac_packet_deal)
+	EXTRN	CODE (_mac_pack_packet)
+	EXTRN	CODE (mac_load_packet)
+	EXTRN	CODE (_mac_send_packet)
+	EXTRN	CODE (_phy_write_reg_bit)
+	EXTRN	CODE (_flash_read_buf)
+	EXTRN	XDATA (?_flash_read_buf?BYTE)
+	EXTRN	DATA (var_tx_buf)
+	EXTRN	XDATA (tx_beacon)
+	EXTRN	CODE (system_init)
+	EXTRN	CODE (mac_init)
+	EXTRN	XDATA (ble_sta)
+	EXTRN	CODE (spi_init)
+	EXTRN	CODE (phy_init)
+	EXTRN	CODE (_phy_read_reg)
+	EXTRN	CODE (?C_STARTUP)
+	EXTRN	CODE (?C?COPY)
+	EXTRN	CODE (?C?CSTPTR)
+	EXTRN	CODE (?C?CSTOPTR)
+	EXTRN	CODE (?C?CLDPTR)
+	PUBLIC	P0M0
+	PUBLIC	P02DBC
+	PUBLIC	P01DBC
+	PUBLIC	P00DBC
+	PUBLIC	MOSI_MAP
+	PUBLIC	MISO_MAP
+	PUBLIC	PITS3
+	PUBLIC	PITS2
+	PUBLIC	PITS1
+	PUBLIC	P0LPU
+	PUBLIC	PITS0
+	PUBLIC	FREQ_CLK
+	PUBLIC	INT01_PINS
+	PUBLIC	CLKO_MAP
+	PUBLIC	PWM3_MAP
+	PUBLIC	TCON1
+	PUBLIC	S2CON
+	PUBLIC	PWM2_MAP
+	PUBLIC	PWM1_MAP
+	PUBLIC	SS_MAP
+	PUBLIC	PWM0_MAP
+	PUBLIC	S2BUF
+	PUBLIC	ADCWC
+	PUBLIC	TXD2_MAP
+	PUBLIC	RXD2_MAP
+	PUBLIC	CLKOUT
+	PUBLIC	WDTCCR
+	PUBLIC	T5_MAP
+	PUBLIC	T4_MAP
+	PUBLIC	T3_MAP
+	PUBLIC	RSTDBC
+	PUBLIC	T1_MAP
+	PUBLIC	T0_MAP
+	PUBLIC	CLKDIV
+	PUBLIC	ADCC2
+	PUBLIC	adv_flag
+	PUBLIC	SPOV_RSTEN
+	PUBLIC	PINTE1
+	PUBLIC	PINTE0
+	PUBLIC	LVDDBC
+	PUBLIC	TXD_MAP
+	PUBLIC	BORDBC
+	PUBLIC	RXD_MAP
+	PUBLIC	BORC
+	PUBLIC	SCK_MAP
+	PUBLIC	local_info
+	PUBLIC	T5CON1
+	PUBLIC	CRCC
+	PUBLIC	S2CON2
+	PUBLIC	PWM21_MAP
+	PUBLIC	PWM11_MAP
+	PUBLIC	PWM01_MAP
+	PUBLIC	P2M3
+	PUBLIC	P2M2
+	PUBLIC	P0M3
+	PUBLIC	P2M1
+	PUBLIC	P0M2
+	PUBLIC	P2M0
+	PUBLIC	P0M1
+	PUBLIC	P1M0
+	PUBLIC	my_mac
+	PUBLIC	main
+
+	XSEG  AT  0FF08H
+           P1M0:   DS   1
+
+	XSEG  AT  0FF01H
+           P0M1:   DS   1
+
+	XSEG  AT  0FF10H
+           P2M0:   DS   1
+
+	XSEG  AT  0FF02H
+           P0M2:   DS   1
+
+	XSEG  AT  0FF11H
+           P2M1:   DS   1
+
+	XSEG  AT  0FF03H
+           P0M3:   DS   1
+
+	XSEG  AT  0FF12H
+           P2M2:   DS   1
+
+	XSEG  AT  0FF13H
+           P2M3:   DS   1
+
+	XSEG  AT  0FF91H
+      PWM01_MAP:   DS   1
+
+	XSEG  AT  0FF95H
+      PWM11_MAP:   DS   1
+
+	XSEG  AT  0FF99H
+      PWM21_MAP:   DS   1
+
+	XSEG  AT  0FE89H
+         S2CON2:   DS   1
+
+	XSEG  AT  0FEA2H
+           CRCC:   DS   1
+
+	XSEG  AT  0FE85H
+         T5CON1:   DS   1
+
+	XSEG  AT  00H
+     local_info:   DS   39
+
+	XSEG  AT  0FFA5H
+        SCK_MAP:   DS   1
+
+	XSEG  AT  0FEA4H
+           BORC:   DS   1
+
+	XSEG  AT  0FFA1H
+        RXD_MAP:   DS   1
+
+	XSEG  AT  0FEA5H
+         BORDBC:   DS   1
+
+	XSEG  AT  0FFA0H
+        TXD_MAP:   DS   1
+
+	XSEG  AT  0FEA7H
+         LVDDBC:   DS   1
+
+	XSEG  AT  0FEB8H
+         PINTE0:   DS   1
+
+	XSEG  AT  0FEB9H
+         PINTE1:   DS   1
+
+	XSEG  AT  0FE95H
+     SPOV_RSTEN:   DS   1
+
+	XSEG  AT  0FE9BH
+          ADCC2:   DS   1
+
+	XSEG  AT  0FE91H
+         CLKDIV:   DS   1
+
+	XSEG  AT  0FF80H
+         T0_MAP:   DS   1
+
+	XSEG  AT  0FF81H
+         T1_MAP:   DS   1
+
+	XSEG  AT  0FEAAH
+         RSTDBC:   DS   1
+
+	XSEG  AT  0FF83H
+         T3_MAP:   DS   1
+
+	XSEG  AT  0FF84H
+         T4_MAP:   DS   1
+
+	XSEG  AT  0FF85H
+         T5_MAP:   DS   1
+
+	XSEG  AT  0FEA0H
+         WDTCCR:   DS   1
+
+	XSEG  AT  0FE93H
+         CLKOUT:   DS   1
+
+	XSEG  AT  0FFA9H
+       RXD2_MAP:   DS   1
+
+	XSEG  AT  0FFA8H
+       TXD2_MAP:   DS   1
+
+	XSEG  AT  0FE98H
+          ADCWC:   DS   1
+
+	XSEG  AT  0FE8AH
+          S2BUF:   DS   1
+
+	XSEG  AT  0FF90H
+       PWM0_MAP:   DS   1
+
+	XSEG  AT  0FFA4H
+         SS_MAP:   DS   1
+
+	XSEG  AT  0FF94H
+       PWM1_MAP:   DS   1
+
+	XSEG  AT  0FF98H
+       PWM2_MAP:   DS   1
+
+	XSEG  AT  0FE88H
+          S2CON:   DS   1
+
+	XSEG  AT  0FE80H
+          TCON1:   DS   1
+
+	XSEG  AT  0FF9CH
+       PWM3_MAP:   DS   1
+
+	XSEG  AT  0FF8FH
+       CLKO_MAP:   DS   1
+
+	XSEG  AT  0FEBCH
+     INT01_PINS:   DS   1
+
+	XSEG  AT  0FE92H
+       FREQ_CLK:   DS   1
+
+	XSEG  AT  0FEB0H
+          PITS0:   DS   1
+
+	XSEG  AT  0FF05H
+          P0LPU:   DS   1
+
+	XSEG  AT  0FEB1H
+          PITS1:   DS   1
+
+	XSEG  AT  0FEB2H
+          PITS2:   DS   1
+
+	XSEG  AT  0FEB3H
+          PITS3:   DS   1
+
+	XSEG  AT  0FFA7H
+       MISO_MAP:   DS   1
+
+	XSEG  AT  0FFA6H
+       MOSI_MAP:   DS   1
+
+	XSEG  AT  0FF40H
+         P00DBC:   DS   1
+
+	XSEG  AT  0FF41H
+         P01DBC:   DS   1
+
+	XSEG  AT  0FF42H
+         P02DBC:   DS   1
+
+	XSEG  AT  0FF00H
+           P0M0:   DS   1
+
+	RSEG  ?XD?MIAN
+       adv_flag:   DS   1
+
+	RSEG  ?CO?MIAN
+my_mac:
+	DB	022H
+	DB	022H
+	DB	022H
+	DB	044H
+	DB	055H
+	DB	066H
+
+
+	RSEG  ?C_INITSEG
+	DB	041H
+	DW	adv_flag
+	DB	000H
+
+; 
+; #define ALLOCATE_EXTERN
+; #include "HC89S003F4.h"
+; #include "network_conf.h"
+; #include "spi.h"
+; #include "delay.h"
+; #include "flash.h"
+; #include "system.h"
+; #include <string.h>
+; 
+; 
+; #include "netstack_mac.h"
+; 
+; code u8 my_mac[6] = {0x22,0x22,0x22,0x44,0x55,0x66};
+; u8 adv_flag=0;
+; struct netstack_local local_info _at_ VAR_LOCAL_INFO_X;
+; extern Ble_Sta ble_sta;
+; extern Beacon *tx_beacon;
+; extern u8 data var_tx_buf[47];
+; 
+; 
+; 
+; //NET_PDU pdu; 
+; void main()
+
+	RSEG  ?PR?main?MIAN
+main:
+	USING	0
+			; SOURCE LINE # 24
+; {
+			; SOURCE LINE # 25
+; 	
+; 	
+; 	system_init(); //系统初始化
+			; SOURCE LINE # 28
+	LCALL	system_init
+; 	
+; //	wdt_init();   //看门狗初始化
+; //	os_init();    //OS初始化
+; 	spi_init();   //SPI初始化
+			; SOURCE LINE # 32
+	LCALL	spi_init
+; 
+; 	phy_init();  //物理层初始化
+			; SOURCE LINE # 34
+	LCALL	phy_init
+; 	mac_init();  //MAC层初始化
+			; SOURCE LINE # 35
+	LCALL	mac_init
+; 	
+; //	net_set_mac_addr(my_mac);
+; //	net_init();  //网络层初始化
+; //	app_init();  //应用层初始化
+; //	local_info.update_flag = 1;
+; //	flash_erase_section((u16)LOCAL_INFO_ADDR);
+; //	flash_write_buf((u16)LOCAL_INFO_ADDR,(u8 *)&local_info,sizeof(local_info));
+; //	
+; 	flash_read_buf((u16)LOCAL_INFO_ADDR,(u8 *)&local_info,sizeof(struct netstack_local));
+			; SOURCE LINE # 44
+	MOV  	R3,#01H
+	MOV  	R2,#HIGH (local_info)
+	MOV  	R1,#LOW (local_info)
+	MOV  	DPTR,#?_flash_read_buf?BYTE+05H
+	MOV  	A,#027H
+	MOVX 	@DPTR,A
+	MOV  	R7,#00H
+	MOV  	R6,#03CH
+	LCALL	_flash_read_buf
+; 	memcpy(local_info.mac_addr,my_mac,6);
+			; SOURCE LINE # 45
+	MOV  	R0,#LOW (local_info)
+	MOV  	R4,#HIGH (local_info)
+	MOV  	R5,#01H
+	MOV  	R3,#0FFH
+	MOV  	R2,#HIGH (my_mac)
+	MOV  	R1,#LOW (my_mac)
+	MOV  	R6,#00H
+	MOV  	R7,#06H
+	LCALL	?C?COPY
+; 	ble_sta.tx_flag = 1;
+			; SOURCE LINE # 46
+	MOV  	DPTR,#ble_sta+01H
+	MOV  	A,#01H
+	MOVX 	@DPTR,A
+; 	ble_sta.conn_st = 0;
+			; SOURCE LINE # 47
+	CLR  	A
+	MOV  	DPTR,#ble_sta
+	MOVX 	@DPTR,A
+; 	
+; //	pdu.nid = 0x02;
+; //	pdu.seq = 0x01;
+; //	pdu.ttl = 0x05;
+; //	pdu.dst[0] = 0x01;
+; //	pdu.dst[1] = 0x02;
+; //	pdu.dst[2] = 0x03;
+; //	pdu.crc_check = 0x00;
+; //	pdu.dat.net_cmd.opcode = 0x07;
+; //	pdu.len = 8;
+; //	
+; //	while(1){
+; //		net_output(&pdu,0,2);
+; //	}
+; 	
+; //	local_info.update_flag = 1;
+; //	flash_read_buf((u16)0x1c00,var_tx_buf,32);
+; 	if(local_info.update_flag == 0){
+			; SOURCE LINE # 65
+	MOV  	DPTR,#local_info+026H
+	MOVX 	A,@DPTR
+	JNZ  	?C0002
+; 		//进入APP程序
+; 		phy_write_reg_bit(15,7,0);
+			; SOURCE LINE # 67
+	MOV  	R3,A
+	MOV  	R5,#07H
+	MOV  	R7,#0FH
+	LCALL	_phy_write_reg_bit
+; 		phy_write_reg_bit(14,0,0);
+			; SOURCE LINE # 68
+	CLR  	A
+	MOV  	R3,A
+	MOV  	R5,A
+	MOV  	R7,#0EH
+	LCALL	_phy_write_reg_bit
+; 		#pragma ASM
+; 		AJMP	0x1c00
+	  AJMP	0x1c00
+; 		#pragma ENDASM
+; //		(*boot)();
+; 	}
+			; SOURCE LINE # 73
+?C0002:
+; 	
+; 	while(1){
+			; SOURCE LINE # 75
+; //		WDTC |= 0x10;    //清狗
+; 		if(adv_flag && ble_sta.tx_flag == 1){
+			; SOURCE LINE # 77
+	MOV  	DPTR,#adv_flag
+	MOVX 	A,@DPTR
+	JNZ  	$ + 5H
+	LJMP 	?C0004
+	MOV  	DPTR,#ble_sta+01H
+	MOVX 	A,@DPTR
+	XRL  	A,#01H
+	JZ   	$ + 5H
+	LJMP 	?C0004
+; 			adv_flag = 0;
+			; SOURCE LINE # 78
+	MOV  	DPTR,#adv_flag
+	MOVX 	@DPTR,A
+; 			if(ble_sta.conn_st==0){
+			; SOURCE LINE # 79
+	MOV  	DPTR,#ble_sta
+	MOVX 	A,@DPTR
+	JNZ  	?C0005
+; 					tx_beacon = (Beacon *)&var_tx_buf[VAR_TX_BEACON_OFFSET];
+			; SOURCE LINE # 80
+	MOV  	DPTR,#tx_beacon
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOV  	A,#HIGH (var_tx_buf+08H)
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOV  	A,#LOW (var_tx_buf+08H)
+	MOVX 	@DPTR,A
+; 					tx_beacon->len = 0x08;
+			; SOURCE LINE # 81
+	MOV  	DPTR,#tx_beacon
+	MOVX 	A,@DPTR
+	MOV  	R3,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R2,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R1,A
+	MOV  	A,#08H
+	LCALL	?C?CSTPTR
+; 					tx_beacon->flag = 0xFF;
+			; SOURCE LINE # 82
+	MOV  	DPTR,#tx_beacon
+	MOVX 	A,@DPTR
+	MOV  	R3,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R2,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R1,A
+	MOV  	DPTR,#01H
+	MOV  	A,#0FFH
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->company_id[0] = 0x4E;
+			; SOURCE LINE # 83
+	MOV  	DPTR,#02H
+	MOV  	A,#04EH
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->company_id[1] = 0x00;
+			; SOURCE LINE # 84
+	MOV  	DPTR,#03H
+	CLR  	A
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->dst[0] = 0xFF;
+			; SOURCE LINE # 85
+	MOV  	DPTR,#04H
+	MOV  	A,#0FFH
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->dst[1] = 0xFF;
+			; SOURCE LINE # 86
+	MOV  	DPTR,#05H
+	MOV  	A,#0FFH
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->oper = CTL_ADV;
+			; SOURCE LINE # 87
+	MOV  	DPTR,#06H
+	MOV  	A,#01H
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->dat[0] = local_info.mac_addr[0];
+			; SOURCE LINE # 88
+	MOV  	DPTR,#local_info
+	MOVX 	A,@DPTR
+	MOV  	DPTR,#07H
+	LCALL	?C?CSTOPTR
+; 					tx_beacon->dat[1] = local_info.mac_addr[1];
+			; SOURCE LINE # 89
+	MOV  	DPTR,#local_info+01H
+	MOVX 	A,@DPTR
+	MOV  	DPTR,#08H
+	LCALL	?C?CSTOPTR
+; 				}
+			; SOURCE LINE # 90
+?C0005:
+; 			mac_pack_packet(tx_beacon->len);
+			; SOURCE LINE # 91
+	MOV  	DPTR,#tx_beacon
+	MOVX 	A,@DPTR
+	MOV  	R3,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R2,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R1,A
+	LCALL	?C?CLDPTR
+	MOV  	R7,A
+	LCALL	_mac_pack_packet
+; 			mac_load_packet();
+			; SOURCE LINE # 92
+	LCALL	mac_load_packet
+; 			mac_send_packet(0);
+			; SOURCE LINE # 93
+	CLR  	A
+	MOV  	R7,A
+	LCALL	_mac_send_packet
+; 			mac_send_packet(1);
+			; SOURCE LINE # 94
+	MOV  	R7,#01H
+	LCALL	_mac_send_packet
+; 			mac_send_packet(2);
+			; SOURCE LINE # 95
+	MOV  	R7,#02H
+	LCALL	_mac_send_packet
+; 			mac_listen_packet(0);	
+			; SOURCE LINE # 96
+	CLR  	A
+	MOV  	R7,A
+	LCALL	_mac_listen_packet
+; 		}
+			; SOURCE LINE # 97
+?C0004:
+; 		if(phy_read_reg(97)&0x40){
+			; SOURCE LINE # 98
+	MOV  	R7,#061H
+	LCALL	_phy_read_reg
+	MOV  	A,R7
+	JB   	ACC.6,$ + 6H
+	LJMP 	?C0002
+; 			
+; 			mac_packet_deal();
+			; SOURCE LINE # 100
+	LCALL	mac_packet_deal
+; 		}
+			; SOURCE LINE # 101
+; 
+; 	}
+			; SOURCE LINE # 103
+	LJMP 	?C0002
+	RET  	
+; END OF main
+
+	END

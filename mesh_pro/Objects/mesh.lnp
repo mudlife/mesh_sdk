@@ -1,0 +1,13 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\delay.obj",
+".\Objects\spi.obj",
+".\Objects\flash.obj",
+".\Objects\system.obj",
+".\Objects\netstack_app.obj",
+".\lib\mesh.LIB" 
+TO ".\Objects\mesh" 
+PRINT(".\Listings\mesh.m51") IXREF 
+RAMSIZE(256) 
+CODE( 0X0000-0X3FFF )
+XDATA( 0X0000-0X00FF )

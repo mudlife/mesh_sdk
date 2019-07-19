@@ -1,0 +1,4 @@
+<map id="NET_PDU" name="NET_PDU">
+<area shape="rect" id="node2" href="$dd/d1d/struct_n_e_t___c_m_d.html" title="{NET_CMD\n|+ opcode\l+ param\l|}" alt="" coords="5,27,88,119"/>
+<area shape="rect" id="node3" href="$d6/d15/struct_n_e_t___d_a_t.html" title="{NET_DAT\n|+ seg\l+ sn\l+ nesn\l+ rfu\l+ app_pdu\l|}" alt="" coords="112,5,195,141"/>
+</map>

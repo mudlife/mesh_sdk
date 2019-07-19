@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: inc/network_conf.h 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">network_conf.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../db/d3e/network__conf_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __NETWORK_CONF_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __NETWORK_CONF_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;HC89S003F4.h&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d5/df5/netstack__phy_8h.html">netstack_phy.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">//#include &quot;netstack_mac.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../da/d2d/netstack__net_8h.html">netstack_net.h</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">//#include &quot;uart.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//网路配置文件</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">extern</span> <span class="keyword">struct </span><a class="code" href="../../da/d64/structnetstack__local.html">netstack_local</a> <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a7a18b6c4068be2542b900089fef03872">   12</a></span>&#160;<span class="preprocessor">#define LOCAL_INFO_ADDR 0x3C00    //本地信息存储地址</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a0fe697eeecf16ec36cb9723c3afb9244">   13</a></span>&#160;<span class="preprocessor">#define NETSTACK_GROUP_ADDR         (LOCAL_INFO_ADDR+256)  //组成员地址</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a2f47a102ad8d98c36c7099d99fd3b9b5">   14</a></span>&#160;<span class="preprocessor">#define LOCAL_NAME_ADDR                 (NETSTACK_GROUP_ADDR+128)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a308c2611d522d0cfc902763af5370c8a">   16</a></span>&#160;<span class="preprocessor">#define NETSTACK_GROUP_MAX          10   //最大组数</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#ad21c03c7fe06aace681e6b69afda94de">   18</a></span>&#160;<span class="preprocessor">#define CHIP_ADDR                           0x0100  </span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//xdata 基地址</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a0c002aaa6aa16c44cea70281cef05c20">   22</a></span>&#160;<span class="preprocessor">#define VAR_BASE_X          0x00</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//本地信息结构体变量地址和大小</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a19cfd8133fd332d71ac98cc6ef579b4d">   25</a></span>&#160;<span class="preprocessor">#define VAR_LOCAL_INFO_X            VAR_BASE_X</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a7c885003f07dba7dbb804982af7ddce2">   26</a></span>&#160;<span class="preprocessor">#define VAR_LOCAL_INTO_SIZE     0x28</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#aec813f8efa58b059713c990f4397b235">   30</a></span>&#160;<span class="preprocessor">#define VAR_TX_BEACON_OFFSET                0x08</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//#define VAR_TX_BEACON_SIZE                 0x22</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//data 基地址</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a48c111820dec6b60567c530823eb336d">   34</a></span>&#160;<span class="preprocessor">#define VAR_BASE_D                      0x10</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//接收缓存地址和大小</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a0ecc37c1dff55ee65740cde89744c262">   37</a></span>&#160;<span class="preprocessor">#define VAR_RX_BUF_D                    VAR_BASE_D</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#af7bcf925b540392822c775688076024e">   38</a></span>&#160;<span class="preprocessor">#define VAR_RX_BUF_SIZE             0x2F</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//发送缓存地址和大小</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a2957b5aa49edbc5bc1a3a8c5d82f9d00">   41</a></span>&#160;<span class="preprocessor">#define VAR_TX_BUF_D                    (VAR_BASE_D+VAR_RX_BUF_SIZE)</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a862555b7f04e47a74f870634a67e32ca">   42</a></span>&#160;<span class="preprocessor">#define VAR_TX_BUF_SIZE             0x2F</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a9d854547825d0db1929fb0dba2e582aa">   46</a></span>&#160;<span class="preprocessor">#define FEATURE_LOW_POWER       0</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a75be879686c0930613ab270e976b44c5">   47</a></span>&#160;<span class="preprocessor">#define FEATURE_NET                 0</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a4ed6920521de734098f92e59494a3891">   48</a></span>&#160;<span class="preprocessor">#define FEATURE_LEARN               0</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a331decddcd2879d7f15dd253f14b2f01">   55</a></span>&#160;<span class="preprocessor">#define UUID_BASE_STATION       0X0000                  //基站</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a321d27559992517a7c4adeb27f7250ce">   56</a></span>&#160;<span class="preprocessor">#define UUID_LIGHT                  0X0001                  //灯</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#ac4abd860074c145ea6a7d20875a4247b">   57</a></span>&#160;<span class="preprocessor">#define UUID_PLUG                       0X0002                  //插座</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a13ea02df5454f85a7c8175572d6d2af5">   58</a></span>&#160;<span class="preprocessor">#define UUID_ALARM                  0X0003                  //警报器</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#ad1e7b4c95b1b5bef733ede25d2aa19dc">   59</a></span>&#160;<span class="preprocessor">#define UUID_FAN                        0X0004                  //风扇</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">//  可修改配置  开始</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a8d9edde699f2eeae13b3f635c4ebd19d">   69</a></span>&#160;<span class="preprocessor">#define UUID    UUID_LIGHT   //设置当前的UUID为灯的UUID    </span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a5650de8761d886baffbf5c84d2c285bd">   71</a></span>&#160;<span class="preprocessor">#define COMPANY_ID  0x4E00  //公司ID， 用户可以自定义</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#a3b9ad5d39f224444893d9e9747995094">   73</a></span>&#160;<span class="preprocessor">#define DEFAULT_DEV_NAME    &quot;LED&quot; </span></div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="../../db/d3e/network__conf_8h.html#ada4d4daeb0ab30fc58d8c4e090a1ba06">   74</a></span>&#160;<span class="preprocessor">#define DEFAULT_DEV_NAME_LEN    3</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//  可修改配置  结束</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="network__conf_8h_html_a39b8005db999d19671b4bd82c63ef945"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a></div><div class="ttdeci">struct netstack_local local_info</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00069">netstack_net.c:69</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html">netstack_phy.h</a></div></div>
+<div class="ttc" id="netstack__net_8h_html"><div class="ttname"><a href="../../da/d2d/netstack__net_8h.html">netstack_net.h</a></div></div>
+<div class="ttc" id="structnetstack__local_html"><div class="ttname"><a href="../../da/d64/structnetstack__local.html">netstack_local</a></div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00020">netstack_net.h:20</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

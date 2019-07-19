@@ -1,0 +1,1468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: mac/netstack_mac.c 文件参考</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_2ac391ad55c056cf22300c181fd83614.html">mac</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">宏定义</a> &#124;
+<a href="#func-members">函数</a> &#124;
+<a href="#var-members">变量</a>  </div>
+  <div class="headertitle">
+<div class="title">netstack_mac.c 文件参考</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>MAC层文件  
+<a href="#details">更多...</a></p>
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../db/d3e/network__conf_8h_source.html">network_conf.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../dd/dee/delay_8h_source.html">delay.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../de/df7/flash_8h_source.html">flash.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+netstack_mac.c 的引用(Include)关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../db/dcd/netstack__mac_8c__incl.png" border="0" usemap="#mac_2netstack__mac_8c" alt=""/></div>
+<map name="mac_2netstack__mac_8c" id="mac_2netstack__mac_8c">
+<area shape="rect" id="node3" href="../../db/d3e/network__conf_8h.html" title="network_conf.h" alt="" coords="122,80,231,107"/>
+<area shape="rect" id="node9" href="../../dd/dee/delay_8h.html" title="delay.h" alt="" coords="366,155,430,181"/>
+<area shape="rect" id="node10" href="../../de/df7/flash_8h.html" title="flash.h" alt="" coords="256,80,316,107"/>
+<area shape="rect" id="node5" href="../../d5/df5/netstack__phy_8h.html" title="netstack_phy.h" alt="" coords="5,229,116,256"/>
+<area shape="rect" id="node7" href="../../da/d2d/netstack__net_8h.html" title="netstack_net.h" alt="" coords="99,155,207,181"/>
+<area shape="rect" id="node8" href="../../d4/d82/netstack__mac_8h.html" title="netstack_mac.h" alt="" coords="191,229,306,256"/>
+</map>
+</div>
+</div>
+<p><a href="../../da/d7b/netstack__mac_8c_source.html">浏览源代码.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+宏定义</h2></td></tr>
+<tr class="memitem:ad096a9f1d5b7f24931d2e9b4f5f2879c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(_x_)&#160;&#160;&#160;((_x_) * 2)</td></tr>
+<tr class="separator:ad096a9f1d5b7f24931d2e9b4f5f2879c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">获取数据的一段数据</div></td></tr>
+<tr class="memitem:ab7f6bf8df35486f1d7c1ea59b71aa448"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ab7f6bf8df35486f1d7c1ea59b71aa448">LO</a>(x)&#160;&#160;&#160;(unsigned char)((x) &amp; 0xff)</td></tr>
+<tr class="memdesc:ab7f6bf8df35486f1d7c1ea59b71aa448"><td class="mdescLeft">&#160;</td><td class="mdescRight">取0-7位  <a href="#ab7f6bf8df35486f1d7c1ea59b71aa448">更多...</a><br /></td></tr>
+<tr class="separator:ab7f6bf8df35486f1d7c1ea59b71aa448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f50870cb2b769df20f828db480c96a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a1f50870cb2b769df20f828db480c96a0">MID</a>(x)&#160;&#160;&#160;(unsigned char)(((x) &gt;&gt; 8) &amp; 0xff)</td></tr>
+<tr class="memdesc:a1f50870cb2b769df20f828db480c96a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">取8-15位  <a href="#a1f50870cb2b769df20f828db480c96a0">更多...</a><br /></td></tr>
+<tr class="separator:a1f50870cb2b769df20f828db480c96a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464086719dcbec3a5447a3e76dd2e935"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a464086719dcbec3a5447a3e76dd2e935">HI</a>(x)&#160;&#160;&#160;(unsigned char)(((x) &gt;&gt; 16) &amp; 0xff)</td></tr>
+<tr class="memdesc:a464086719dcbec3a5447a3e76dd2e935"><td class="mdescLeft">&#160;</td><td class="mdescRight">取16-23位  <a href="#a464086719dcbec3a5447a3e76dd2e935">更多...</a><br /></td></tr>
+<tr class="separator:a464086719dcbec3a5447a3e76dd2e935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+函数</h2></td></tr>
+<tr class="memitem:a341d737f70480ae31911485e942d060f"><td class="memItemLeft" align="right" valign="top">u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a341d737f70480ae31911485e942d060f">mac_init</a> (void)</td></tr>
+<tr class="memdesc:a341d737f70480ae31911485e942d060f"><td class="mdescLeft">&#160;</td><td class="mdescRight">mac 初始化  <a href="#a341d737f70480ae31911485e942d060f">更多...</a><br /></td></tr>
+<tr class="separator:a341d737f70480ae31911485e942d060f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d193e8205661f6479386352cf7716d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a4d193e8205661f6479386352cf7716d3">mac_set_power</a> (u8 power)</td></tr>
+<tr class="memdesc:a4d193e8205661f6479386352cf7716d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置RF的发射功率  <a href="#a4d193e8205661f6479386352cf7716d3">更多...</a><br /></td></tr>
+<tr class="separator:a4d193e8205661f6479386352cf7716d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0adea6008de0733b5b37ecfaba32a345"><td class="memItemLeft" align="right" valign="top">static u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345">swap_bits</a> (u8 byte)</td></tr>
+<tr class="memdesc:a0adea6008de0733b5b37ecfaba32a345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap bits between MSB and LSB of a given byte.  <a href="#a0adea6008de0733b5b37ecfaba32a345">更多...</a><br /></td></tr>
+<tr class="separator:a0adea6008de0733b5b37ecfaba32a345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad781d2550631c94dfdf7693fd3e6eb00"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00">swap_crc_bits</a> (u8 *crc)</td></tr>
+<tr class="memdesc:ad781d2550631c94dfdf7693fd3e6eb00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap bits for 3-byte CRC.  <a href="#ad781d2550631c94dfdf7693fd3e6eb00">更多...</a><br /></td></tr>
+<tr class="separator:ad781d2550631c94dfdf7693fd3e6eb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d9c5ea82344d997a616afd4bb176d1d"><td class="memItemLeft" align="right" valign="top">static u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d">reflected</a> (unsigned char b)</td></tr>
+<tr class="memdesc:a4d9c5ea82344d997a616afd4bb176d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">高低位交换  <a href="#a4d9c5ea82344d997a616afd4bb176d1d">更多...</a><br /></td></tr>
+<tr class="separator:a4d9c5ea82344d997a616afd4bb176d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca2291cc6aba52914784b9927fbd112"><td class="memItemLeft" align="right" valign="top">static unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112">crc24q_hash</a> (unsigned char *dat, int len)</td></tr>
+<tr class="memdesc:a9ca2291cc6aba52914784b9927fbd112"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRC hash.  <a href="#a9ca2291cc6aba52914784b9927fbd112">更多...</a><br /></td></tr>
+<tr class="separator:a9ca2291cc6aba52914784b9927fbd112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1ba0483affda2654dcf7dc6fd960b7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7">ble_calc_adv_crc_tab</a> (const u8 *adv_pdu, u8 len, u8 *crc_c)</td></tr>
+<tr class="memdesc:a0d1ba0483affda2654dcf7dc6fd960b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRC 查表  <a href="#a0d1ba0483affda2654dcf7dc6fd960b7">更多...</a><br /></td></tr>
+<tr class="separator:a0d1ba0483affda2654dcf7dc6fd960b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98d797c14ce3ad49ccfefe34540d69f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f">mac_pack_packet</a> (u8 *addr, u8 len)</td></tr>
+<tr class="memdesc:ab98d797c14ce3ad49ccfefe34540d69f"><td class="mdescLeft">&#160;</td><td class="mdescRight">蓝牙数据打包  <a href="#ab98d797c14ce3ad49ccfefe34540d69f">更多...</a><br /></td></tr>
+<tr class="separator:ab98d797c14ce3ad49ccfefe34540d69f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33ff31e508adf099e47eba17b8c5e263"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263">tpl_rx_mode</a> (u8 ch)</td></tr>
+<tr class="memdesc:a33ff31e508adf099e47eba17b8c5e263"><td class="mdescLeft">&#160;</td><td class="mdescRight">进入接收模式  <a href="#a33ff31e508adf099e47eba17b8c5e263">更多...</a><br /></td></tr>
+<tr class="separator:a33ff31e508adf099e47eba17b8c5e263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a564e1e53209be4e2ef3d5b41a9f598cc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc">tpl_tx_mode</a> (u8 ch)</td></tr>
+<tr class="memdesc:a564e1e53209be4e2ef3d5b41a9f598cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">进入发送模式  <a href="#a564e1e53209be4e2ef3d5b41a9f598cc">更多...</a><br /></td></tr>
+<tr class="separator:a564e1e53209be4e2ef3d5b41a9f598cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeacdee97c5e1934263c550d733584559"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#aeacdee97c5e1934263c550d733584559">mac_load_packet</a> (void)</td></tr>
+<tr class="memdesc:aeacdee97c5e1934263c550d733584559"><td class="mdescLeft">&#160;</td><td class="mdescRight">把数据加载到RF的FIFO中  <a href="#aeacdee97c5e1934263c550d733584559">更多...</a><br /></td></tr>
+<tr class="separator:aeacdee97c5e1934263c550d733584559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794b07380997066fa4902f43916cf97d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d">mac_send_packet</a> (u8 channel)</td></tr>
+<tr class="memdesc:a794b07380997066fa4902f43916cf97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">发送数据  <a href="#a794b07380997066fa4902f43916cf97d">更多...</a><br /></td></tr>
+<tr class="separator:a794b07380997066fa4902f43916cf97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e4da2dccafd4c5e7b1a5c8eff13496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496">mac_listen_packet</a> (u8 channel)</td></tr>
+<tr class="memdesc:a85e4da2dccafd4c5e7b1a5c8eff13496"><td class="mdescLeft">&#160;</td><td class="mdescRight">开始接收  <a href="#a85e4da2dccafd4c5e7b1a5c8eff13496">更多...</a><br /></td></tr>
+<tr class="separator:a85e4da2dccafd4c5e7b1a5c8eff13496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a8e4824e5b365194c87cc2067d9316"><td class="memItemLeft" align="right" valign="top">static u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316">g24_crc</a> (u8 *dat, u8 len)</td></tr>
+<tr class="memdesc:ab0a8e4824e5b365194c87cc2067d9316"><td class="mdescLeft">&#160;</td><td class="mdescRight">2.4G 数据CRC校验  <a href="#ab0a8e4824e5b365194c87cc2067d9316">更多...</a><br /></td></tr>
+<tr class="separator:ab0a8e4824e5b365194c87cc2067d9316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75cbc145251b10cf3b87b693d6fb57e9"><td class="memItemLeft" align="right" valign="top">static u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9">mac_read_packet</a> (void)</td></tr>
+<tr class="memdesc:a75cbc145251b10cf3b87b693d6fb57e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">读取接收到的数据  <a href="#a75cbc145251b10cf3b87b693d6fb57e9">更多...</a><br /></td></tr>
+<tr class="separator:a75cbc145251b10cf3b87b693d6fb57e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10a7f891db1bb62ddc6a70862dc5a8b6"><td class="memItemLeft" align="right" valign="top">static u8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6">mac_packet_deal</a> (void)</td></tr>
+<tr class="memdesc:a10a7f891db1bb62ddc6a70862dc5a8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">接收处理  <a href="#a10a7f891db1bb62ddc6a70862dc5a8b6">更多...</a><br /></td></tr>
+<tr class="separator:a10a7f891db1bb62ddc6a70862dc5a8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38d715b974d2ac09e9a08d6af349226a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a">mac_process</a> (void)</td></tr>
+<tr class="memdesc:a38d715b974d2ac09e9a08d6af349226a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MAC 进程  <a href="#a38d715b974d2ac09e9a08d6af349226a">更多...</a><br /></td></tr>
+<tr class="separator:a38d715b974d2ac09e9a08d6af349226a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+变量</h2></td></tr>
+<tr class="memitem:aa300e4d3fccc70adc22aeb89d7d2087a"><td class="memItemLeft" align="right" valign="top">u8 data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#aa300e4d3fccc70adc22aeb89d7d2087a">var_rx_buf</a> [<a class="el" href="../../db/d3e/network__conf_8h.html#af7bcf925b540392822c775688076024e">VAR_RX_BUF_SIZE</a>]</td></tr>
+<tr class="separator:aa300e4d3fccc70adc22aeb89d7d2087a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d35377c4b3cfe48d5d2c6105ca0fd28"><td class="memItemLeft" align="right" valign="top">u8 data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a9d35377c4b3cfe48d5d2c6105ca0fd28">var_tx_buf</a> [<a class="el" href="../../db/d3e/network__conf_8h.html#a862555b7f04e47a74f870634a67e32ca">VAR_TX_BUF_SIZE</a>]</td></tr>
+<tr class="separator:a9d35377c4b3cfe48d5d2c6105ca0fd28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c5ad7b3bcc2a977ada85e1a409c039f"><td class="memItemLeft" align="right" valign="top">const u8 code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a9c5ad7b3bcc2a977ada85e1a409c039f">tpl_channels</a> []</td></tr>
+<tr class="separator:a9c5ad7b3bcc2a977ada85e1a409c039f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a211eaf75cafc03d002beafff0b389ebb"><td class="memItemLeft" align="right" valign="top">const u8 code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#a211eaf75cafc03d002beafff0b389ebb">tpl_whiten</a> [] = {0xd3,0xb3,0xf3}</td></tr>
+<tr class="separator:a211eaf75cafc03d002beafff0b389ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac730945ba650da1de8aff5bfcb81c221"><td class="memItemLeft" align="right" valign="top">code unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/netstack__mac_8c.html#ac730945ba650da1de8aff5bfcb81c221">crc24q</a> [256]</td></tr>
+<tr class="separator:ac730945ba650da1de8aff5bfcb81c221"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>MAC层文件 </p>
+<p>用于数据收发，打包和解包 </p><dl class="section author"><dt>作者</dt><dd>mudlife </dd></dl>
+<dl class="section user"><dt>Copyright (c):</dt><dd>上海晶曦微电子科技有限公司 </dd></dl>
+<dl class="section version"><dt>版本</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>日期</dt><dd>2019-06-02 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 中定义.</p>
+</div><h2 class="groupheader">宏定义说明</h2>
+<a class="anchor" id="a464086719dcbec3a5447a3e76dd2e935"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HI</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;(unsigned char)(((x) &gt;&gt; 16) &amp; 0xff)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>取16-23位 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00037">37</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab7f6bf8df35486f1d7c1ea59b71aa448"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;(unsigned char)((x) &amp; 0xff)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>取0-7位 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00035">35</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f50870cb2b769df20f828db480c96a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MID</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;(unsigned char)(((x) &gt;&gt; 8) &amp; 0xff)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>取8-15位 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00036">36</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad096a9f1d5b7f24931d2e9b4f5f2879c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RF_CHN_TO_PLL_CHN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_x_</td><td>)</td>
+          <td>&#160;&#160;&#160;((_x_) * 2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>信道2倍频 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00027">27</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">函数说明</h2>
+<a class="anchor" id="a0d1ba0483affda2654dcf7dc6fd960b7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ble_calc_adv_crc_tab </td>
+          <td>(</td>
+          <td class="paramtype">const u8 *&#160;</td>
+          <td class="paramname"><em>adv_pdu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8 *&#160;</td>
+          <td class="paramname"><em>crc_c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CRC 查表 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">adv_pdu</td><td>数据 </td></tr>
+    <tr><td class="paramname">len</td><td>数据长度 </td></tr>
+    <tr><td class="paramname">crc_c</td><td>CRC计算结果 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00227">227</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_cgraph" id="da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_cgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="205,5,301,32"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="200,56,305,83"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="358,5,429,32"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="353,56,433,83"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_icgraph" id="da/d7b/netstack__mac_8c_a0d1ba0483affda2654dcf7dc6fd960b7_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="200,68,328,95"/>
+<area shape="rect" id="node11" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="376,119,501,145"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="397,68,480,95"/>
+<area shape="rect" id="node4" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="683,68,757,95"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="549,93,635,120"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="684,5,756,32"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="805,68,929,95"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="977,67,1077,93"/>
+<area shape="rect" id="node7" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1125,40,1176,67"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="835,8,899,35"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ca2291cc6aba52914784b9927fbd112"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned long crc24q_hash </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char *&#160;</td>
+          <td class="paramname"><em>dat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CRC hash. </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dat</td><td>数据 </td></tr>
+    <tr><td class="paramname">len</td><td>数据长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>返回计算结果 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00203">203</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_cgraph" id="da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_cgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="149,5,220,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_icgraph" id="da/d7b/netstack__mac_8c_a9ca2291cc6aba52914784b9927fbd112_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="149,93,296,120"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="344,68,472,95"/>
+<area shape="rect" id="node12" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="520,119,645,145"/>
+<area shape="rect" id="node4" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="541,68,624,95"/>
+<area shape="rect" id="node5" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="827,68,901,95"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="693,93,779,120"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="828,5,900,32"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="949,68,1073,95"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="1121,67,1221,93"/>
+<area shape="rect" id="node8" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1269,40,1320,67"/>
+<area shape="rect" id="node11" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="979,8,1043,35"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0a8e4824e5b365194c87cc2067d9316"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static u8 g24_crc </td>
+          <td>(</td>
+          <td class="paramtype">u8 *&#160;</td>
+          <td class="paramname"><em>dat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>2.4G 数据CRC校验 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dat</td><td>数据 </td></tr>
+    <tr><td class="paramname">len</td><td>数据长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>校验结果 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00363">363</a> 行定义.</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_ab0a8e4824e5b365194c87cc2067d9316_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_ab0a8e4824e5b365194c87cc2067d9316_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_ab0a8e4824e5b365194c87cc2067d9316_icgraph" id="da/d7b/netstack__mac_8c_ab0a8e4824e5b365194c87cc2067d9316_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="121,5,247,32"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="295,5,419,32"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="467,5,567,32"/>
+<area shape="rect" id="node5" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="615,5,665,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a341d737f70480ae31911485e942d060f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u8 mac_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>mac 初始化 </p>
+<dl class="section return"><dt>返回</dt><dd>返回初始化结果 </dd></dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>初始化成功 </td></tr>
+    <tr><td class="paramname">1</td><td>初始化失败 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00129">129</a> 行定义.</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a341d737f70480ae31911485e942d060f_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a341d737f70480ae31911485e942d060f_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a341d737f70480ae31911485e942d060f_icgraph" id="da/d7b/netstack__mac_8c_a341d737f70480ae31911485e942d060f_icgraph">
+<area shape="rect" id="node2" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="124,5,175,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a85e4da2dccafd4c5e7b1a5c8eff13496"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_listen_packet </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>开始接收 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>信道 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00344">344</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_cgraph" id="da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="325,56,448,83"/>
+<area shape="rect" id="node7" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="335,107,438,133"/>
+<area shape="rect" id="node8" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263" title="进入接收模式 " alt="" coords="184,81,277,108"/>
+<area shape="rect" id="node3" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="497,5,597,32"/>
+<area shape="rect" id="node6" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="496,56,599,83"/>
+<area shape="rect" id="node4" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="647,56,752,83"/>
+<area shape="rect" id="node5" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="662,5,737,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_icgraph" id="da/d7b/netstack__mac_8c_a85e4da2dccafd4c5e7b1a5c8eff13496_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="571,22,695,49"/>
+<area shape="rect" id="node5" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="453,98,517,125"/>
+<area shape="rect" id="node6" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="184,48,267,74"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="743,34,843,61"/>
+<area shape="rect" id="node4" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="891,64,941,90"/>
+<area shape="rect" id="node7" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="448,22,523,49"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="315,48,400,74"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="321,98,393,125"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="aeacdee97c5e1934263c550d733584559"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_load_packet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>把数据加载到RF的FIFO中 </p>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00312">312</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_cgraph" id="da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="177,63,300,89"/>
+<area shape="rect" id="node7" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="187,5,290,32"/>
+<area shape="rect" id="node8" href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4" title="往RF FIFO中写数据 " alt="" coords="349,151,449,177"/>
+<area shape="rect" id="node3" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="349,100,449,127"/>
+<area shape="rect" id="node6" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="348,49,451,76"/>
+<area shape="rect" id="node4" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="499,75,604,101"/>
+<area shape="rect" id="node5" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="514,125,589,152"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_icgraph" id="da/d7b/netstack__mac_8c_aeacdee97c5e1934263c550d733584559_icgraph">
+<area shape="rect" id="node2" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="177,21,260,48"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="441,21,516,48"/>
+<area shape="rect" id="node7" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="308,21,393,48"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="443,72,515,99"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="564,21,688,48"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="736,21,836,48"/>
+<area shape="rect" id="node6" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="884,47,935,73"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="594,72,658,99"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ab98d797c14ce3ad49ccfefe34540d69f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_pack_packet </td>
+          <td>(</td>
+          <td class="paramtype">u8 *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>蓝牙数据打包 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>地址 </td></tr>
+    <tr><td class="paramname">len</td><td>数据长度 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00247">247</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_cgraph" id="da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_cgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="181,31,328,57"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="381,5,477,32"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="376,56,481,83"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="534,5,605,32"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="529,56,609,83"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_icgraph" id="da/d7b/netstack__mac_8c_ab98d797c14ce3ad49ccfefe34540d69f_icgraph">
+<area shape="rect" id="node2" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="181,21,264,48"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="445,21,520,48"/>
+<area shape="rect" id="node7" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="312,21,397,48"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="447,72,519,99"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="568,21,692,48"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="740,21,840,48"/>
+<area shape="rect" id="node6" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="888,47,939,73"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="598,72,662,99"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a10a7f891db1bb62ddc6a70862dc5a8b6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static u8 mac_packet_deal </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>接收处理 </p>
+<dl class="section return"><dt>返回</dt><dd>返回处理结果 </dd></dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>处理成功 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00436">436</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_cgraph" id="da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="1045,1154,1167,1181"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="1043,1509,1169,1536"/>
+<area shape="rect" id="node16" href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="177,1078,252,1105"/>
+<area shape="rect" id="node50" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="660,1129,791,1156"/>
+<area shape="rect" id="node3" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="1246,1256,1346,1282"/>
+<area shape="rect" id="node6" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="1245,1154,1347,1181"/>
+<area shape="rect" id="node4" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="1417,1281,1523,1308"/>
+<area shape="rect" id="node5" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="1433,1382,1507,1409"/>
+<area shape="rect" id="node8" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="1246,1458,1346,1485"/>
+<area shape="rect" id="node9" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9" title="读取RF的FIFO值 " alt="" coords="1247,1408,1345,1434"/>
+<area shape="rect" id="node10" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316" title="2.4G 数据CRC校验 " alt="" coords="1262,1509,1330,1536"/>
+<area shape="rect" id="node11" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="1223,1622,1369,1649"/>
+<area shape="rect" id="node12" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="1422,1597,1518,1624"/>
+<area shape="rect" id="node14" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="1417,1648,1523,1674"/>
+<area shape="rect" id="node13" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="1575,1597,1646,1624"/>
+<area shape="rect" id="node15" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="1571,1648,1651,1674"/>
+<area shape="rect" id="node17" href="../../d9/d85/netstack__net_8c.html#a14b4b0f743207f6297930dc3e93cf368" title="数据包加密 " alt="" coords="300,1053,411,1080"/>
+<area shape="rect" id="node18" href="../../d9/d85/netstack__net_8c.html#ac78032a1fa2d8f5cd457310cb8d05deb" title="判断是否为重包 " alt="" coords="309,1104,402,1130"/>
+<area shape="rect" id="node19" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="489,1408,571,1434"/>
+<area shape="rect" id="node29" href="../../d9/d85/netstack__net_8c.html#ae52e60e87bd14728be437222712f6805" title="判断组成员是否存在 " alt="" coords="473,850,587,877"/>
+<area shape="rect" id="node31" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="313,622,398,649"/>
+<area shape="rect" id="node20" href="../../d4/d82/netstack__mac_8h.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="855,1661,983,1688"/>
+<area shape="rect" id="node21" href="../../d4/d82/netstack__mac_8h.html#aeacdee97c5e1934263c550d733584559" title="把数据加载到RF的FIFO中 " alt="" coords="857,1458,981,1485"/>
+<area shape="rect" id="node24" href="../../d4/d82/netstack__mac_8h.html#a794b07380997066fa4902f43916cf97d" title="发送数据 " alt="" coords="661,1408,789,1434"/>
+<area shape="rect" id="node27" href="../../d4/d82/netstack__mac_8h.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="660,1256,791,1282"/>
+<area shape="rect" id="node22" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="1055,1281,1157,1308"/>
+<area shape="rect" id="node23" href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4" title="往RF FIFO中写数据 " alt="" coords="1246,1306,1346,1333"/>
+<area shape="rect" id="node25" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc" title="进入发送模式 " alt="" coords="873,1205,966,1232"/>
+<area shape="rect" id="node26" href="../../d3/d0f/delay_8c.html#ab63c881c7370f9c01bfd8c20827b4ec6" title="0.5毫秒延时 " alt="" coords="1053,1446,1159,1473"/>
+<area shape="rect" id="node28" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263" title="进入接收模式 " alt="" coords="873,1104,966,1130"/>
+<area shape="rect" id="node30" href="../../d1/d4d/flash_8c.html#ad9da0c22889472ef97f7dc833a36132e" title="从flash中读取数据 " alt="" coords="867,800,972,826"/>
+<area shape="rect" id="node32" href="../../d9/d85/netstack__net_8c.html#a3ae3346a4646a946d75d4ab75131c4a8" title="更新本地信息 " alt="" coords="849,546,989,573"/>
+<area shape="rect" id="node34" href="../../d1/d4d/flash_8c.html#a8d77bd9b3691a7d765d50907b8b3cfd1" title="擦除 flash " alt="" coords="1037,800,1175,826"/>
+<area shape="rect" id="node35" href="../../d1/d4d/flash_8c.html#aa17a77807a7aabec11fdebac1e638f82" title="往flash中写入数据 " alt="" coords="1053,496,1159,522"/>
+<area shape="rect" id="node36" href="../../d9/d85/netstack__net_8c.html#adb34a57b2e256f3a017524d04e47774f" title="填充网络PDU 头部 " alt="" coords="680,141,771,168"/>
+<area shape="rect" id="node37" href="../../df/d9a/netstack__app_8c.html#a344c7ec58519bcfd56d7dd9722e2f846" title="APP层处理来自网络层的数据包 " alt="" coords="491,318,569,345"/>
+<area shape="rect" id="node39" href="../../d0/dff/os_8h.html#a6ebb38845fa2428effc18cc598551b07" title="添加任务 " alt="" coords="871,192,967,218"/>
+<area shape="rect" id="node43" href="../../d4/d82/netstack__mac_8h.html#a4d193e8205661f6479386352cf7716d3" title="设置RF的发射功率 " alt="" coords="473,952,587,978"/>
+<area shape="rect" id="node44" href="../../d9/d85/netstack__net_8c.html#aad72816ebe4b41e347c4c8b2e32550b5" title="设置设备广播数据 " alt="" coords="463,153,597,180"/>
+<area shape="rect" id="node45" href="../../d9/d85/netstack__net_8c.html#aeb41e8a2ec160d2bc2277d8d0294506f" title="清除网络 " alt="" coords="467,774,593,801"/>
+<area shape="rect" id="node46" href="../../d9/d85/netstack__net_8c.html#aff22007206c1fd12523a5b612c7a0ce0" title="添加组成员 " alt="" coords="672,445,779,472"/>
+<area shape="rect" id="node47" href="../../d9/d85/netstack__net_8c.html#a3fd6513521df66177d6b90512019e4b5" title="移除组成员 " alt="" coords="662,648,789,674"/>
+<area shape="rect" id="node48" href="../../d9/d85/netstack__net_8c.html#a6ca0dadfccf78f1b7b6c943a8c04e6ad" title="清除组成员 " alt="" coords="668,698,783,725"/>
+<area shape="rect" id="node49" href="../../d9/d85/netstack__net_8c.html#a8dac0dde6b1ac91b94cf84037c20dafd" title="更新配对地址 " alt="" coords="459,597,601,624"/>
+<area shape="rect" id="node33" href="../../d1/d4d/flash_8c.html#af4b866c99ab487c79e433e86e6299d76" title="flash信息校验 " alt="" coords="1069,546,1143,573"/>
+<area shape="rect" id="node38" href="../../df/d9a/netstack__app_8c.html#a34433e85ae5e5ee6a9a14a37ba0c3ee1" title="开灯 " alt="" coords="681,394,770,421"/>
+<area shape="rect" id="node40" href="../../df/d9a/netstack__app_8c.html#a702a4b0f1d6ccdd0254d1cc1d35ab796" title="闪灯 " alt="" coords="689,192,762,218"/>
+<area shape="rect" id="node41" href="../../df/d9a/netstack__app_8c.html#aa095ec3980fedc3eb340f472ff70f867" title="关灯 " alt="" coords="680,293,771,320"/>
+<area shape="rect" id="node42" href="../../df/d9a/netstack__app_8c.html#a1d28acb57236dcc1229c2f9794b7487b" title="设置亮度和色温值 " alt="" coords="649,344,801,370"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_icgraph" id="da/d7b/netstack__mac_8c_a10a7f891db1bb62ddc6a70862dc5a8b6_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="177,5,277,32"/>
+<area shape="rect" id="node3" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="325,5,376,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a38d715b974d2ac09e9a08d6af349226a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_process </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>MAC 进程 </p>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00456">456</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_cgraph" id="da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="1357,448,1457,475"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="153,448,277,475"/>
+<area shape="rect" id="node3" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="1507,473,1612,500"/>
+<area shape="rect" id="node4" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="1522,575,1597,601"/>
+<area shape="rect" id="node6" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="1178,397,1301,424"/>
+<area shape="rect" id="node9" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="800,600,925,627"/>
+<area shape="rect" id="node17" href="../../da/d2d/netstack__net_8h.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="325,1056,400,1083"/>
+<area shape="rect" id="node50" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="797,245,928,272"/>
+<area shape="rect" id="node7" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="1357,499,1457,525"/>
+<area shape="rect" id="node8" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="1356,397,1459,424"/>
+<area shape="rect" id="node10" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9" title="读取RF的FIFO值 " alt="" coords="1358,600,1457,627"/>
+<area shape="rect" id="node11" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316" title="2.4G 数据CRC校验 " alt="" coords="1015,549,1083,576"/>
+<area shape="rect" id="node12" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="976,752,1123,779"/>
+<area shape="rect" id="node13" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="1191,752,1287,779"/>
+<area shape="rect" id="node15" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="1187,803,1292,829"/>
+<area shape="rect" id="node14" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="1372,752,1443,779"/>
+<area shape="rect" id="node16" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="1367,803,1447,829"/>
+<area shape="rect" id="node18" href="../../d9/d85/netstack__net_8c.html#a14b4b0f743207f6297930dc3e93cf368" title="数据包加密 " alt="" coords="448,1132,559,1159"/>
+<area shape="rect" id="node19" href="../../d9/d85/netstack__net_8c.html#ac78032a1fa2d8f5cd457310cb8d05deb" title="判断是否为重包 " alt="" coords="457,1183,550,1209"/>
+<area shape="rect" id="node20" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="637,752,719,779"/>
+<area shape="rect" id="node30" href="../../d9/d85/netstack__net_8c.html#ae52e60e87bd14728be437222712f6805" title="判断组成员是否存在 " alt="" coords="621,955,735,981"/>
+<area shape="rect" id="node32" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="461,1081,546,1108"/>
+<area shape="rect" id="node21" href="../../d4/d82/netstack__mac_8h.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="799,752,927,779"/>
+<area shape="rect" id="node22" href="../../d4/d82/netstack__mac_8h.html#aeacdee97c5e1934263c550d733584559" title="把数据加载到RF的FIFO中 " alt="" coords="987,499,1111,525"/>
+<area shape="rect" id="node25" href="../../d4/d82/netstack__mac_8h.html#a794b07380997066fa4902f43916cf97d" title="发送数据 " alt="" coords="799,499,927,525"/>
+<area shape="rect" id="node28" href="../../d4/d82/netstack__mac_8h.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="797,347,928,373"/>
+<area shape="rect" id="node23" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="1188,220,1291,247"/>
+<area shape="rect" id="node24" href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4" title="往RF FIFO中写数据 " alt="" coords="1357,549,1457,576"/>
+<area shape="rect" id="node26" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc" title="进入发送模式 " alt="" coords="1003,296,1096,323"/>
+<area shape="rect" id="node27" href="../../d3/d0f/delay_8c.html#ab63c881c7370f9c01bfd8c20827b4ec6" title="0.5毫秒延时 " alt="" coords="1186,701,1293,728"/>
+<area shape="rect" id="node29" href="../../da/d7b/netstack__mac_8c.html#a33ff31e508adf099e47eba17b8c5e263" title="进入接收模式 " alt="" coords="1003,144,1096,171"/>
+<area shape="rect" id="node31" href="../../d1/d4d/flash_8c.html#ad9da0c22889472ef97f7dc833a36132e" title="从flash中读取数据 " alt="" coords="997,1056,1102,1083"/>
+<area shape="rect" id="node33" href="../../d9/d85/netstack__net_8c.html#a3ae3346a4646a946d75d4ab75131c4a8" title="更新本地信息 " alt="" coords="979,1259,1119,1285"/>
+<area shape="rect" id="node35" href="../../d1/d4d/flash_8c.html#a8d77bd9b3691a7d765d50907b8b3cfd1" title="擦除 flash " alt="" coords="1171,1031,1308,1057"/>
+<area shape="rect" id="node36" href="../../d1/d4d/flash_8c.html#aa17a77807a7aabec11fdebac1e638f82" title="往flash中写入数据 " alt="" coords="1186,1309,1293,1336"/>
+<area shape="rect" id="node37" href="../../d9/d85/netstack__net_8c.html#adb34a57b2e256f3a017524d04e47774f" title="填充网络PDU 头部 " alt="" coords="817,1461,908,1488"/>
+<area shape="rect" id="node38" href="../../df/d9a/netstack__app_8c.html#a344c7ec58519bcfd56d7dd9722e2f846" title="APP层处理来自网络层的数据包 " alt="" coords="639,1563,717,1589"/>
+<area shape="rect" id="node40" href="../../d0/dff/os_8h.html#a6ebb38845fa2428effc18cc598551b07" title="添加任务 " alt="" coords="1001,1664,1097,1691"/>
+<area shape="rect" id="node43" href="../../d4/d82/netstack__mac_8h.html#a4d193e8205661f6479386352cf7716d3" title="设置RF的发射功率 " alt="" coords="621,663,735,689"/>
+<area shape="rect" id="node44" href="../../d9/d85/netstack__net_8c.html#aad72816ebe4b41e347c4c8b2e32550b5" title="设置设备广播数据 " alt="" coords="611,1512,745,1539"/>
+<area shape="rect" id="node45" href="../../d9/d85/netstack__net_8c.html#aeb41e8a2ec160d2bc2277d8d0294506f" title="清除网络 " alt="" coords="615,1005,741,1032"/>
+<area shape="rect" id="node46" href="../../d9/d85/netstack__net_8c.html#aff22007206c1fd12523a5b612c7a0ce0" title="添加组成员 " alt="" coords="809,1360,916,1387"/>
+<area shape="rect" id="node47" href="../../d9/d85/netstack__net_8c.html#a3fd6513521df66177d6b90512019e4b5" title="移除组成员 " alt="" coords="799,1107,926,1133"/>
+<area shape="rect" id="node48" href="../../d9/d85/netstack__net_8c.html#a6ca0dadfccf78f1b7b6c943a8c04e6ad" title="清除组成员 " alt="" coords="805,1005,920,1032"/>
+<area shape="rect" id="node49" href="../../d9/d85/netstack__net_8c.html#a8dac0dde6b1ac91b94cf84037c20dafd" title="更新配对地址 " alt="" coords="607,1233,749,1260"/>
+<area shape="rect" id="node34" href="../../d1/d4d/flash_8c.html#af4b866c99ab487c79e433e86e6299d76" title="flash信息校验 " alt="" coords="1202,1259,1277,1285"/>
+<area shape="rect" id="node39" href="../../df/d9a/netstack__app_8c.html#a34433e85ae5e5ee6a9a14a37ba0c3ee1" title="开灯 " alt="" coords="818,1613,907,1640"/>
+<area shape="rect" id="node41" href="../../df/d9a/netstack__app_8c.html#a702a4b0f1d6ccdd0254d1cc1d35ab796" title="闪灯 " alt="" coords="826,1664,899,1691"/>
+<area shape="rect" id="node42" href="../../df/d9a/netstack__app_8c.html#aa095ec3980fedc3eb340f472ff70f867" title="关灯 " alt="" coords="817,1563,908,1589"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_icgraph" id="da/d7b/netstack__mac_8c_a38d715b974d2ac09e9a08d6af349226a_icgraph">
+<area shape="rect" id="node2" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="153,5,204,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a75cbc145251b10cf3b87b693d6fb57e9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static u8 mac_read_packet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>读取接收到的数据 </p>
+<dl class="section return"><dt>返回</dt><dd>返回接收结果 </dd></dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>无效数据 </td></tr>
+    <tr><td class="paramname">1</td><td>有效数据 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00379">379</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_cgraph" id="da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="202,5,302,32"/>
+<area shape="rect" id="node5" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9" title="读取RF的FIFO值 " alt="" coords="203,56,301,83"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#ab0a8e4824e5b365194c87cc2067d9316" title="2.4G 数据CRC校验 " alt="" coords="218,107,286,133"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="179,157,325,184"/>
+<area shape="rect" id="node3" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="373,5,479,32"/>
+<area shape="rect" id="node4" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="389,56,463,83"/>
+<area shape="rect" id="node8" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="378,132,474,159"/>
+<area shape="rect" id="node10" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="373,183,479,209"/>
+<area shape="rect" id="node9" href="../../da/d7b/netstack__mac_8c.html#a4d9c5ea82344d997a616afd4bb176d1d" title="高低位交换 " alt="" coords="531,132,602,159"/>
+<area shape="rect" id="node11" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="527,183,607,209"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_icgraph" id="da/d7b/netstack__mac_8c_a75cbc145251b10cf3b87b693d6fb57e9_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="179,5,303,32"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="351,5,451,32"/>
+<area shape="rect" id="node4" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="499,5,549,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a794b07380997066fa4902f43916cf97d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_send_packet </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>发送数据 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel</td><td>信道 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00328">328</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_cgraph" id="da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="346,5,449,32"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a564e1e53209be4e2ef3d5b41a9f598cc" title="进入发送模式 " alt="" coords="188,56,281,83"/>
+<area shape="rect" id="node9" href="../../d3/d0f/delay_8c.html#ab63c881c7370f9c01bfd8c20827b4ec6" title="0.5毫秒延时 " alt="" coords="181,119,288,145"/>
+<area shape="rect" id="node3" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="657,31,763,57"/>
+<area shape="rect" id="node5" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="336,56,459,83"/>
+<area shape="rect" id="node6" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="508,81,608,108"/>
+<area shape="rect" id="node8" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="507,31,609,57"/>
+<area shape="rect" id="node7" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="673,107,747,133"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_icgraph" id="da/d7b/netstack__mac_8c_a794b07380997066fa4902f43916cf97d_icgraph">
+<area shape="rect" id="node2" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="181,21,264,48"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="445,21,520,48"/>
+<area shape="rect" id="node7" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="312,21,397,48"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="447,72,519,99"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="568,21,692,48"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="740,21,840,48"/>
+<area shape="rect" id="node6" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="888,47,939,73"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="598,72,662,99"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d193e8205661f6479386352cf7716d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mac_set_power </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>power</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>设置RF的发射功率 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">power</td><td>发射功率 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00140">140</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_cgraph" id="da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="167,5,269,32"/>
+<area shape="rect" id="node3" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="317,5,423,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_icgraph" id="da/d7b/netstack__mac_8c_a4d193e8205661f6479386352cf7716d3_icgraph">
+<area shape="rect" id="node2" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="167,5,252,32"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="300,5,375,32"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="423,5,547,32"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="595,5,695,32"/>
+<area shape="rect" id="node6" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="743,5,793,32"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d9c5ea82344d997a616afd4bb176d1d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static u8 reflected </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>高低位交换 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>数据 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>交换结果 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00182">182</a> 行定义.</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a4d9c5ea82344d997a616afd4bb176d1d_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a4d9c5ea82344d997a616afd4bb176d1d_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a4d9c5ea82344d997a616afd4bb176d1d_icgraph" id="da/d7b/netstack__mac_8c_a4d9c5ea82344d997a616afd4bb176d1d_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a9ca2291cc6aba52914784b9927fbd112" title="CRC hash. " alt="" coords="124,93,220,120"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="268,93,415,120"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="463,68,591,95"/>
+<area shape="rect" id="node13" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="639,119,764,145"/>
+<area shape="rect" id="node5" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="660,68,743,95"/>
+<area shape="rect" id="node6" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="945,68,1020,95"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="812,93,897,120"/>
+<area shape="rect" id="node11" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="947,5,1019,32"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="1068,68,1192,95"/>
+<area shape="rect" id="node8" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="1240,67,1340,93"/>
+<area shape="rect" id="node9" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1388,40,1439,67"/>
+<area shape="rect" id="node12" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="1098,8,1162,35"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0adea6008de0733b5b37ecfaba32a345"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static u8 swap_bits </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swap bits between MSB and LSB of a given byte. </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">byte</td><td>The byte to tx_beacon processed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>The byte with swapped bits. </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00153">153</a> 行定义.</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a0adea6008de0733b5b37ecfaba32a345_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a0adea6008de0733b5b37ecfaba32a345_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a0adea6008de0733b5b37ecfaba32a345_icgraph" id="da/d7b/netstack__mac_8c_a0adea6008de0733b5b37ecfaba32a345_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#ad781d2550631c94dfdf7693fd3e6eb00" title="Swap bits for 3&#45;byte CRC. " alt="" coords="133,93,239,120"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="287,93,433,120"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="481,68,609,95"/>
+<area shape="rect" id="node13" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="657,119,783,145"/>
+<area shape="rect" id="node5" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="679,68,761,95"/>
+<area shape="rect" id="node6" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="964,68,1039,95"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="831,93,916,120"/>
+<area shape="rect" id="node11" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="965,5,1037,32"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="1087,68,1211,95"/>
+<area shape="rect" id="node8" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="1259,67,1359,93"/>
+<area shape="rect" id="node9" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1407,40,1457,67"/>
+<area shape="rect" id="node12" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="1117,8,1181,35"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="ad781d2550631c94dfdf7693fd3e6eb00"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void swap_crc_bits </td>
+          <td>(</td>
+          <td class="paramtype">u8 *&#160;</td>
+          <td class="paramname"><em>crc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swap bits for 3-byte CRC. </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">crc</td><td>The pointer to a 3-byte CRC that is to tx_beacon bit-swapped. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00167">167</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_cgraph" id="da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_cgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a0adea6008de0733b5b37ecfaba32a345" title="Swap bits between MSB and LSB of a given byte. " alt="" coords="159,5,239,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_icgraph" id="da/d7b/netstack__mac_8c_ad781d2550631c94dfdf7693fd3e6eb00_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a0d1ba0483affda2654dcf7dc6fd960b7" title="CRC 查表 " alt="" coords="159,93,305,120"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#ab98d797c14ce3ad49ccfefe34540d69f" title="蓝牙数据打包 " alt="" coords="353,68,481,95"/>
+<area shape="rect" id="node12" href="../../da/d7b/netstack__mac_8c.html#a75cbc145251b10cf3b87b693d6fb57e9" title="读取接收到的数据 " alt="" coords="529,119,655,145"/>
+<area shape="rect" id="node4" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="551,68,633,95"/>
+<area shape="rect" id="node5" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="836,68,911,95"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="703,93,788,120"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="837,5,909,32"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="959,68,1083,95"/>
+<area shape="rect" id="node7" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="1131,67,1231,93"/>
+<area shape="rect" id="node8" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1279,40,1329,67"/>
+<area shape="rect" id="node11" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="989,8,1053,35"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a33ff31e508adf099e47eba17b8c5e263"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void tpl_rx_mode </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>进入接收模式 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>信道 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00288">288</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_cgraph" id="da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="147,56,269,83"/>
+<area shape="rect" id="node7" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="157,107,259,133"/>
+<area shape="rect" id="node3" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="319,5,419,32"/>
+<area shape="rect" id="node6" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="317,56,420,83"/>
+<area shape="rect" id="node4" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="468,56,573,83"/>
+<area shape="rect" id="node5" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="483,5,558,32"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_icgraph" id="da/d7b/netstack__mac_8c_a33ff31e508adf099e47eba17b8c5e263_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a85e4da2dccafd4c5e7b1a5c8eff13496" title="开始接收 " alt="" coords="147,48,277,74"/>
+<area shape="rect" id="node3" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="712,22,836,49"/>
+<area shape="rect" id="node6" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="595,98,659,125"/>
+<area shape="rect" id="node7" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="325,48,408,74"/>
+<area shape="rect" id="node4" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="884,34,984,61"/>
+<area shape="rect" id="node5" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1032,64,1083,90"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="589,22,664,49"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="456,48,541,74"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="463,98,535,125"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a564e1e53209be4e2ef3d5b41a9f598cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void tpl_tx_mode </td>
+          <td>(</td>
+          <td class="paramtype">u8&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>进入发送模式 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>信道 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>返回</dt><dd>无 </dd></dl>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00300">300</a> 行定义.</p>
+
+<p><div class="dynheader">
+函数调用图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_cgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_cgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_cgraph" id="da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_cgraph">
+<area shape="rect" id="node2" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="157,5,259,32"/>
+<area shape="rect" id="node4" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827" title="写RF寄存器某一位 " alt="" coords="147,56,269,83"/>
+<area shape="rect" id="node3" href="../../da/d00/spi_8c.html#a09b82cf9ac6119c1080b9f3d615c02e6" title="读写一个byte " alt="" coords="468,56,573,83"/>
+<area shape="rect" id="node5" href="../../de/d03/netstack__phy_8c.html#ae7ba3d9941f6e981417bb317a1aee0e0" title="读RF寄存器 " alt="" coords="319,107,419,133"/>
+<area shape="rect" id="node7" href="../../de/d03/netstack__phy_8c.html#a1c12a824aee6841bf873c3874acd3b52" title="写RF寄存器 " alt="" coords="317,56,420,83"/>
+<area shape="rect" id="node6" href="../../d3/d0f/delay_8c.html#a583dcd989ad8e5453411ef97b47b365d" title="微妙延时 " alt="" coords="483,107,558,133"/>
+</map>
+</div>
+</p>
+
+<p><div class="dynheader">
+这是这个函数的调用关系图:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_icgraph.png" border="0" usemap="#da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_icgraph" alt=""/></div>
+<map name="da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_icgraph" id="da/d7b/netstack__mac_8c_a564e1e53209be4e2ef3d5b41a9f598cc_icgraph">
+<area shape="rect" id="node2" href="../../da/d7b/netstack__mac_8c.html#a794b07380997066fa4902f43916cf97d" title="发送数据 " alt="" coords="147,21,275,48"/>
+<area shape="rect" id="node3" href="../../d9/d85/netstack__net_8c.html#a29d6c9815da8ae61c9b13495ddb3a1e7" title="网络层输出 " alt="" coords="323,21,405,48"/>
+<area shape="rect" id="node4" href="../../d9/d85/netstack__net_8c.html#a8c94131e6631e732540808e310ed3698" title="网络层输入 " alt="" coords="587,21,661,48"/>
+<area shape="rect" id="node8" href="../../d9/d85/netstack__net_8c.html#ac0d1d3eda806f489f57a878d07fa8102" title="网络层处理 " alt="" coords="453,21,539,48"/>
+<area shape="rect" id="node9" href="../../d9/d85/netstack__net_8c.html#ac822c4934648a7f186def8f93398e40c" title="网络层任务 " alt="" coords="588,72,660,99"/>
+<area shape="rect" id="node5" href="../../da/d7b/netstack__mac_8c.html#a10a7f891db1bb62ddc6a70862dc5a8b6" title="接收处理 " alt="" coords="709,21,833,48"/>
+<area shape="rect" id="node6" href="../../da/d7b/netstack__mac_8c.html#a38d715b974d2ac09e9a08d6af349226a" title="MAC 进程 " alt="" coords="881,21,981,48"/>
+<area shape="rect" id="node7" href="../../d0/d29/main_8c.html#acdef7a1fd863a6d3770c1268cb06add3" title="主函数 " alt="" coords="1029,47,1080,73"/>
+<area shape="rect" id="node10" href="../../d9/d85/netstack__net_8c.html#ae7cc4f67364767fc61c17382c11c392f" title="网络层初始化 " alt="" coords="739,72,803,99"/>
+</map>
+</div>
+</p>
+
+</div>
+</div>
+<h2 class="groupheader">变量说明</h2>
+<a class="anchor" id="ac730945ba650da1de8aff5bfcb81c221"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">code unsigned long crc24q[256]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CRC hash表 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00053">53</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c5ad7b3bcc2a977ada85e1a409c039f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const u8 code tpl_channels[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>初始值:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">        <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(0),    </div>
+<div class="line">    <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(12),   </div>
+<div class="line">    <a class="code" href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a>(39)    </div>
+<div class="line">}</div>
+<div class="ttc" id="netstack__mac_8c_html_ad096a9f1d5b7f24931d2e9b4f5f2879c"><div class="ttname"><a href="../../da/d7b/netstack__mac_8c.html#ad096a9f1d5b7f24931d2e9b4f5f2879c">RF_CHN_TO_PLL_CHN</a></div><div class="ttdeci">#define RF_CHN_TO_PLL_CHN(_x_)</div><div class="ttdef"><b>Definition:</b> <a href="../../da/d7b/netstack__mac_8c_source.html#l00027">netstack_mac.c:27</a></div></div>
+</div><!-- fragment --><p>蓝牙广播信道 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00042">42</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="a211eaf75cafc03d002beafff0b389ebb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const u8 code tpl_whiten[] = {0xd3,0xb3,0xf3}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>白化种子 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00049">49</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa300e4d3fccc70adc22aeb89d7d2087a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u8 data var_rx_buf[<a class="el" href="../../db/d3e/network__conf_8h.html#af7bcf925b540392822c775688076024e">VAR_RX_BUF_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>接收缓存 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00020">20</a> 行定义.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d35377c4b3cfe48d5d2c6105ca0fd28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">u8 data var_tx_buf[<a class="el" href="../../db/d3e/network__conf_8h.html#a862555b7f04e47a74f870634a67e32ca">VAR_TX_BUF_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>发送缓存 </p>
+
+<p>在文件 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html">netstack_mac.c</a> 第 <a class="el" href="../../da/d7b/netstack__mac_8c_source.html#l00022">22</a> 行定义.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

@@ -1,0 +1,1 @@
+"app\Ledcontrol.c" LARGE OPTIMIZE (6,SPEED) BROWSE INCDIR(.\app;.\dev;.\inc;.\os;.\examples) DEFINE (LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\Ledcontrol.lst) TABS (2) OBJECT(.\Objects\Ledcontrol.obj)

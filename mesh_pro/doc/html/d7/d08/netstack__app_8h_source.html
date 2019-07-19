@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: app/netstack_app.h 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_d422163b96683743ed3963d4aac17747.html">app</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">netstack_app.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d7/d08/netstack__app_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __NETSTACK_APP_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __NETSTACK_APP_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;HC_DEFINE.H&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a871058bc733336bc2bf993eb3099b92c">    6</a></span>&#160;<span class="preprocessor">#define   LED_MODEL_WY      0x00     //冷暖模式</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a7189c6831ecf107ed91fe9e224f19608">    7</a></span>&#160;<span class="preprocessor">#define   LED_MODEL_RGB     0x01        //RGB模式</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#afe7bc82c39732d91507d16cccddc9086">    8</a></span>&#160;<span class="preprocessor">#define   LED_MODEL_WY_RGB  0x02 //冷暖RGB共存模式</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a48bea2c9e43c1188c1f162c8a3a2e059">   10</a></span>&#160;<span class="preprocessor">#define   CURRENT_LED_MODEL  LED_MODEL_WY  //当前LED模式</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#ad65d1478d6dcfa1338ab4e78ea13f7e5">   12</a></span>&#160;<span class="preprocessor">#define     LED_MODEL_SHIFT     (4)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a9cdf030854f71a57dba67801ec5a479f">   18</a></span>&#160;<span class="preprocessor">#define CTL_LED_FLASH           0X40    </span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a71bea3d25c03a35682e82661487feaca">   19</a></span>&#160;<span class="preprocessor">#define CTL_LED_ON              0X41  </span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a5f4c1db1f478c8da33b708e6bd9c2ec3">   20</a></span>&#160;<span class="preprocessor">#define CTL_LED_OFF             0X42  </span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#acb1c4dd240624de0ca63c899c2e459ee">   22</a></span>&#160;<span class="preprocessor">#define CTL_BRIGHT_VAL      0X43    </span></div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#ab0ab7609ee28edb0724c67fbfdfe0fff">   23</a></span>&#160;<span class="preprocessor">#define CTL_BRIGHT_UP           0X44  </span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#ae79369b51ec722302aadd5325640d3d9">   24</a></span>&#160;<span class="preprocessor">#define CTL_BRIGHT_DOWN     0X45  </span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#ad6833614aa5ef2e9015465ca1bacec51">   26</a></span>&#160;<span class="preprocessor">#define CTL_TONE_VAL            0X46    </span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a444615141c94322cf3571acb8d9ffda5">   27</a></span>&#160;<span class="preprocessor">#define CTL_TONE_UP             0X47    </span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a37cbfee22945dbe4e8c71bbd13101c0c">   28</a></span>&#160;<span class="preprocessor">#define CTL_TONE_DOWN           0X48    </span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a1c647f952ed0b5d3ad4035aedb988dda">   30</a></span>&#160;<span class="preprocessor">#define CTL_KEY_BOARD           0X49  </span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#a899255a573195d69b8bc03317d0ca091">   32</a></span>&#160;<span class="preprocessor">#define CTL_LED_RGB             0X4A  </span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="../../d7/d08/netstack__app_8h.html#ad34c12d8e5fadc6f157c6438e2393959">   34</a></span>&#160;<span class="preprocessor">#define CTL_CMD_MAX             0X4B  </span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="../../d8/d95/structled__sta__t.html">   40</a></span>&#160;<span class="preprocessor">typedef struct led_sta_t{</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="../../d8/d95/structled__sta__t.html#a0b63f3c54cd9c16fb02c96d3df9855f2">   41</a></span>&#160;    u8 <a class="code" href="../../d8/d95/structled__sta__t.html#a0b63f3c54cd9c16fb02c96d3df9855f2">led_model</a>;  </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="../../d8/d95/structled__sta__t.html#a31757cbfbe2e50f8e02ec9ca45ff30f0">   42</a></span>&#160;    u8 <a class="code" href="../../d8/d95/structled__sta__t.html#a31757cbfbe2e50f8e02ec9ca45ff30f0">led_sta</a>;     </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="../../d8/d95/structled__sta__t.html#a55d36c706a803e72fa55f61228b0b553">   43</a></span>&#160;    u8 <a class="code" href="../../d8/d95/structled__sta__t.html#a55d36c706a803e72fa55f61228b0b553">led_bright</a>; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="../../d8/d95/structled__sta__t.html#abda858450f3dc751a852b7eb728876f7">   44</a></span>&#160;    u8 <a class="code" href="../../d8/d95/structled__sta__t.html#abda858450f3dc751a852b7eb728876f7">led_tone</a>;     </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}<a class="code" href="../../d7/d08/netstack__app_8h.html#a77bee2fa3a1f5256b1c3ceeae1195473">Led_Sta_T</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a950d92c5aa8b58148680bbdeca49f331">app_process</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;u8 <a class="code" href="../../d7/d08/netstack__app_8h.html#ae8486318160b49cbc693c02594d818bb">app_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;u8 <a class="code" href="../../d7/d08/netstack__app_8h.html#a344c7ec58519bcfd56d7dd9722e2f846">app_input</a>(<a class="code" href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a> *net_pdu);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;u8 <a class="code" href="../../d7/d08/netstack__app_8h.html#ab096bdeec6ee3b81dbb8bfe818bb06db">app_output</a>(<a class="code" href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a> *net_pdu);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a34433e85ae5e5ee6a9a14a37ba0c3ee1">F_OpenLed</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#aa095ec3980fedc3eb340f472ff70f867">F_CloseLed</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a3082839ab5912ec256ad883a56e08176">F_BrightUp</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a43d1db64a66068b5208675444da710d3">F_BrightDown</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#ab00e855edbe51faea32964b89e8b23aa">F_ToneUp</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a5889f9936a88b99bed06cbb68e1da8bc">F_ToneDown</a>();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a1d28acb57236dcc1229c2f9794b7487b">F_SetBrightToneValue</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#ac3d43429a4da263d8a169c21b03885ca">F_AcPowerDect</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a006748422db7b1bf03b0845832da8521">F_CWRunning</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#affcdf4198d9d9846a1639d4b2f356282">F_Countdata</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> x_Bright,<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> y_Tone);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/d08/netstack__app_8h.html#a2c0e86960979f0c8d21b864925b06e71">PWM_Init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="netstack__app_8h_html_aa095ec3980fedc3eb340f472ff70f867"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#aa095ec3980fedc3eb340f472ff70f867">F_CloseLed</a></div><div class="ttdeci">void F_CloseLed()</div><div class="ttdoc">关灯 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00464">netstack_app.c:464</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_ae8486318160b49cbc693c02594d818bb"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#ae8486318160b49cbc693c02594d818bb">app_init</a></div><div class="ttdeci">u8 app_init(void)</div><div class="ttdoc">APP层初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00303">netstack_app.c:303</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a2c0e86960979f0c8d21b864925b06e71"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a2c0e86960979f0c8d21b864925b06e71">PWM_Init</a></div><div class="ttdeci">void PWM_Init(void)</div><div class="ttdoc">PWM初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00705">netstack_app.c:705</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a3082839ab5912ec256ad883a56e08176"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a3082839ab5912ec256ad883a56e08176">F_BrightUp</a></div><div class="ttdeci">void F_BrightUp()</div><div class="ttdoc">亮度加 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00477">netstack_app.c:477</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_ab00e855edbe51faea32964b89e8b23aa"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#ab00e855edbe51faea32964b89e8b23aa">F_ToneUp</a></div><div class="ttdeci">void F_ToneUp()</div><div class="ttdoc">色温加 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00527">netstack_app.c:527</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a77bee2fa3a1f5256b1c3ceeae1195473"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a77bee2fa3a1f5256b1c3ceeae1195473">Led_Sta_T</a></div><div class="ttdeci">struct led_sta_t Led_Sta_T</div><div class="ttdoc">LED灯设备广播参数结构体 </div></div>
+<div class="ttc" id="structled__sta__t_html_a55d36c706a803e72fa55f61228b0b553"><div class="ttname"><a href="../../d8/d95/structled__sta__t.html#a55d36c706a803e72fa55f61228b0b553">led_sta_t::led_bright</a></div><div class="ttdeci">u8 led_bright</div><div class="ttdoc">亮度 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d08/netstack__app_8h_source.html#l00043">netstack_app.h:43</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a1d28acb57236dcc1229c2f9794b7487b"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a1d28acb57236dcc1229c2f9794b7487b">F_SetBrightToneValue</a></div><div class="ttdeci">void F_SetBrightToneValue()</div><div class="ttdoc">设置亮度和色温值 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00575">netstack_app.c:575</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a344c7ec58519bcfd56d7dd9722e2f846"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a344c7ec58519bcfd56d7dd9722e2f846">app_input</a></div><div class="ttdeci">u8 app_input(NET_PDU *net_pdu)</div><div class="ttdoc">APP层处理来自网络层的数据包 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00349">netstack_app.c:349</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_ab096bdeec6ee3b81dbb8bfe818bb06db"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#ab096bdeec6ee3b81dbb8bfe818bb06db">app_output</a></div><div class="ttdeci">u8 app_output(NET_PDU *net_pdu)</div><div class="ttdoc">APP层发送数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00440">netstack_app.c:440</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_affcdf4198d9d9846a1639d4b2f356282"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#affcdf4198d9d9846a1639d4b2f356282">F_Countdata</a></div><div class="ttdeci">void F_Countdata(unsigned char x_Bright, unsigned char y_Tone)</div></div>
+<div class="ttc" id="netstack__app_8h_html_a34433e85ae5e5ee6a9a14a37ba0c3ee1"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a34433e85ae5e5ee6a9a14a37ba0c3ee1">F_OpenLed</a></div><div class="ttdeci">void F_OpenLed()</div><div class="ttdoc">开灯 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00453">netstack_app.c:453</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a950d92c5aa8b58148680bbdeca49f331"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a950d92c5aa8b58148680bbdeca49f331">app_process</a></div><div class="ttdeci">void app_process(void)</div><div class="ttdoc">应用层进程 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00263">netstack_app.c:263</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a006748422db7b1bf03b0845832da8521"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a006748422db7b1bf03b0845832da8521">F_CWRunning</a></div><div class="ttdeci">void F_CWRunning(void)</div><div class="ttdoc">应用层中断处理函数 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00621">netstack_app.c:621</a></div></div>
+<div class="ttc" id="structled__sta__t_html_a31757cbfbe2e50f8e02ec9ca45ff30f0"><div class="ttname"><a href="../../d8/d95/structled__sta__t.html#a31757cbfbe2e50f8e02ec9ca45ff30f0">led_sta_t::led_sta</a></div><div class="ttdeci">u8 led_sta</div><div class="ttdoc">LED状态 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d08/netstack__app_8h_source.html#l00042">netstack_app.h:42</a></div></div>
+<div class="ttc" id="struct_n_e_t___p_d_u_html"><div class="ttname"><a href="../../da/d6d/struct_n_e_t___p_d_u.html">NET_PDU</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d4/d82/netstack__mac_8h_source.html#l00052">netstack_mac.h:52</a></div></div>
+<div class="ttc" id="structled__sta__t_html_a0b63f3c54cd9c16fb02c96d3df9855f2"><div class="ttname"><a href="../../d8/d95/structled__sta__t.html#a0b63f3c54cd9c16fb02c96d3df9855f2">led_sta_t::led_model</a></div><div class="ttdeci">u8 led_model</div><div class="ttdoc">LED模式 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d08/netstack__app_8h_source.html#l00041">netstack_app.h:41</a></div></div>
+<div class="ttc" id="structled__sta__t_html_abda858450f3dc751a852b7eb728876f7"><div class="ttname"><a href="../../d8/d95/structled__sta__t.html#abda858450f3dc751a852b7eb728876f7">led_sta_t::led_tone</a></div><div class="ttdeci">u8 led_tone</div><div class="ttdoc">色温 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d08/netstack__app_8h_source.html#l00044">netstack_app.h:44</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_ac3d43429a4da263d8a169c21b03885ca"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#ac3d43429a4da263d8a169c21b03885ca">F_AcPowerDect</a></div><div class="ttdeci">void F_AcPowerDect()</div><div class="ttdoc">ADC 检测 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00587">netstack_app.c:587</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a5889f9936a88b99bed06cbb68e1da8bc"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a5889f9936a88b99bed06cbb68e1da8bc">F_ToneDown</a></div><div class="ttdeci">void F_ToneDown()</div><div class="ttdoc">色温减 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00552">netstack_app.c:552</a></div></div>
+<div class="ttc" id="netstack__app_8h_html_a43d1db64a66068b5208675444da710d3"><div class="ttname"><a href="../../d7/d08/netstack__app_8h.html#a43d1db64a66068b5208675444da710d3">F_BrightDown</a></div><div class="ttdeci">void F_BrightDown()</div><div class="ttdoc">亮度减 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00501">netstack_app.c:501</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

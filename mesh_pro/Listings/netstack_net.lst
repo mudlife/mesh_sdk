@@ -1,0 +1,1142 @@
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE NETSTACK_NET
+OBJECT MODULE PLACED IN .\Objects\netstack_net.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE net\netstack_net.c LARGE OPTIMIZE(6,SPEED) INCDIR(.\app;.\dev;.\os;.\inc
+                    -) DEFINE(LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\netstack_net.lst) TABS(2) OBJECT(.\Objects\netstack_net.obj)
+
+line level    source
+
+   1          /**
+   2           * @file netstack_net.c
+   3           * @brief 网络层文件
+   4           * @details 实现层协议 网络初始化，组网，中继，收发网络层数据
+   5           * @author mudlife
+   6           * @par Copyright (c):
+   7           *      上海晶曦微电子科技有限公司
+   8           * @version 1.0.0
+   9           * @date 2019-06-02
+  10           */
+  11          
+  12          
+  13          #include "network_conf.h"
+  14          #include "netstack_app.h"
+  15          #include "delay.h"
+  16          #include <string.h>
+  17          #include "flash.h"
+  18          #include "os.h"
+  19          #include "pwm.h"
+  20          #include "system.h"
+  21          #include <stdlib.h>
+  22          
+  23          /// 网络PDU 头部数据长度
+  24          #define NET_PDU_HEAD_LEN  11
+  25          /// 消息缓存的最大数
+  26          #define RX_POOL_COUNT   5
+  27          
+  28          /**
+  29           * @name 网络层操作码
+  30           * @{
+  31           */
+  32          #define CTL_ADV_NET_STA         0X00    //广播网络状态
+  33          #define CTL_ADV_DEV_STA         0X01    //广播设备状态
+  34          
+  35          #define CTL_LEARN_REQ           0X02
+  36          #define CTL_LEARN_RSP           0X03
+  37          #define CTL_LEARN_CLEAR         0X04
+  38          #define CTL_LEAR_CLEAR_RSP      0X05
+  39          
+  40          #define CTL_SET_PARAM           0X06    //网络配置
+  41          #define CTL_SET_PARAM_RSP       0X07    //网络配置响应
+  42          #define CTL_SET_POWER           0X08    //设置发送功率
+  43          #define CTL_GET_NET_NODE        0X09    //获取入网设备
+  44          #define CTL_REPEAT_CNT          0X0A    //重传次数
+  45          #define CTL_GET_DEVICE_STA      0X0C    //获取设备状态
+  46          
+  47          #define CTL_PAIR              0X10  //配对
+  48          #define CTL_PAIR_CANEL        0X11  //取消配对
+  49          #define CTL_REMOVE_NET        0X12  //移除网络节点
+  50          #define CTL_REMOVE_NET_RSP    0X13  //移除网络失败
+  51          #define CTL_ADD_GROUP         0X14  //添加组
+  52          
+  53          #define CTL_ADD_GROUP_RSP     0X15  //添加组响应
+  54          
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 2   
+
+  55          #define CTL_DEL_GROUP         0X16  //删除组
+  56          #define CTL_DEL_GROUP_RSP     0X17  //删除组响应
+  57          #define CTL_CLEAR_GROUP       0X18
+  58          #define CTL_CLEAR_GROUP_RSP   0X19
+  59          
+  60          #define CTL_SET_RENAME          0X1A //设置名称
+  61          #define CTL_SET_RENAME_RSP      0X1B //设置名称
+  62          /** @} */
+  63          
+  64          /// 加密定义
+  65          #define net_encrypt net_decencrypt
+  66          
+  67          /** 本地信息结构体成员 */
+  68          struct netstack_local local_info ;
+  69          
+  70          
+  71          extern u8 data var_tx_buf[VAR_TX_BUF_SIZE];
+  72          /** 空地址 */
+  73          code u8 null_mac[6] = {0x00,0x00,0x00,0x00,0x00,0x00};
+  74          /** 广播地址 */
+  75          code u8 all_group[]={0xFF,0xFF,0xFF,0xFE};
+  76          
+  77          /** 网络广播次数 */
+  78          static u8 adv_net_info_cnt;
+  79          
+  80          /** 消息缓存数 */
+  81          static u8 rx_pool_c=0;
+  82          
+  83          
+  84          //static u8 adv_led_sta_en = 0;
+  85          /** 接收缓存变量 */
+  86          struct netstack_rx_flag rx_pool[RX_POOL_COUNT];
+  87          void task_net(void);
+  88          static void net_ctl_del(u8 *src_addr,NET_PDU *net_pdu);
+  89          
+  90          //extern void app_led_trig();
+  91          
+  92          //void net_group_init(void);
+  93          static u8 net_group_exist(struct group_t *group);
+  94          static u8 net_group_add(struct group_t *group);
+  95          static u8 net_group_remove(struct group_t *group);
+  96          //static u8 net_user_exist(struct group_t *group);
+  97          //static void net_erase_group(struct group_t *group);
+  98          static u8 net_updat_peer_addr(struct group_t *group);
+  99          static u8 net_group_clear(u8 *user_id);
+ 100          
+ 101          static void net_set_device_sta(NET_PDU *pdu,u8 ttl);
+ 102          
+ 103          extern void net_clear_network(void);
+ 104          # if 1
+ 105          
+ 106          
+ 107          
+ 108          
+ 109          
+ 110          //static void net_adv_led_sta_task(void)
+ 111          //{
+ 112          //  adv_led_sta_en = 0;
+ 113          ////  NET_PDU *pdu = (NET_PDU *)&var_tx_buf[15];
+ 114          ////  net_set_device_sta(pdu,5);
+ 115          ////  net_output(local_info.mac_addr,pdu,1,20);
+ 116          //  
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 3   
+
+ 117          //}
+ 118          #if defined(NET_RESET)
+              /**
+               * @brief 启动次数清零
+               *
+               * @return 无
+               */
+              static void reboot_task(void)
+              {
+                local_info.reboot_cnt = 0;
+                net_updat_local_info();
+              }
+              #endif
+ 130          
+ 131          
+ 132          static void net_device_sta_task(void)
+ 133          {
+ 134   1        NET_PDU *pdu = (NET_PDU *)&var_tx_buf[15];
+ 135   1        net_set_device_sta(pdu,16);
+ 136   1            
+ 137   1        net_output(local_info.mac_addr,pdu,1,10);
+ 138   1      }
+ 139          
+ 140          /**
+ 141           * @brief 接收缓存初始化
+ 142           *
+ 143           * @return 无
+ 144           */
+ 145          static void net_rx_pool_init(void)
+ 146          {
+ 147   1        memset(rx_pool,0,sizeof(rx_pool));
+ 148   1        rx_pool_c = 0;
+ 149   1      }
+ 150          
+ 151          /**
+ 152           * @brief 判断是否为重包
+ 153           *
+ 154           * @param src 源地址
+ 155           * @param seq 序列号
+ 156           * @return 返回结果
+ 157           *   @retval 0 该数据包不存在
+ 158           *   @retval 1 该数据包已存在
+ 159           */
+ 160          static u8 net_rx_exist(u8 *src,u8 seq)
+ 161          {
+ 162   1        u8 i;
+ 163   1        
+ 164   1        for(i=0;i<rx_pool_c;i++){
+ 165   2          if(memcmp(src,rx_pool[i].src,3)==0 && rx_pool[i].seq == seq){
+ 166   3            return 1;
+ 167   3          }
+ 168   2        }
+ 169   1        if(rx_pool_c >= RX_POOL_COUNT){
+ 170   2          memcpy(&rx_pool[0],&rx_pool[1],sizeof(struct netstack_rx_flag)*(rx_pool_c-1));
+ 171   2          memcpy(&rx_pool[RX_POOL_COUNT-1].src,src,3);
+ 172   2          rx_pool[RX_POOL_COUNT-1].seq = seq;
+ 173   2        }else{
+ 174   2          memcpy(&rx_pool[i].src,src,3);
+ 175   2          rx_pool[i].seq = seq;
+ 176   2          rx_pool_c++;
+ 177   2        }
+ 178   1        return 0;
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 4   
+
+ 179   1      }
+ 180          
+ 181          /**
+ 182           * @brief 数据包加密
+ 183           *
+ 184           * @param net_pdu 网络层数据 @see NET_PDU
+ 185           * @return 无
+ 186           */
+ 187          static void net_decencrypt(NET_PDU *net_pdu)
+ 188          {
+ 189   1        u8 *ptr;
+ 190   1        u8 i,len;
+ 191   1        if(net_pdu->sm == 0)//判读是否加密
+ 192   1          return;
+ 193   1        ptr = net_pdu->src;
+ 194   1        len = sizeof(NET_PDU) - 2;
+ 195   1        net_pdu->nid = net_pdu->nid^local_info.pass[0];
+ 196   1        for(i=0;i<len;i++){
+ 197   2          *ptr = *ptr^local_info.pass[i%6];
+ 198   2          ptr++;
+ 199   2        }
+ 200   1        
+ 201   1      }
+ 202          
+ 203          /**
+ 204           * @brief 更新本地信息
+ 205           *
+ 206           * @return 无
+ 207           */
+ 208          void net_updat_local_info(void)
+ 209          {
+ 210   1        local_info.flash_crc_val = flash_crc((u8 *)&local_info,sizeof(local_info)-1);
+ 211   1        flash_erase_section((u16)LOCAL_INFO_ADDR);
+ 212   1        flash_erase_section((u16)LOCAL_INFO_ADDR+128);
+ 213   1        flash_write_buf((u16)LOCAL_INFO_ADDR,(u8 *)&local_info,sizeof(local_info));
+ 214   1        flash_write_buf((u16)(LOCAL_INFO_ADDR+128),(u8 *)&local_info,sizeof(local_info));
+ 215   1      }
+ 216          
+ 217          /**
+ 218           * @brief 获取本地信息
+ 219           *
+ 220           * @return 返回是否获取成功
+ 221           *   @retval 0 获取成功
+ 222           *   @retval 1 获取失败 
+ 223           */
+ 224          static u8 net_get_local_info(void)
+ 225          {
+ 226   1        u8 crc = 0;
+ 227   1        flash_read_buf((u16)LOCAL_INFO_ADDR,(u8 *)&local_info,sizeof(struct netstack_local));
+ 228   1        crc = flash_crc((u8 *)&local_info,sizeof(struct netstack_local)-1);
+ 229   1        if(local_info.flash_crc_val == crc){
+ 230   2          return 0;
+ 231   2        }else{
+ 232   2          flash_read_buf((u16)LOCAL_INFO_ADDR+128,(u8 *)&local_info,sizeof(struct netstack_local));
+ 233   2          crc = flash_crc((u8 *)&local_info,sizeof(struct netstack_local)-1);
+ 234   2          if(local_info.flash_crc_val == crc){
+ 235   3            return 0;
+ 236   3          }
+ 237   2        }
+ 238   1        
+ 239   1        flash_erase_section((u16)LOCAL_INFO_ADDR);
+ 240   1        flash_erase_section((u16)LOCAL_INFO_ADDR+128);
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 5   
+
+ 241   1        
+ 242   1        return 1;
+ 243   1      }
+ 244          
+ 245          //void net_set_mac_addr(const u8 *addr)
+ 246          //{
+ 247          //  memcpy(local_info.mac_addr,addr,6);
+ 248          //  net_updat_local_info();
+ 249          //}
+ 250          
+ 251          /**
+ 252           * @brief 网络层初始化
+ 253           *
+ 254           * @return 返回初始化结果
+ 255           *   @retval 0 成功
+ 256           *   @retval 1 失败 
+ 257           */
+ 258          u8 net_init(void)
+ 259          {
+ 260   1      //  flash_read_buf((u16)LOCAL_INFO_ADDR,(u8 *)&local_info,sizeof(struct netstack_local));
+ 261   1        if(net_get_local_info() == 1){
+ 262   2          ResetNoReadOption();
+ 263   2        }
+ 264   1        
+ 265   1        if(memcmp(null_mac,local_info.mac_addr,6) == 0)
+ 266   1        {//判断是否是第一次运行
+ 267   2          INSCON = 0x10;
+ 268   2          flash_read_mac_addr((u16)(CHIP_ADDR+2),local_info.mac_addr);
+ 269   2          INSCON = 0x00;
+ 270   2          
+ 271   2        }
+ 272   1      #if defined(NET_RESET)
+                local_info.reboot_cnt++;
+              #endif
+ 275   1        
+ 276   1        net_updat_local_info();
+ 277   1        
+ 278   1      
+ 279   1        local_info.company_id[0] = COMPANY_ID>>8;
+ 280   1        local_info.company_id[1] = COMPANY_ID;
+ 281   1        
+ 282   1        local_info.uuid[0] = UUID>>8;
+ 283   1        local_info.uuid[1] = UUID;
+ 284   1        
+ 285   1        local_info.channel = 0;
+ 286   1        local_info.repeat = 5;
+ 287   1        local_info.pair_time = 0;
+ 288   1      
+ 289   1        adv_net_info_cnt = 0;
+ 290   1        net_rx_pool_init();
+ 291   1      
+ 292   1        if(((local_info.net_sta>>NET_FEATURE_NET_STA)&0x01) == 0){
+ 293   2          local_info.nid = 0x1E;
+ 294   2          local_info.net_sta |= (1<<NET_FEATURE_SETTING);
+ 295   2        }
+ 296   1        
+ 297   1        //是否支持低功耗
+ 298   1        #if FEATURE_LOW_POWER
+                  local_info.net_sta |= 1<<NET_FEATURE_LOW_POWER;
+                #else
+ 301   1          local_info.net_sta &= ~(1<<NET_FEATURE_LOW_POWER);
+ 302   1        #endif
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 6   
+
+ 303   1        
+ 304   1        //单机版还是联网版
+ 305   1        #if FEATURE_NET
+                  local_info.net_sta |= 1<<NET_FEATURE_NET;
+                #else
+ 308   1          local_info.net_sta &= ~(1<<NET_FEATURE_NET);
+ 309   1        #endif
+ 310   1        
+ 311   1        //学习
+ 312   1        #if FEATURE_LEARN
+                  local_info.net_sta &= ~(1<<NET_FEATURE_LEARN);
+                #else
+ 315   1          local_info.net_sta |= 1<<NET_FEATURE_LEARN;
+ 316   1        #endif
+ 317   1        
+ 318   1          
+ 319   1        if(local_info.group_count == 0){
+ 320   2          net_group_add((struct group_t *)all_group);
+ 321   2        } 
+ 322   1        #if defined(NET_RESET)  
+                if(local_info.reboot_cnt >=6){
+                  NET_PDU *pdu = (NET_PDU *)&var_tx_buf[15];
+                  pdu->dat.net_cmd.opcode = CTL_LED_FLASH;
+                  pdu->dat.net_cmd.param[0] = 1;
+                  app_input(pdu);
+                  os_task_add(2000,net_clear_network);
+                }else
+                #endif
+ 331   1        {
+ 332   2          mac_listen_packet(local_info.channel);//进入接收模式
+ 333   2          #if defined(NET_RESET)
+                  os_task_add(6000,reboot_task);
+                  #endif
+ 336   2          os_task_add(100,task_net);//添加任务例程
+ 337   2        }
+ 338   1        return 0;
+ 339   1      }
+ 340          
+ 341          
+ 342          /**
+ 343           * @brief 填充网络PDU 头部
+ 344           *
+ 345           * @param net_pdu 网络PDU
+ 346           * @param oper 操作码
+ 347           * @param at 地址类型
+ 348           * @return 无
+ 349           */
+ 350          static void net_addr_fill(NET_PDU *net_pdu,u8 oper,u8 at)
+ 351          {
+ 352   1        net_pdu->dat.net_cmd.opcode = oper;
+ 353   1        net_pdu->at = at;  //单播
+ 354   1        memcpy(net_pdu->src,local_info.mac_addr,3);
+ 355   1        net_pdu->dst[0] = 0xFF;
+ 356   1        net_pdu->dst[1] = 0xFF;
+ 357   1        net_pdu->dst[2] = 0xFF;
+ 358   1        net_pdu->seq = local_info.seq;
+ 359   1        local_info.seq++;
+ 360   1      }
+ 361          
+ 362          
+ 363          /**
+ 364           * @brief 网络层输入
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 7   
+
+ 365           *
+ 366           * @param src_addr 设备MAC地址
+ 367           * @param net_pdu 网络PDU
+ 368           * @param len 数据长度
+ 369           * @return 返回处理结果
+ 370           *   @retval 0 有效处理
+ 371           *   @retval 1 无效处理 
+ 372           */
+ 373          u8 net_input(u8 *src_addr,NET_PDU *net_pdu,u8 len)
+ 374          {
+ 375   1        
+ 376   1        //判读是否加密
+ 377   1        net_decencrypt(net_pdu);
+ 378   1        
+ 379   1        
+ 380   1        //1 判断网络ID是否一致
+ 381   1      
+ 382   1        if(net_pdu->nid != local_info.nid && net_pdu->nid != 0x1F){
+ 383   2          return 1;
+ 384   2        }
+ 385   1        
+ 386   1        //判断源地址是否为本地地址
+ 387   1        if(memcmp(net_pdu->src,local_info.mac_addr,3) == 0){
+ 388   2          return 1;
+ 389   2        }
+ 390   1        
+ 391   1        net_pdu->len = len;
+ 392   1        if(net_rx_exist(net_pdu->src,net_pdu->seq) == 1){
+ 393   2            return 1;
+ 394   2        }
+ 395   1      
+ 396   1        
+ 397   1        //2 判断是否为控制指令
+ 398   1      
+ 399   1        if(net_pdu->at == 1){//判断目标地址类型 0--单播  1--组播
+ 400   2          if(net_pdu->ttl>0){
+ 401   3            net_pdu->ttl--;
+ 402   3            net_output(src_addr,net_pdu,1,local_info.repeat);
+ 403   3            net_decencrypt(net_pdu);
+ 404   3          
+ 405   3          }
+ 406   2          //判断组播地址是否与本地组ID匹配
+ 407   2          if(net_pdu->group_id != 0xFE && net_group_exist((struct group_t *)net_pdu->dst) == 0){
+ 408   3            return 1;
+ 409   3          }
+ 410   2      
+ 411   2        }else if(memcmp(net_pdu->dst,local_info.mac_addr,3) != 0){//单播地址
+ 412   2          goto net_input_del1;
+ 413   2        }
+ 414   1      
+ 415   1        if(net_pdu->ctl == 1){//是控制指令
+ 416   2          net_ctl_del(src_addr,net_pdu);
+ 417   2        }else{//数据
+ 418   2          
+ 419   2        }
+ 420   1        return 0;
+ 421   1      net_input_del1:
+ 422   1        if(net_pdu->ttl>0){
+ 423   2          net_pdu->ttl--;
+ 424   2          if(net_pdu->dat.net_cmd.opcode < 0x40){
+ 425   3            net_output(src_addr,net_pdu,1,3);
+ 426   3          }else{
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 8   
+
+ 427   3            net_output(src_addr,net_pdu,1,local_info.repeat);
+ 428   3          }
+ 429   2          return 0;
+ 430   2        }
+ 431   1        
+ 432   1        return 0;
+ 433   1      }
+ 434          
+ 435          /**
+ 436           * @brief 网络层处理
+ 437           *
+ 438           * @param src_addr 设备MAC
+ 439           * @param net_pdu 网络PDU
+ 440           * @return 无
+ 441           */
+ 442          static void net_ctl_del(u8 *src_addr,NET_PDU *net_pdu)
+ 443          {
+ 444   1        src_addr = src_addr;
+ 445   1        net_pdu->dat.net_cmd.opcode &= 0x7F;
+ 446   1        if(net_pdu->dat.net_cmd.opcode < 0x40){
+ 447   2          //根据操作码执行相应的操作
+ 448   2          switch(net_pdu->dat.net_cmd.opcode){
+ 449   3      //      case CTL_LEARN_REQ:
+ 450   3      //        if(((local_info.net_sta>>NET_FEATURE_LEARN)&0x01) == 0){
+ 451   3      //          local_info.net_sta |= (1<<NET_FEATURE_LEARN);
+ 452   3      //          net_pdu->dat.net_cmd.param[0] = 0;
+ 453   3      //        }else{
+ 454   3      //          net_pdu->dat.net_cmd.param[0] = 2;
+ 455   3      //        }
+ 456   3      //        delay_ms(20);
+ 457   3      //        net_pdu->dat.net_cmd.opcode = CTL_LEARN_RSP;
+ 458   3      //        net_pdu->seq = local_info.seq;
+ 459   3      //        local_info.seq++;
+ 460   3      //        net_pdu->at = 0;  //单播
+ 461   3      //        memcpy(net_pdu->src,local_info.mac_addr,3);
+ 462   3      //        memcpy(net_pdu->dst,src_addr,3);
+ 463   3      //        net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 464   3      //        net_output(local_info.mac_addr,net_pdu,1,20);
+ 465   3      //      break;
+ 466   3      //      case CTL_LEARN_CLEAR:
+ 467   3      //        local_info.net_sta &= ~(1<<NET_FEATURE_LEARN);
+ 468   3      //        delay_ms(20);
+ 469   3      //        net_pdu->dat.net_cmd.opcode = CTL_LEAR_CLEAR_RSP;
+ 470   3      //        net_pdu->dat.net_cmd.param[0] = 0;
+ 471   3      //        net_pdu->seq = local_info.seq;
+ 472   3      //        local_info.seq++;
+ 473   3      //        net_pdu->at = 0;  //单播
+ 474   3      //        memcpy(net_pdu->src,local_info.mac_addr,3);
+ 475   3      //        memcpy(net_pdu->dst,src_addr,3);
+ 476   3      //        net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 477   3      //        net_output(local_info.mac_addr,net_pdu,1,20);
+ 478   3      //      break;
+ 479   3            case CTL_SET_PARAM://配置节点
+ 480   3              if(local_info.pair_time >= 250)
+ 481   3                local_info.net_sta &= ~(1<<NET_FEATURE_SETTING);//将网络设置为不可配置模式
+ 482   3              if(((local_info.net_sta>>NET_FEATURE_SETTING)&0x01) != 0)
+ 483   3              {
+ 484   4                local_info.net_sta &= ~(1<<NET_FEATURE_SETTING);
+ 485   4                local_info.net_sta |= 1<<NET_FEATURE_NET_STA;
+ 486   4                local_info.nid = net_pdu->dat.net_cmd.param[0];
+ 487   4                memcpy(local_info.admin_id,&net_pdu->dat.net_cmd.param[1],3);
+ 488   4                memcpy(local_info.pass,&net_pdu->dat.net_cmd.param[4],6);
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 9   
+
+ 489   4                net_updat_local_info();
+ 490   4                net_addr_fill(net_pdu,CTL_SET_PARAM_RSP,0);
+ 491   4                net_pdu->dat.net_cmd.param[0] = 0;
+ 492   4                net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 493   4                net_output(local_info.mac_addr,net_pdu,1,30);
+ 494   4                
+ 495   4                net_pdu->dat.net_cmd.opcode = CTL_LED_FLASH;
+ 496   4                net_pdu->dat.net_cmd.param[0] = 1;
+ 497   4                app_input(net_pdu);
+ 498   4              }else{
+ 499   4                net_addr_fill(net_pdu,CTL_SET_PARAM_RSP,0);
+ 500   4                net_pdu->dat.net_cmd.param[0] = 2;
+ 501   4                net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 502   4                net_output(local_info.mac_addr,net_pdu,1,30);
+ 503   4              }
+ 504   3            break;
+ 505   3            case CTL_REPEAT_CNT:
+ 506   3              local_info.repeat = net_pdu->dat.net_cmd.param[0];
+ 507   3              net_updat_local_info();
+ 508   3            break;
+ 509   3            case CTL_SET_POWER://设置发送功率
+ 510   3              mac_set_power(net_pdu->dat.net_cmd.param[0]);
+ 511   3            break;
+ 512   3            case CTL_GET_NET_NODE://获取入网设备
+ 513   3              adv_net_info_cnt = 10;
+ 514   3            break;
+ 515   3            case CTL_GET_DEVICE_STA:
+ 516   3              net_set_device_sta(net_pdu,5);
+ 517   3              net_output(local_info.mac_addr,net_pdu,1,30);
+ 518   3            break;
+ 519   3            case CTL_REMOVE_NET://移除网络节点
+ 520   3              if(memcmp(local_info.admin_id,net_pdu->dat.net_cmd.param,3) == 0)
+ 521   3                {
+ 522   4      //      if(local_info.admin_id == net_pdu->dat.net_cmd.param[0]){
+ 523   4              net_pdu->dat.net_cmd.param[0] = 0;
+ 524   4              net_addr_fill(net_pdu,CTL_REMOVE_NET_RSP,0);
+ 525   4      
+ 526   4              net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 527   4              net_output(local_info.mac_addr,net_pdu,1,30);
+ 528   4              local_info.net_sta |= 1<<NET_FEATURE_SETTING;
+ 529   4              local_info.net_sta &= ~(1<<NET_FEATURE_NET_STA);
+ 530   4              net_pdu->dat.net_cmd.opcode = CTL_LED_FLASH;
+ 531   4              net_pdu->dat.net_cmd.param[0] = 2;
+ 532   4              app_input(net_pdu);
+ 533   4              os_task_add(3000,net_clear_network);
+ 534   4            }else{
+ 535   4              //权限不够
+ 536   4              net_addr_fill(net_pdu,CTL_REMOVE_NET_RSP,0);
+ 537   4              net_pdu->dat.net_cmd.param[0] = 2;
+ 538   4              net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 539   4              net_output(local_info.mac_addr,net_pdu,1,5);
+ 540   4            }
+ 541   3            
+ 542   3            break;
+ 543   3            case CTL_ADD_GROUP://添加组
+ 544   3              if(net_group_exist((struct group_t *)&net_pdu->dat.net_cmd.param[0]) == 0){
+ 545   4      //          net_group_remove(&net_pdu->dat.net_cmd.param[1]);//删除原来的组
+ 546   4                if(net_group_add((struct group_t *)&net_pdu->dat.net_cmd.param[0]) == 1){//添加新组
+ 547   5                  net_pdu->dat.net_cmd.param[0] = 2;
+ 548   5                }else{
+ 549   5                  net_pdu->dat.net_cmd.param[0] = 0;
+ 550   5                }
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 10  
+
+ 551   4                
+ 552   4              }else{
+ 553   4                net_pdu->dat.net_cmd.param[0] = 1;
+ 554   4              }
+ 555   3              net_addr_fill(net_pdu,CTL_ADD_GROUP_RSP,0);
+ 556   3              net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 557   3              net_output(local_info.mac_addr,net_pdu,1,20);
+ 558   3            break;
+ 559   3            case CTL_DEL_GROUP://删除组
+ 560   3              if(net_group_remove((struct group_t *)&net_pdu->dat.net_cmd.param[0]) == 0){
+ 561   4                net_pdu->dat.net_cmd.param[0] = 0;
+ 562   4              }else{
+ 563   4                net_pdu->dat.net_cmd.param[0] = 1;
+ 564   4              }
+ 565   3              net_addr_fill(net_pdu,CTL_DEL_GROUP_RSP,0);
+ 566   3              net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 567   3              net_output(local_info.mac_addr,net_pdu,1,20);
+ 568   3            break;
+ 569   3            case CTL_CLEAR_GROUP://清除组
+ 570   3              net_group_clear(&net_pdu->dat.net_cmd.param[0]);
+ 571   3              net_addr_fill(net_pdu,CTL_CLEAR_GROUP_RSP,0);
+ 572   3              net_pdu->dat.net_cmd.param[0] = 0;
+ 573   3              net_pdu->len = NET_PDU_HEAD_LEN + 1;
+ 574   3              net_output(local_info.mac_addr,net_pdu,1,20);
+ 575   3            break;
+ 576   3      //      case CTL_ERASE_GROUP://擦除组
+ 577   3      //        net_erase_group(&net_pdu->dat.net_cmd.param[0]);
+ 578   3            break;
+ 579   3            case CTL_PAIR://配对
+ 580   3              if(local_info.pair_time < 60){
+ 581   4                local_info.pair_time = 60;
+ 582   4                net_updat_peer_addr((struct group_t *)&net_pdu->dat.net_cmd.param[0]);
+ 583   4                net_pdu->dat.net_cmd.param[3] = 0x01;
+ 584   4                net_updat_peer_addr((struct group_t *)&net_pdu->dat.net_cmd.param[0]);
+ 585   4                net_pdu->dat.net_cmd.opcode = CTL_LED_FLASH;
+ 586   4                net_pdu->dat.net_cmd.param[0] = 3;
+ 587   4                app_input(net_pdu);
+ 588   4              }
+ 589   3            break;
+ 590   3            case CTL_PAIR_CANEL:
+ 591   3              if(local_info.pair_time < 60){
+ 592   4                local_info.pair_time = 60;
+ 593   4                net_group_remove((struct group_t *)&net_pdu->dat.net_cmd.param[0]);
+ 594   4                net_pdu->dat.net_cmd.param[3] = 0x01;
+ 595   4                net_group_remove((struct group_t *)&net_pdu->dat.net_cmd.param[0]);
+ 596   4                net_pdu->dat.net_cmd.opcode = CTL_LED_FLASH;
+ 597   4                net_pdu->dat.net_cmd.param[0] = 4;
+ 598   4                app_input(net_pdu);
+ 599   4              }
+ 600   3            break;
+ 601   3      //      case CTL_CHILD_ID:
+ 602   3      //        local_info.child_id = net_pdu->dat.net_cmd.param[0];
+ 603   3      //        net_updat_local_info();
+ 604   3      //      break;
+ 605   3            case CTL_SET_RENAME:
+ 606   3              flash_erase_section(LOCAL_NAME_ADDR);
+ 607   3              flash_write_buf(LOCAL_NAME_ADDR,&net_pdu->dat.net_cmd.param[0],net_pdu->dat.net_cmd.param[0]+1);
+ 608   3              net_addr_fill(net_pdu,CTL_SET_RENAME_RSP,0);
+ 609   3              net_pdu->len = NET_PDU_HEAD_LEN + 1 + net_pdu->dat.net_cmd.param[0];
+ 610   3      
+ 611   3              net_output(local_info.mac_addr,net_pdu,1,20);
+ 612   3            break;
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 11  
+
+ 613   3          
+ 614   3          }
+ 615   2        }else{
+ 616   2          if(app_input(net_pdu) == 1 && net_pdu->at == 0){
+ 617   3            net_set_device_sta(net_pdu,16);
+ 618   3            net_output(local_info.mac_addr,net_pdu,1,30);
+ 619   3      //      os_task_add(1000,net_device_sta_task);
+ 620   3          }
+ 621   2        }
+ 622   1      }
+ 623          #endif
+ 624          
+ 625          /**
+ 626           * @brief 网络层输出
+ 627           *
+ 628           * @param addr 设备MAC
+ 629           * @param net_pdu 网络PDU
+ 630           * @param pkt_type 数据包类型 
+ 631           * @param count 重发次数
+ 632           * @return 返回处理结果
+ 633           *   @retval 0 发送成功
+ 634           *   @retval 1 发送失败 
+ 635           */
+ 636          u8 net_output(u8 *addr,NET_PDU *net_pdu,u8 pkt_type,u8 count) 
+ 637          {
+ 638   1        BLE_PKT *tx_pkt;
+ 639   1        u8 i=0,j=0;
+ 640   1        u8 t;
+ 641   1      //  net_pdu->crc_check = crc_check(net_pdu);
+ 642   1        net_pdu->sm = (local_info.net_sta>>0)&0x01;
+ 643   1        net_encrypt(net_pdu);//加密
+ 644   1        if(pkt_type == 1){
+ 645   2          tx_pkt = (BLE_PKT *)&var_tx_buf[0];
+ 646   2          memcpy(tx_pkt->adv_ind.dat,net_pdu,net_pdu->len);
+ 647   2          tx_pkt->adv_ind.len = net_pdu->len+3;
+ 648   2          mac_pack_packet(addr,tx_pkt->adv_ind.len);
+ 649   2          
+ 650   2          
+ 651   2            for(j=0;j<count;j++){
+ 652   3      //        do{
+ 653   3      //          i = (mac_scan_rssi(0)>>2)&0x3F;  //01 0000
+ 654   3      //        }while(i>4);
+ 655   3      //        for(i=0;i<5;i++)
+ 656   3      //          scan_rssi[i] = (mac_scan_rssi(0)>>2)&0x3F;
+ 657   3              mac_load_packet();
+ 658   3              for(i=0;i<3;i++){
+ 659   4                mac_send_packet(i);
+ 660   4              }
+ 661   3      
+ 662   3            }
+ 663   2      
+ 664   2            mac_listen_packet(local_info.channel);//进入接收模式    
+ 665   2            return 0;
+ 666   2            
+ 667   2          }
+ 668   1      
+ 669   1        return 1;
+ 670   1      }
+*** WARNING C280 IN LINE 640 OF net\netstack_net.c: 't': unreferenced local variable
+ 671          #if 0
+              //u8 net_output(u8 *addr,NET_PDU *net_pdu,u8 pkt_type,u8 count) 
+              //{
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 12  
+
+              //  BLE_PKT *tx_pkt;
+              //  u8 i=0,j=0;
+              //  u8 t;
+              ////  net_pdu->crc_check = crc_check(net_pdu);
+              //  net_pdu->sm = (local_info.net_sta>>0)&0x01;
+              //  net_encrypt(net_pdu);//加密
+              //  if(pkt_type == 1){
+              //    tx_pkt = (BLE_PKT *)&var_tx_buf[0];
+              //    memcpy(tx_pkt->adv_ind.dat,net_pdu,net_pdu->len);
+              //    tx_pkt->adv_ind.len = net_pdu->len+3;
+              //    mac_pack_packet(addr,tx_pkt->adv_ind.len);
+              //     do{
+              ////      t = rand()%20;
+              ////      delay_us(t);
+              //      i = mac_scan_rssi(0);
+              ////       j++;
+              ////       if(j>4)
+              ////         break;
+              //    }while(i>8);
+              //    mac_load_packet();
+              //      for(j=0;j<count;j++)
+              //      {//动态分配内存
+              //        
+              //          for(i=0;i<3;i++){
+              //            mac_send_packet(i);
+              //            mac_send_packet(i);
+              //          }
+              ////          for(i=0;i<3;i++){
+              ////            mac_send_packet(i);
+              ////            mac_send_packet(i);
+              ////          }
+              //        }
+              
+              //        mac_listen_packet(local_info.channel);//进入接收模式    
+              //        return 0;
+              //      
+              //    }
+              
+              //  return 1;
+              //}
+              #endif
+ 715           /**
+ 716           * @brief 设置网络广播数据
+ 717           *
+ 718           * @param pdu 网络PDU成员地址
+ 719           * @return 无
+ 720           */
+ 721          static void net_set_net_sta(NET_PDU *pdu)
+ 722          {
+ 723   1          pdu->nid = local_info.nid;
+ 724   1          pdu->ctl = 0x01;
+ 725   1          pdu->sm = 0x00;
+ 726   1          pdu->ttl = 0x10;
+ 727   1         
+ 728   1          net_addr_fill(pdu,CTL_ADV_NET_STA,0);
+ 729   1      
+ 730   1      //    pdu->dat.net_cmd.opcode = CTL_ADV_NET_STA;
+ 731   1          pdu->dat.net_cmd.param[0] = local_info.net_sta;
+ 732   1        
+ 733   1          flash_read_buf(LOCAL_NAME_ADDR,&pdu->dat.net_cmd.param[1],1);
+ 734   1          if(pdu->dat.net_cmd.param[1] == 0){
+ 735   2            pdu->dat.net_cmd.param[1] = DEFAULT_DEV_NAME_LEN;
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 13  
+
+ 736   2            memcpy(&pdu->dat.net_cmd.param[2],DEFAULT_DEV_NAME,DEFAULT_DEV_NAME_LEN);
+ 737   2          }else{
+ 738   2            if(pdu->dat.net_cmd.param[1]>13) 
+ 739   2              pdu->dat.net_cmd.param[1] = 13;
+ 740   2            flash_read_buf(LOCAL_NAME_ADDR+1,&pdu->dat.net_cmd.param[2],pdu->dat.net_cmd.param[1]);
+ 741   2          
+ 742   2          }
+ 743   1      
+ 744   1          pdu->len = NET_PDU_HEAD_LEN + 2 + pdu->dat.net_cmd.param[1];
+ 745   1      
+ 746   1      }
+ 747          
+ 748           /**
+ 749           * @brief 设置设备广播数据
+ 750           *
+ 751           * @param pdu 网络PDU成员地址
+ 752           * @param ttl 生命周期
+ 753           * @return 无
+ 754           */
+ 755          static void net_set_device_sta(NET_PDU *pdu,u8 ttl)
+ 756          {
+ 757   1        pdu->nid = local_info.nid;
+ 758   1        pdu->ctl = 0x01;
+ 759   1        pdu->sm = 0x00;
+ 760   1        pdu->ttl = ttl;
+ 761   1      
+ 762   1        net_addr_fill(pdu,CTL_ADV_DEV_STA,0);
+ 763   1        pdu->dat.net_cmd.param[0] = local_info.uuid[0];
+ 764   1        pdu->dat.net_cmd.param[1] = local_info.uuid[1];
+ 765   1        
+ 766   1        memcpy(&pdu->dat.net_cmd.param[2],local_info.device_sta_adv_pram,local_info.device_sta_adv_len);
+ 767   1        
+ 768   1        pdu->len = NET_PDU_HEAD_LEN + 2 + local_info.device_sta_adv_len;
+ 769   1        
+ 770   1      //  pdu->dat.net_cmd.param[0] = scan_rssi[0];
+ 771   1      //  pdu->dat.net_cmd.param[1] = scan_rssi[1];
+ 772   1      //  pdu->dat.net_cmd.param[2] = scan_rssi[2];
+ 773   1      //  pdu->dat.net_cmd.param[3] = scan_rssi[3];
+ 774   1      //  pdu->dat.net_cmd.param[4] = scan_rssi[4];
+ 775   1      //  pdu->len = NET_PDU_HEAD_LEN + 5;
+ 776   1      
+ 777   1        
+ 778   1      }
+ 779          
+ 780           /**
+ 781           * @brief 设置设备广播数据长度
+ 782           *
+ 783           * @param len 数据长度
+ 784           * @return 返回设置结果
+ 785           * @retval 0 设置成功
+ 786           * @retval 1 设置失败
+ 787           */
+ 788          u8 net_set_adv_param_len(u8 len)
+ 789          {
+ 790   1        if(len<10){
+ 791   2          local_info.device_sta_adv_len = len;
+ 792   2          return len;
+ 793   2        }else{
+ 794   2          local_info.device_sta_adv_len = 0;
+ 795   2          
+ 796   2        }
+ 797   1        return 0;
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 14  
+
+ 798   1      }
+ 799          
+ 800           /**
+ 801           * @brief 获取设备广播缓存
+ 802           *
+ 803           * @return 缓存地址
+ 804           */
+ 805          void *net_get_adv_param_buf(void)
+ 806          {
+ 807   1        return (void *)local_info.device_sta_adv_pram;
+ 808   1      }
+ 809          
+ 810          //void test(void)
+ 811          //{
+ 812          //  var_tx_buf[15] = 22;
+ 813          //  var_tx_buf[16] = 07;
+ 814          //  var_tx_buf[17] = 22;
+ 815          //  var_tx_buf[18] = 10;
+ 816          //  var_tx_buf[19] = local_info.seq++;
+ 817          //  var_tx_buf[20] = 11;
+ 818          //  
+ 819          //}
+ 820          
+ 821          
+ 822           /**
+ 823           * @brief 网络层任务
+ 824           *
+ 825           * @return 无
+ 826           * @note 该任务会被周期调用，如果设备入网超时，该任务被释放
+ 827           */
+ 828          static void task_net(void)
+ 829          {
+ 830   1        NET_PDU *pdu = (NET_PDU *)&var_tx_buf[15];
+ 831   1        
+ 832   1      //  if((((local_info.net_sta>>NET_FEATURE_NET_STA)&0x01) == 0) && (local_info.pair_time >= 250)){
+ 833   1      //    local_info.net_sta &= ~(1<<NET_FEATURE_SETTING);
+ 834   1      //    return ;
+ 835   1      //  }else{
+ 836   1      //    if(local_info.pair_time <= 250){
+ 837   1      //      local_info.pair_time++;
+ 838   1      //    }
+ 839   1      //  }
+ 840   1        
+ 841   1        if(adv_net_info_cnt>0){
+ 842   2          net_set_net_sta(pdu);
+ 843   2        }
+ 844   1      //  else if(adv_led_sta_en == 1){
+ 845   1      //    net_set_device_sta(pdu,5);
+ 846   1      //  }
+ 847   1        else{
+ 848   2          if(local_info.seq %2 == 0)
+ 849   2          {
+ 850   3            net_set_net_sta(pdu);
+ 851   3          }
+ 852   2          else{
+ 853   3            net_set_device_sta(pdu,0x10);
+ 854   3          }
+ 855   2        }
+ 856   1      
+ 857   1        net_output(local_info.mac_addr,pdu,1,1);
+ 858   1      
+ 859   1        if(adv_net_info_cnt>0){
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 15  
+
+ 860   2          adv_net_info_cnt--;
+ 861   2          os_task_add(120,task_net);
+ 862   2        }
+ 863   1      //  else if(adv_led_sta_en == 1){
+ 864   1      //    os_task_add(120,task_net);
+ 865   1      //  }
+ 866   1        else if(((local_info.net_sta>>NET_FEATURE_NET_STA)&0x01) == 0)
+ 867   1          os_task_add(200,task_net);
+ 868   1        else
+ 869   1          os_task_add(5000,task_net);
+ 870   1      
+ 871   1      }
+ 872          
+ 873           /**
+ 874           * @brief 清除网络
+ 875           *
+ 876           * @return 无
+ 877           * @note 清除网络后，节点信息被全部清除，设备会复位
+ 878           */
+ 879          void net_clear_network(void)
+ 880          {
+ 881   1        flash_erase_section(LOCAL_INFO_ADDR);
+ 882   1        flash_erase_section(LOCAL_INFO_ADDR+128);
+ 883   1        flash_erase_section(LOCAL_INFO_ADDR+256);
+ 884   1        flash_erase_section(LOCAL_INFO_ADDR+256+128);
+ 885   1        flash_erase_section(LOCAL_INFO_ADDR+512);
+ 886   1        ResetNoReadOption();
+ 887   1      }
+ 888          
+ 889          /*******************************************组操作函数***********************************************
+             -******************/
+ 890          
+ 891          
+ 892           /**
+ 893           * @brief 判断组成员是否存在
+ 894           *
+ 895           * @param group 组成员
+ 896           * @return 判断结果
+ 897           * @retval 0 不存在
+ 898           * @retval 1 存在
+ 899           */
+ 900          static u8 net_group_exist(struct group_t *group)
+ 901          {
+ 902   1        
+ 903   1        u8 i;
+ 904   1        struct group_t g;
+ 905   1      
+ 906   1          for(i=0;i<local_info.group_count;i++){
+ 907   2            flash_read_buf(NETSTACK_GROUP_ADDR+i*sizeof(struct group_t),(u8 *)&g,sizeof(struct group_t));
+ 908   2            if(memcmp(group->g.id,g.g.id,sizeof(struct group_t)) == 0){
+ 909   3              return 1;
+ 910   3            }
+ 911   2          }
+ 912   1      
+ 913   1        return 0;
+ 914   1      }
+ 915          
+ 916          /**
+ 917           * 功能：判断用户是否存在
+ 918           * 参数：group---组成员
+ 919           * 返回：存在返回1，否则返回0
+ 920           */
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 16  
+
+ 921          //static u8 net_user_exist(struct group_t *group)
+ 922          //{
+ 923          //u8 i;
+ 924          //  struct group_t g;
+ 925          
+ 926          //    for(i=0;i<local_info.group_count;i++){
+ 927          //      flash_read_buf(NETSTACK_GROUP_ADDR+i*sizeof(struct group_t),(u8 *)&g,sizeof(struct group_t));
+ 928          //      if(memcmp(group->g.gm.user_id,g.g.gm.user_id,3) == 0){
+ 929          ////      if(group->g.gm.user_id == g.g.gm.user_id){
+ 930          //        return 1;
+ 931          //      }
+ 932          //    }
+ 933          //  return 0;
+ 934          //}
+ 935          
+ 936           /**
+ 937           * @brief 添加组成员
+ 938           *
+ 939           * @param group 要添加的组
+ 940           * @return 添加结果
+ 941           * @retval 0 添加成功
+ 942           * @retval 1 添加失败
+ 943           */
+ 944          static u8 net_group_add(struct group_t *group)
+ 945          {
+ 946   1        if(NETSTACK_GROUP_MAX < local_info.group_count)
+ 947   1          return 1;
+ 948   1        flash_write_buf(NETSTACK_GROUP_ADDR+(local_info.group_count)*sizeof(struct group_t),(u8 *)group,sizeof(st
+             -ruct group_t));
+ 949   1        local_info.group_count++;
+ 950   1        net_updat_local_info();
+ 951   1        return 0;
+ 952   1      }
+ 953          
+ 954          
+ 955          /**
+ 956           * @brief 移除组成员
+ 957           *
+ 958           * @param group 要移除的组
+ 959           * @return 移除结果
+ 960           * @retval 0 移除成功
+ 961           * @retval 1 移除失败
+ 962           */
+ 963          static u8 net_group_remove(struct group_t *group)
+ 964          {
+ 965   1        u8 *tmp;
+ 966   1        u8 i;
+ 967   1        struct group_t *g;
+ 968   1        //1.动态分配内存
+ 969   1        tmp = var_tx_buf;
+ 970   1        if(tmp != (u8 *)0){
+ 971   2          g = (struct group_t *)tmp;
+ 972   2          //2.读取组
+ 973   2          flash_read_buf(NETSTACK_GROUP_ADDR,(u8 *)g,(local_info.group_count)*sizeof(struct group_t));
+ 974   2          for(i=0;i<local_info.group_count;i++){
+ 975   3            if(memcmp(group,g,sizeof(struct group_t)) == 0){//查找要删除的组
+ 976   4      //        memcpy(g,(g+1),sizeof(struct group_t)*(local_info.group_count-i-1));
+ 977   4              memcpy(&var_tx_buf[i*4],&var_tx_buf[(i+1)*4],4*(local_info.group_count-i));
+ 978   4              flash_erase_section(NETSTACK_GROUP_ADDR);//擦除
+ 979   4              local_info.group_count--;
+ 980   4              flash_write_buf(NETSTACK_GROUP_ADDR,tmp,(local_info.group_count)*sizeof(struct group_t));
+ 981   4              
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 17  
+
+ 982   4              net_updat_local_info();
+ 983   4              return 0;
+ 984   4            }
+ 985   3            g++;
+ 986   3          }
+ 987   2        }
+ 988   1        return 1;
+ 989   1      }
+ 990          
+ 991          
+ 992          
+ 993          /**
+ 994           * @brief 清除组成员
+ 995           *
+ 996           * @param user_id 用户ID
+ 997           * @return 清除结果
+ 998           * @retval 0 清除成功
+ 999           * @retval 1 清除失败
+1000           */
+1001          static u8 net_group_clear(u8 *user_id)
+1002          {
+1003   1        u8 *tmp;
+1004   1        u8 i;
+1005   1        struct group_t *g;
+1006   1        //1.动态分配内存
+1007   1        tmp = var_tx_buf;
+1008   1        if(tmp != (u8 *)0){
+1009   2          g = (struct group_t *)tmp;
+1010   2          //2.读取组
+1011   2          flash_read_buf(NETSTACK_GROUP_ADDR,(u8 *)g,(local_info.group_count)*sizeof(struct group_t));
+1012   2          for(i=0;i<local_info.group_count;i++){
+1013   3            if(memcmp(user_id,g->g.gm.user_id,3) == 0){//查找用户
+1014   4      //      if(user_id == g->g.gm.user_id){//查找用户
+1015   4              memcpy(&var_tx_buf[i*3],&var_tx_buf[(i+1)*4],4*(local_info.group_count-i));
+1016   4              local_info.group_count--;
+1017   4            }else{
+1018   4              g++;
+1019   4            }
+1020   3          }
+1021   2          flash_erase_section(NETSTACK_GROUP_ADDR);//擦除
+1022   2          flash_write_buf(NETSTACK_GROUP_ADDR,tmp,(local_info.group_count)*sizeof(struct group_t));
+1023   2          net_updat_local_info();
+1024   2        }
+1025   1        return 0;
+1026   1      }
+1027          
+1028          
+1029          //static void net_erase_group(struct group_t *group)
+1030          //{
+1031          //  flash_erase_section(NETSTACK_GROUP_ADDR);//擦除
+1032          //  local_info.group_count=0;
+1033          //  net_group_add(group);
+1034          //}
+1035          
+1036          
+1037          /**
+1038           * @brief 更新配对地址
+1039           *
+1040           * @param group 组
+1041           * @return 更新结果
+1042           * @retval 0 更新成功
+1043           * @retval 1 更新失败
+C51 COMPILER V9.53.0.0   NETSTACK_NET                                                      07/19/2019 10:23:34 PAGE 18  
+
+1044           * 
+1045           */
+1046          static u8 net_updat_peer_addr(struct group_t *group)
+1047          {
+1048   1        u8 *tmp;
+1049   1        u8 i;
+1050   1        struct group_t *g;
+1051   1        //1.动态分配内存
+1052   1        tmp = var_tx_buf;
+1053   1        if(tmp != (u8 *)0){
+1054   2          g = (struct group_t *)tmp;
+1055   2          //2.读取组
+1056   2          flash_read_buf(NETSTACK_GROUP_ADDR,(u8 *)g,(local_info.group_count)*sizeof(struct group_t));
+1057   2          for(i=0;i<local_info.group_count;i++){
+1058   3            if(memcmp(group->g.gm.user_id,g->g.gm.user_id,4) == 0){//查找遥控器的地址
+1059   4      //      if(group->g.gm.user_id == g->g.gm.user_id){//查找遥控器的地址
+1060   4              g->g.gm.device_id = group->g.gm.device_id;
+1061   4              flash_erase_section(NETSTACK_GROUP_ADDR);//擦除
+1062   4        
+1063   4              flash_write_buf(NETSTACK_GROUP_ADDR,tmp,(local_info.group_count)*sizeof(struct group_t));
+1064   4              
+1065   4              net_updat_local_info();
+1066   4              return 0;
+1067   4            }
+1068   3            g++;
+1069   3          }
+1070   2          
+1071   2          return net_group_add(group);
+1072   2          
+1073   2        }
+1074   1        return 1; 
+1075   1      }
+1076          
+1077          
+1078          
+1079          
+1080          
+1081          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   5101    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =     65      94
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

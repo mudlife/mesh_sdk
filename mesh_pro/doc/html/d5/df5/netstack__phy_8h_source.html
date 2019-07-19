@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: inc/netstack_phy.h 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_bfccd401955b95cf8c75461437045ac0.html">inc</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">netstack_phy.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d5/df5/netstack__phy_8h.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __NETSTACK_PHY_H__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __NETSTACK_PHY_H__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;HC_DEFINE.H&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;u8 <a class="code" href="../../d5/df5/netstack__phy_8h.html#ad27242d35976674e11baefb9f958639b">phy_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;u8 <a class="code" href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0">phy_read_reg</a>(u8 reg);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a>(u8 reg,u8 val);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">//u8 phy_read_reg_bit(u8 reg,u8 bits);</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a>(u8 reg,u8 bits,u8 val);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a>(u8 reg, u8 *buf, u8 len);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4">phy_write_fifo</a>(u8 reg, u8 *buf, u8 len);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d5/df5/netstack__phy_8h.html#ab6780ad48842f138fe8c69ef67ce887f">phy_set_channel</a>(u8 channel);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="netstack__phy_8h_html_a1c12a824aee6841bf873c3874acd3b52"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a1c12a824aee6841bf873c3874acd3b52">phy_write_reg</a></div><div class="ttdeci">void phy_write_reg(u8 reg, u8 val)</div><div class="ttdoc">写RF寄存器 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00148">netstack_phy.c:148</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_ad27242d35976674e11baefb9f958639b"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ad27242d35976674e11baefb9f958639b">phy_init</a></div><div class="ttdeci">u8 phy_init(void)</div><div class="ttdoc">物理层初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00266">netstack_phy.c:266</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_ae7ba3d9941f6e981417bb317a1aee0e0"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ae7ba3d9941f6e981417bb317a1aee0e0">phy_read_reg</a></div><div class="ttdeci">u8 phy_read_reg(u8 reg)</div><div class="ttdoc">读RF寄存器 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00121">netstack_phy.c:121</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_a30a9d43dcf8f624291b31b6fedb879b4"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a30a9d43dcf8f624291b31b6fedb879b4">phy_write_fifo</a></div><div class="ttdeci">void phy_write_fifo(u8 reg, u8 *buf, u8 len)</div><div class="ttdoc">往RF FIFO中写数据 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00220">netstack_phy.c:220</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_ab6780ad48842f138fe8c69ef67ce887f"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ab6780ad48842f138fe8c69ef67ce887f">phy_set_channel</a></div><div class="ttdeci">void phy_set_channel(u8 channel)</div></div>
+<div class="ttc" id="netstack__phy_8h_html_ac1ff360971024fe9b7a1afef1f20b827"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#ac1ff360971024fe9b7a1afef1f20b827">phy_write_reg_bit</a></div><div class="ttdeci">void phy_write_reg_bit(u8 reg, u8 bits, u8 val)</div><div class="ttdoc">写RF寄存器某一位 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00168">netstack_phy.c:168</a></div></div>
+<div class="ttc" id="netstack__phy_8h_html_a6d46f3dd17d106fb1a80483ba97afbb9"><div class="ttname"><a href="../../d5/df5/netstack__phy_8h.html#a6d46f3dd17d106fb1a80483ba97afbb9">phy_read_fifo</a></div><div class="ttdeci">void phy_read_fifo(u8 reg, u8 *buf, u8 len)</div><div class="ttdoc">读取RF的FIFO值 </div><div class="ttdef"><b>Definition:</b> <a href="../../de/d03/netstack__phy_8c_source.html#l00198">netstack_phy.c:198</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

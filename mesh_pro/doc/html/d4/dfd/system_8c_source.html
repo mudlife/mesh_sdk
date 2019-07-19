@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: dev/system.c 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_5fc0168d11760b9445bd29fa15d9290f.html">dev</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">system.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d4/dfd/system_8c.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../dc/db2/system_8h.html">system.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../db/d3e/network__conf_8h.html">network_conf.h</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../d4/dfd/system_8c.html#a3e94939da05090847f1d68821450d9db">   14</a></span>&#160;data u32 <a class="code" href="../../d4/dfd/system_8c.html#a3e94939da05090847f1d68821450d9db">g_time</a>=0;          </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//extern u8 adv_flag;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">extern</span> u8 <a class="code" href="../../d4/dfd/system_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a>; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//extern u8 update_time_flag;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#a006748422db7b1bf03b0845832da8521">F_CWRunning</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="../../dc/db2/system_8h.html#a43f5e0d6db0fb41a437cc9096b32e9b5">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#a43f5e0d6db0fb41a437cc9096b32e9b5">system_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    WDTCCR = 0x00;                      <span class="comment">//关闭看门狗</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">while</span>((CLKCON&amp;0x20)!=0x20);         <span class="comment">//等待内部高频RC起振</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    CLKSWR = 0x51;                      <span class="comment">//选择内部高频时钟为主时钟，内部高频RC2分频，Fosc=16MHz</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">while</span>((CLKSWR&amp;0xC0)!=0x40);         <span class="comment">//等待内部高频切换完成</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    CLKDIV = 0x01;                      <span class="comment">//Fosc1分频得到Fcpu，Fcpu=16MHz </span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    FREQ_CLK = 0x10;                    <span class="comment">//指明当前系统时钟8</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    TCON1 = 0x00;                       <span class="comment">//Tx0定时器时钟为Fosc</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    TMOD = 0x00;                        <span class="comment">//16位重装载定时器/计数器</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">//Tim0计算时间  = (65536 - 0xFACB) * (1 / (Fosc /Timer分频系数))</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="comment">//              = 1333 / (16000000 / 12)</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">//              = 1 ms</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">//定时1ms</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">//反推初值  = 65536 - ((1/1000) / (1/(Fosc / Timer分频系数)))</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">//          = 65536 - ((1/1000) / (1/(16000000 / 12)))</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">//          = 65536 - 1333</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">//          = 0xFACB</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    TH0 = 0xFA;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    TL0 = 0xCB;                         <span class="comment">//T0定时时间1ms</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    IE |= 0x02;                         <span class="comment">//打开T0中断</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    TCON |= 0x10;                       <span class="comment">//使能T0</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    EA = 1;                             <span class="comment">//打开总中断</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="../../dc/db2/system_8h.html#adef69697e0f9fc455ecb560f7d2fbe59">   64</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#adef69697e0f9fc455ecb560f7d2fbe59">wdt_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    WDTC = 0x57;   <span class="comment">//允许WDT复位，允许掉电/空闲模式下运行，1024分频</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    WDTCCR = 0xFF;  <span class="comment">//5.93S</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="../../d4/dfd/system_8c.html#a1a4285bca2e6a738d6e5f2c4f85cc50a">   75</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#a1a4285bca2e6a738d6e5f2c4f85cc50a">TIMER0_Rpt</a>(<span class="keywordtype">void</span>) interrupt TIMER0_VECTOR</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="../../d4/dfd/system_8c.html#a3e94939da05090847f1d68821450d9db">g_time</a>++;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="../../d4/dfd/system_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a> = 1;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d4/dfd/system_8c.html#a3e94939da05090847f1d68821450d9db">g_time</a>%100 == 0){</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="../../d4/dfd/system_8c.html#a002944ba712bc7ce89dc8b4401eef4dc">system_tdma</a>();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//      P0_0 = ~P0_0;</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="../../d4/dfd/system_8c.html#a006748422db7b1bf03b0845832da8521">F_CWRunning</a>();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="../../dc/db2/system_8h.html#a002944ba712bc7ce89dc8b4401eef4dc">   92</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#a002944ba712bc7ce89dc8b4401eef4dc">system_tdma</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">channel</a> = ++<a class="code" href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a>.<a class="code" href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">channel</a>%3;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="../../dc/db2/system_8h.html#a2e6b539b2532c8663a69c94b7f07f36e">  103</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d4/dfd/system_8c.html#a2e6b539b2532c8663a69c94b7f07f36e">ResetNoReadOption</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    IAP_CMD = 0xF00F;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    IAP_CMD = 0x8778;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">//void ResetReadOption(void)</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">//{</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">//  IAP_CMD = 0xF00F;</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">//  IAP_CMD = 0x7887;</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">//}</span></div>
+<div class="ttc" id="system_8c_html_a1a4285bca2e6a738d6e5f2c4f85cc50a"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a1a4285bca2e6a738d6e5f2c4f85cc50a">TIMER0_Rpt</a></div><div class="ttdeci">void TIMER0_Rpt(void)</div><div class="ttdoc">T0中断服务函数 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00075">system.c:75</a></div></div>
+<div class="ttc" id="system_8c_html_a006748422db7b1bf03b0845832da8521"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a006748422db7b1bf03b0845832da8521">F_CWRunning</a></div><div class="ttdeci">void F_CWRunning(void)</div><div class="ttdoc">应用层中断处理函数 </div><div class="ttdef"><b>Definition:</b> <a href="../../df/d9a/netstack__app_8c_source.html#l00621">netstack_app.c:621</a></div></div>
+<div class="ttc" id="network__conf_8h_html_a39b8005db999d19671b4bd82c63ef945"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html#a39b8005db999d19671b4bd82c63ef945">local_info</a></div><div class="ttdeci">struct netstack_local local_info</div><div class="ttdef"><b>Definition:</b> <a href="../../d9/d85/netstack__net_8c_source.html#l00069">netstack_net.c:69</a></div></div>
+<div class="ttc" id="system_8c_html_a43f5e0d6db0fb41a437cc9096b32e9b5"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a43f5e0d6db0fb41a437cc9096b32e9b5">system_init</a></div><div class="ttdeci">void system_init(void)</div><div class="ttdoc">系统初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00028">system.c:28</a></div></div>
+<div class="ttc" id="network__conf_8h_html"><div class="ttname"><a href="../../db/d3e/network__conf_8h.html">network_conf.h</a></div></div>
+<div class="ttc" id="system_8c_html_adef69697e0f9fc455ecb560f7d2fbe59"><div class="ttname"><a href="../../d4/dfd/system_8c.html#adef69697e0f9fc455ecb560f7d2fbe59">wdt_init</a></div><div class="ttdeci">void wdt_init(void)</div><div class="ttdoc">看门狗初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00064">system.c:64</a></div></div>
+<div class="ttc" id="system_8h_html"><div class="ttname"><a href="../../dc/db2/system_8h.html">system.h</a></div></div>
+<div class="ttc" id="system_8c_html_a3e94939da05090847f1d68821450d9db"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a3e94939da05090847f1d68821450d9db">g_time</a></div><div class="ttdeci">data u32 g_time</div><div class="ttdoc">全局时间 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00014">system.c:14</a></div></div>
+<div class="ttc" id="system_8c_html_a2e6b539b2532c8663a69c94b7f07f36e"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a2e6b539b2532c8663a69c94b7f07f36e">ResetNoReadOption</a></div><div class="ttdeci">void ResetNoReadOption(void)</div><div class="ttdoc">复位不重读代码选项 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00103">system.c:103</a></div></div>
+<div class="ttc" id="system_8c_html_a002944ba712bc7ce89dc8b4401eef4dc"><div class="ttname"><a href="../../d4/dfd/system_8c.html#a002944ba712bc7ce89dc8b4401eef4dc">system_tdma</a></div><div class="ttdeci">void system_tdma(void)</div><div class="ttdoc">跳频 </div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfd/system_8c_source.html#l00092">system.c:92</a></div></div>
+<div class="ttc" id="structnetstack__local_html_a994f6c98dd079996515c90406d3f3d0b"><div class="ttname"><a href="../../da/d64/structnetstack__local.html#a994f6c98dd079996515c90406d3f3d0b">netstack_local::channel</a></div><div class="ttdeci">u8 channel</div><div class="ttdoc">�ŵ� </div><div class="ttdef"><b>Definition:</b> <a href="../../da/d2d/netstack__net_8h_source.html#l00024">netstack_net.h:24</a></div></div>
+<div class="ttc" id="system_8c_html_aa555f0c9f213dd947f15e25f58241ee7"><div class="ttname"><a href="../../d4/dfd/system_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a></div><div class="ttdeci">u8 task_tick</div><div class="ttdoc">任务更新标志 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00016">os.c:16</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

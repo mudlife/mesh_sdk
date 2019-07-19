@@ -1,0 +1,5 @@
+<map id="net_get_local_info" name="net_get_local_info">
+<area shape="rect" id="node2" href="$d1/d4d/flash_8c.html#ad9da0c22889472ef97f7dc833a36132e" title="从flash中读取数据 " alt="" coords="196,5,301,32"/>
+<area shape="rect" id="node3" href="$d1/d4d/flash_8c.html#af4b866c99ab487c79e433e86e6299d76" title="flash信息校验 " alt="" coords="211,56,286,83"/>
+<area shape="rect" id="node4" href="$d1/d4d/flash_8c.html#a8d77bd9b3691a7d765d50907b8b3cfd1" title="擦除 flash " alt="" coords="180,107,317,133"/>
+</map>

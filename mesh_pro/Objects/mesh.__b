@@ -1,0 +1,6 @@
+TRANSFER
+".\Objects\os.obj",
+".\Objects\netstack_phy.obj",
+".\Objects\netstack_mac.obj",
+".\Objects\netstack_net.obj" 
+TO ".\Objects\mesh.LIB"

@@ -1,0 +1,371 @@
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE RF
+OBJECT MODULE PLACED IN .\Objects\rf.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE dev\rf.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\app;.\dev;.\inc;.\mac;.\net;.
+                    -\phy) DEBUG OBJECTEXTEND PRINT(.\Listings\rf.lst) TABS(2) OBJECT(.\Objects\rf.obj)
+
+line level    source
+
+   1          #include <HC_DEFINE.H>
+   2          #include "rf.h"
+*** WARNING C318 IN LINE 4 OF dev\rf.h: can't open file 'stm32f0xx_hal.h'
+*** ERROR C141 IN LINE 8 OF dev\rf.h: syntax error near 'uint8_t'
+*** ERROR C141 IN LINE 8 OF dev\rf.h: syntax error near '*'
+*** ERROR C141 IN LINE 9 OF dev\rf.h: syntax error near 'reg', expected ')'
+*** ERROR C141 IN LINE 10 OF dev\rf.h: syntax error near '*'
+*** ERROR C141 IN LINE 10 OF dev\rf.h: syntax error near 'reg', expected ')'
+*** WARNING C329 IN LINE 68 OF dev\rf.h: single-line comment contains line-continuation
+*** WARNING C329 IN LINE 71 OF dev\rf.h: single-line comment contains line-continuation
+*** WARNING C329 IN LINE 75 OF dev\rf.h: single-line comment contains line-continuation
+*** WARNING C329 IN LINE 79 OF dev\rf.h: single-line comment contains line-continuation
+   3          #include <string.h>
+   4          
+   5          //extern u8 adv_address[6];
+   6          
+   7          //Local_Info local_info;
+   8          
+   9          /* Read operation */
+  10          #define WL1600_OP_READ      (0x80)
+  11          
+  12          /* Enable WL1600 */
+  13          #define WL1600_ENABLE() \
+  14              HAL_GPIO_WritePin(WL1600_CE_PORT, WL1600_CE_PIN,GPIO_PIN_SET)
+  15          
+  16          /* Disable WL1600 */
+  17          #define WL1600_DISABLE() \
+  18              HAL_GPIO_WritePin(WL1600_CE_PORT, WL1600_CE_PIN,GPIO_PIN_RESET)
+  19          
+  20          
+  21          /* Select WL1600 SPI */
+  22          #define WL1600_SPI_SELECT() \
+  23              HAL_GPIO_WritePin(WL1600_CSN_PORT, WL1600_CSN_PIN,GPIO_PIN_RESET)
+  24          
+  25          
+  26          /* Deselect WL1600 SPI */
+  27          #define WL1600_SPI_DESELECT() \
+  28              HAL_GPIO_WritePin(WL1600_CSN_PORT, WL1600_CSN_PIN,GPIO_PIN_SET)
+  29          
+  30          
+  31          /*
+  32           * Default WL1600 register settings.
+  33           */
+  34          #define REG_END_MARK    (255)
+  35          const u8 wl1600_regs[][2] = {   //小米5能收到
+  36              {0,  0x6F},
+  37              {1,  0xE8},
+  38              {2,  0x56},
+  39              {3,  0x0D},
+  40              {4,  0xC4}, // C4
+  41              {8,  0x25}, // 05 | 25
+  42              {9,  0x41},
+  43              {10, 0x57},
+  44              {11, 0x3B},
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 2   
+
+  45              {16, 0x84},
+  46              {17, 0x7A}, // 7B | 5A
+  47              {18, 0x0C},//{18, 0x08},
+  48              {19, 0x08},
+  49              {27, 0xB4},
+  50              {34, 0x12},
+  51              {35, 0x00},
+  52              {45, 0x06},
+  53              {46, 0x01},
+  54              {47, 0x15},
+  55              {49, 0x5B},
+  56              {50, 0x15},
+  57              {51, 0x14},
+  58              {52, 0x1A},
+  59              {53, 0x00},
+  60              {64, 0x0A},
+  61              {72, 0xBE},//BE
+  62              {73, 0xD6},//D6 
+  63              {78, 0x8E},//8E
+  64              {79, 0x89}, //89
+  65              {81, 0x41},//0x44
+  66              {82, 0x31},  
+  67              {66, 0x60},
+  68              {67, 0xA0},
+  69              {68, 0x80},    
+  70              {255, 255} 
+  71          };
+  72          
+  73          /**
+  74           * 函数：local_info_init
+  75           * 功能：本地信息初始化
+  76           * 参数：无
+  77           * 返回：无
+  78           */
+  79          u8 local_info_init(void)
+  80          {
+  81            memcpy(local_info.addr,adv_address,6);
+  82            
+  83            local_info.channel = local_info.addr[0]%3;
+  84            wl1600_init();
+  85          }
+  86          
+  87          /**
+  88           * 函数：wl1600_check_regs
+  89           * 功能：1600寄存器检测
+  90           * 参数：无
+  91           * 返回：检测成功返回 REG_END_MARK（255），失败返回错误寄存器数组编号
+  92           */
+  93          u8 wl1600_check_regs(void)
+  94          {
+  95              u8 i;
+  96              u8 val;
+  97          
+  98              for (i = 0; wl1600_regs[i][0] != REG_END_MARK; ++i) {
+  99                val = wl1600_read_reg(wl1600_regs[i][0]);
+ 100                  if ( val != wl1600_regs[i][1]) {
+ 101                      return (i);
+ 102                  }
+ 103              }
+ 104              return (REG_END_MARK);
+ 105          }
+ 106          
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 3   
+
+ 107          /**
+ 108           * 函数：wl1600_init
+ 109           * 功能：1600初始化
+ 110           * 参数：无
+ 111           * 返回：无
+ 112           */
+ 113          void wl1600_init(void)
+ 114          {
+ 115              u8 i;
+ 116              WL1600_DISABLE();
+ 117              WL1600_SPI_DESELECT();
+ 118          
+ 119              /* Reset WL1600 */
+ 120              WL1600_DISABLE();
+ 121              delay_us(5);
+ 122              WL1600_ENABLE();
+ 123              delay_ms(3);
+ 124          
+ 125              /* Configure WL1600 */
+ 126                wl1600_write_reg(wl1600_regs[1][0], wl1600_regs[0][1]);
+ 127               for (i = 0; wl1600_regs[i][0] != REG_END_MARK; ++i) {
+ 128                  wl1600_write_reg(wl1600_regs[i][0], wl1600_regs[i][1]);
+ 129              }
+ 130          
+ 131            while(wl1600_check_regs() != REG_END_MARK);
+ 132          }
+ 133          
+ 134          /**
+ 135           * 函数：wl1600_write_reg
+ 136           * 功能：对寄存器写值
+ 137           * 参数：reg----寄存器地址
+ 138           *       val----要写入的值
+ 139           * 返回：无
+ 140           */
+ 141          void wl1600_write_reg(u8 reg, u8 val)
+ 142          {
+ 143            u8 reg_tmp;
+ 144            WL1600_SPI_SELECT();
+ 145            delay_us(5);
+ 146            HAL_SPI_Transmit(&hspi2,&reg,1,0xffff);  
+ 147            HAL_SPI_TransmitReceive(&hspi2,&val,&reg_tmp,1,0xffff);
+ 148            delay_us(5);
+ 149            WL1600_SPI_DESELECT();
+ 150            
+ 151            
+ 152          }
+ 153          
+ 154          /**
+ 155           * 函数：wl1600_write_fifo
+ 156           * 功能：往1600 FIFO中写数据
+ 157           * 参数：reg----寄存器地址
+ 158           *       buf----数据缓存地址
+ 159           *       len----写入长度
+ 160           * 返回：无
+ 161           */
+ 162          void wl1600_write_fifo(u8 reg, u8 *buf, u8 len)
+ 163          {
+ 164            WL1600_SPI_SELECT();
+ 165            delay_us(5);
+ 166            HAL_SPI_Transmit(&hspi2,&reg,1,0xffff);  
+ 167            HAL_SPI_Transmit(&hspi2,buf,len,0xffff);  
+ 168            delay_us(5);
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 4   
+
+ 169            WL1600_SPI_DESELECT();
+ 170          }
+ 171          
+ 172          /**
+ 173           * 函数：wl1600_read_reg
+ 174           * 功能：读取1600寄存器的值
+ 175           * 参数：reg----要读取的寄存器地址
+ 176           * 返回：返回读取到的值
+ 177           */
+ 178          u8 wl1600_read_reg(u8 reg)
+ 179          {
+ 180           u8 reg_tmp;
+ 181            u8 val;
+ 182            reg_tmp = reg | WL1600_OP_READ;
+ 183            WL1600_SPI_SELECT();
+ 184            delay_us(5);
+ 185            HAL_SPI_TransmitReceive(&hspi2,&reg_tmp,&val,1,0xffff);  
+ 186            reg_tmp = 0xff;
+ 187            HAL_SPI_TransmitReceive(&hspi2,&reg_tmp,&val,1,0xffff);
+ 188            delay_us(5);
+ 189            WL1600_SPI_DESELECT();
+ 190            
+ 191            return val;
+ 192          }
+ 193          
+ 194          /**
+ 195           * 函数：wl1600_read_fifo
+ 196           * 功能：读取1600 FIFO中的数据
+ 197           * 参数：reg----要读取的寄存器地址
+ 198           *       buf----读取缓存地址
+ 199           *       len----读取长度
+ 200           * 返回：无
+ 201           */
+ 202          void wl1600_read_fifo(u8 reg, u8 *buf, u8 len)
+ 203          {
+ 204              u8 reg_tmp;
+ 205            u8 val,i;
+ 206            reg_tmp = reg | WL1600_OP_READ;
+ 207            WL1600_SPI_SELECT();
+ 208            delay_us(5);
+ 209            HAL_SPI_Transmit(&hspi2,&reg_tmp,1,0xffff);  
+ 210            reg_tmp = 0xff;
+ 211            for(i=0;i<len;i++)
+ 212              HAL_SPI_TransmitReceive(&hspi2,&reg_tmp,buf++,1,0xffff);
+ 213            delay_us(5);
+ 214            WL1600_SPI_DESELECT();
+ 215          }
+ 216          
+ 217          /**
+ 218           * 函数：wl1600_write_reg_bit
+ 219           * 功能：设置1600寄存器的某位值
+ 220           * 参数：reg----要设置寄存器的地址
+ 221           *       bits----要设置的位
+ 222           *       set----要设置的值，1或0
+ 223           * 返回：无
+ 224           */
+ 225          void wl1600_write_reg_bit(u8 reg, u8 bits, u8 set)
+ 226          {
+ 227              u8 val;
+ 228              u8 bit_val = (1 << bits);
+ 229              
+ 230              val = wl1600_read_reg(reg);
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 5   
+
+ 231              if (set) {
+ 232                  val |= bit_val;
+ 233              } else {
+ 234                  val &= ~bit_val;
+ 235              }
+ 236          
+ 237              wl1600_write_reg(reg, val);
+ 238          }
+ 239          
+ 240          /**
+ 241           * 函数：wl1600_read_reg_bit
+ 242           * 功能：读取1600寄存器的某一位值
+ 243           * 参数：reg----要读取的寄存器地址
+ 244           *       bits----要读取的位地址
+ 245           * 返回：读取到的值，1或0
+ 246           */
+ 247          u8 wl1600_read_reg_bit(u8 reg, u8 bits)
+ 248          {
+ 249              u8 val;
+ 250              u8 bit_val = (1 << bits);
+ 251              
+ 252              val = wl1600_read_reg(reg);
+ 253              
+ 254              return (val & bit_val) ? 1 : 0;
+ 255          }
+ 256          
+ 257          /*
+ 258           * 函数：wl1600_read_reg_nbit
+ 259           * 功能：读取寄存器n位数据
+ 260           * 参数：reg----要读取寄存器的地址
+ 261           *       begin_bit----起始位
+ 262           *       end_bit----结束位
+ 263           * 返回：返回读取的结果
+ 264           */
+ 265          //u8 wl1600_read_reg_nbit(u8 reg,u8 begin_bit,u8 end_bit)
+ 266          //{
+ 267          //  u8 reg_val;
+ 268          //  u8 bit_num = 0;
+ 269          //  u8 i = 0;
+ 270          //  for(i=begin_bit;i<=end_bit;i++)
+ 271          //  {
+ 272          //    bit_num = bit_num + (0x1<<i);
+ 273          //  }
+ 274          //  reg_val = wl1600_read_reg(reg);//先读出这个寄存器的值
+ 275          //  
+ 276          //  return (bit_num&reg_val)>>begin_bit;  
+ 277          //}
+ 278          
+ 279          /**
+ 280           * 函数：wl1600_set_rf_channel
+ 281           * 功能：设置1600的信道
+ 282           * 参数：chn----要设置的信道号
+ 283           * 返回：无
+ 284           */
+ 285          void wl1600_set_rf_channel(u8 chn)
+ 286          {
+ 287            u8 val;
+ 288              
+ 289              if (chn <= 78) {
+ 290                  /* REG15[6:0] is the channel number */
+ 291                  val = wl1600_read_reg(15);
+ 292                  /* Keep REG15[7] */
+C51 COMPILER V9.53.0.0   RF                                                                05/11/2018 15:25:04 PAGE 6   
+
+ 293                  val = (val & 0x80) + chn;
+ 294                  /* Write new channel number */
+ 295                  wl1600_write_reg(15, val);
+ 296              }
+ 297          }
+ 298          
+ 299          const struct phy_driver phy_driver_s={
+ 300            local_info_init,
+ 301            wl1600_write_reg,
+ 302            wl1600_read_reg,
+ 303            wl1600_write_reg_bit,
+ 304            wl1600_read_reg_bit,
+ 305            wl1600_write_fifo,
+ 306            wl1600_read_fifo,
+ 307            wl1600_set_rf_channel,
+ 308          };
+ 309          
+ 310          
+ 311          ////GPIO模拟SPI 操作
+ 312          //u8 wl1600_spi_rwbyte(u8 data)
+ 313          //{
+ 314          //  u8 i,ret=0;
+ 315          //  
+ 316          //  CLK_LOW();
+ 317          //  for(i=0;i<8;i++){
+ 318          //    ret <<= 1;
+ 319          //    CLK_HIGH();
+ 320          //    
+ 321          //    if(READ_MISO())
+ 322          //        ret |= 0x01;
+ 323          //    
+ 324          //    if(data&0x80)
+ 325          //      MOSI_HIGH();
+ 326          //    else
+ 327          //      MOSI_LOW();
+ 328          //    delay_us(1);
+ 329          
+ 330          //    CLK_LOW();
+ 331          //    delay_us(1);
+ 332          //    data <<= 1;
+ 333          //  
+ 334          //  }
+ 335          //  CLK_LOW();
+ 336          
+ 337          //  return ret;
+ 338          //}
+ 339          
+
+C51 COMPILATION COMPLETE.  5 WARNING(S),  5 ERROR(S)

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: os/os.c 源文件</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="../../wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>首页</span></a></li>
+      <li><a href="../../annotated.html"><span>结构体</span></a></li>
+      <li class="current"><a href="../../files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>文件列表</span></a></li>
+      <li><a href="../../globals.html"><span>全局定义</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_8b7cb6c889a10e2a101a7e90c854ca4d.html">os</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">os.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d7/dea/os_8c.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d0/dff/os_8h.html">os.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">   14</a></span>&#160;<span class="preprocessor">#define TASK_MAX 4   </span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">   15</a></span>&#160;<span class="preprocessor">struct task task_pool[TASK_MAX];</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#aa555f0c9f213dd947f15e25f58241ee7">   16</a></span>&#160;<span class="preprocessor">u8 task_tick;  </span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#a6cc2e63d83267ff5059bf0a76b302a09">   23</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d7/dea/os_8c.html#a6cc2e63d83267ff5059bf0a76b302a09">os_init</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//  memory_init(); //内存初始化</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    memset(<a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>,0,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> <a class="code" href="../../db/da2/structtask.html">task</a>)*<a class="code" href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">TASK_MAX</a>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#a6ebb38845fa2428effc18cc598551b07">   39</a></span>&#160;u8 <a class="code" href="../../d7/dea/os_8c.html#a6ebb38845fa2428effc18cc598551b07">os_task_add</a>(u16 time,<a class="code" href="../../d0/dff/os_8h.html#a2b3f270923105f65c2198b80e85a97a3">taskfun</a> fun)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    data u8 i;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">for</span>(i=0;i&lt;<a class="code" href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">TASK_MAX</a>;i++){</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordflow">if</span>((<a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].sta&amp;0x80) == 0){<span class="comment">//判断该任务节点是否被使用  sta 的 第7位 为0 表示没有被使用 </span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#a6e791c1344ce53e43d0286a98267a3a9">sta</a> = 0x80;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#a4dd98e3cba82c3c6cfa930335b55a567">timer</a> = time;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#ab27ab521aac1f9d8dc3f80679f3e4467">fun</a> = fun;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#a6b6cdaefa6e3607c18a5f08ba03234d8">   61</a></span>&#160;u8 <a class="code" href="../../d7/dea/os_8c.html#a6b6cdaefa6e3607c18a5f08ba03234d8">os_task_remark</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    data u8 i;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../d7/dea/os_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a>){</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="../../d7/dea/os_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a> = 0;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">for</span>(i=0;i&lt;<a class="code" href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">TASK_MAX</a>;i++){</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].timer){</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#a4dd98e3cba82c3c6cfa930335b55a567">timer</a>--;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].timer == 0){</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#a6e791c1344ce53e43d0286a98267a3a9">sta</a> |=0x01;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="../../d7/dea/os_8c.html#af6b9d32d1e1a8c069294d7216281ba59">   85</a></span>&#160;u8 <a class="code" href="../../d7/dea/os_8c.html#af6b9d32d1e1a8c069294d7216281ba59">os_task_process</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    u8 data i;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">for</span>(i=0;i&lt;<a class="code" href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">TASK_MAX</a>;i++){</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">if</span>((<a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].sta&amp;0x01) != 0){</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#a6e791c1344ce53e43d0286a98267a3a9">sta</a> = 0x00;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <a class="code" href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a>[i].<a class="code" href="../../db/da2/structtask.html#ab27ab521aac1f9d8dc3f80679f3e4467">fun</a>();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="ttc" id="os_8c_html_a6b6cdaefa6e3607c18a5f08ba03234d8"><div class="ttname"><a href="../../d7/dea/os_8c.html#a6b6cdaefa6e3607c18a5f08ba03234d8">os_task_remark</a></div><div class="ttdeci">u8 os_task_remark(void)</div><div class="ttdoc">跟新任务时间 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00061">os.c:61</a></div></div>
+<div class="ttc" id="os_8h_html_a2b3f270923105f65c2198b80e85a97a3"><div class="ttname"><a href="../../d0/dff/os_8h.html#a2b3f270923105f65c2198b80e85a97a3">taskfun</a></div><div class="ttdeci">void(* taskfun)(void)</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/dff/os_8h_source.html#l00006">os.h:6</a></div></div>
+<div class="ttc" id="os_8c_html_af6b9d32d1e1a8c069294d7216281ba59"><div class="ttname"><a href="../../d7/dea/os_8c.html#af6b9d32d1e1a8c069294d7216281ba59">os_task_process</a></div><div class="ttdeci">u8 os_task_process(void)</div><div class="ttdoc">任务调度 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00085">os.c:85</a></div></div>
+<div class="ttc" id="structtask_html_a4dd98e3cba82c3c6cfa930335b55a567"><div class="ttname"><a href="../../db/da2/structtask.html#a4dd98e3cba82c3c6cfa930335b55a567">task::timer</a></div><div class="ttdeci">u16 timer</div><div class="ttdoc">ʣ��ʱ�� </div><div class="ttdef"><b>Definition:</b> <a href="../../d0/dff/os_8h_source.html#l00011">os.h:11</a></div></div>
+<div class="ttc" id="os_8c_html_a6ebb38845fa2428effc18cc598551b07"><div class="ttname"><a href="../../d7/dea/os_8c.html#a6ebb38845fa2428effc18cc598551b07">os_task_add</a></div><div class="ttdeci">u8 os_task_add(u16 time, taskfun fun)</div><div class="ttdoc">添加任务 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00039">os.c:39</a></div></div>
+<div class="ttc" id="structtask_html_ab27ab521aac1f9d8dc3f80679f3e4467"><div class="ttname"><a href="../../db/da2/structtask.html#ab27ab521aac1f9d8dc3f80679f3e4467">task::fun</a></div><div class="ttdeci">taskfun fun</div><div class="ttdoc">������ </div><div class="ttdef"><b>Definition:</b> <a href="../../d0/dff/os_8h_source.html#l00012">os.h:12</a></div></div>
+<div class="ttc" id="os_8h_html"><div class="ttname"><a href="../../d0/dff/os_8h.html">os.h</a></div></div>
+<div class="ttc" id="os_8c_html_a36bb10267dd6269cfdb231d9e98b5794"><div class="ttname"><a href="../../d7/dea/os_8c.html#a36bb10267dd6269cfdb231d9e98b5794">TASK_MAX</a></div><div class="ttdeci">#define TASK_MAX</div><div class="ttdoc">最多可同时运行的任务个数 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00014">os.c:14</a></div></div>
+<div class="ttc" id="os_8c_html_aa555f0c9f213dd947f15e25f58241ee7"><div class="ttname"><a href="../../d7/dea/os_8c.html#aa555f0c9f213dd947f15e25f58241ee7">task_tick</a></div><div class="ttdeci">u8 task_tick</div><div class="ttdoc">任务更新标志 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00016">os.c:16</a></div></div>
+<div class="ttc" id="os_8c_html_a6cc2e63d83267ff5059bf0a76b302a09"><div class="ttname"><a href="../../d7/dea/os_8c.html#a6cc2e63d83267ff5059bf0a76b302a09">os_init</a></div><div class="ttdeci">void os_init(void)</div><div class="ttdoc">任务初始化 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00023">os.c:23</a></div></div>
+<div class="ttc" id="os_8c_html_a4e144cbf63581020c40f1985f2dd8e6b"><div class="ttname"><a href="../../d7/dea/os_8c.html#a4e144cbf63581020c40f1985f2dd8e6b">task_pool</a></div><div class="ttdeci">struct task task_pool[TASK_MAX]</div><div class="ttdoc">任务池 </div><div class="ttdef"><b>Definition:</b> <a href="../../d7/dea/os_8c_source.html#l00015">os.c:15</a></div></div>
+<div class="ttc" id="structtask_html"><div class="ttname"><a href="../../db/da2/structtask.html">task</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d0/dff/os_8h_source.html#l00009">os.h:9</a></div></div>
+<div class="ttc" id="structtask_html_a6e791c1344ce53e43d0286a98267a3a9"><div class="ttname"><a href="../../db/da2/structtask.html#a6e791c1344ce53e43d0286a98267a3a9">task::sta</a></div><div class="ttdeci">s8 sta</div><div class="ttdoc">�����״̬ </div><div class="ttdef"><b>Definition:</b> <a href="../../d0/dff/os_8h_source.html#l00010">os.h:10</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>

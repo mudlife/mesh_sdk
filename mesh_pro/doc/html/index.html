@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>mesh: Mesh SDK 开发文档</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="wl_log.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">mesh
+   &#160;<span id="projectnumber">V1.0.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.8.10 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li class="current"><a href="index.html"><span>首页</span></a></li>
+      <li><a href="annotated.html"><span>结构体</span></a></li>
+      <li><a href="files.html"><span>文件</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Mesh SDK 开发文档 </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><dl class="section author"><dt>作者</dt><dd>mudlife <br />
+  <a href="#" onclick="location.href='mai'+'lto:'+'mud'+'li'+'fez'+'@w'+'ear'+'li'+'nks'+'.c'+'om'; return false;">mudli<span style="display: none;">.nosp@m.</span>fez@<span style="display: none;">.nosp@m.</span>wearl<span style="display: none;">.nosp@m.</span>inks<span style="display: none;">.nosp@m.</span>.com</a> </dd></dl>
+<dl class="section user"><dt>Copyright (c):</dt><dd>上海晶曦微电子科技有限公司 </dd></dl>
+<dl class="section version"><dt>版本</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>日期</dt><dd>2019-06-02</dd></dl>
+<p>该文档帮助客户快速进行二次开发 </p><dl class="section user"><dt>程序架构：</dt><dd><div class="fragment"><div class="line">|       |           |        |</div>
+<div class="line">|       |    APP    |        |</div>
+<div class="line">|       |___________|        |</div>
+<div class="line">|    D  |           |        |</div>
+<div class="line">|       |    NET    |   O    |</div>
+<div class="line">|       |___________|        |</div>
+<div class="line">|    E  |           |        |</div>
+<div class="line">|       |    MAC    |   S    |</div>
+<div class="line">|       |___________|        |</div>
+<div class="line">|    V  |           |        |</div>
+<div class="line">|       |    PHY    |        |</div>
+<div class="line">|       |           |        |</div>
+</div><!-- fragment --> PHY,MAC,NET,OS层不对用户开放，用户主要在APP层进行开发 </dd></dl>
+<dl class="section see"><dt>参见</dt><dd><a class="el" href="df/d9a/netstack__app_8c.html" title="应用层文件 ">netstack_app.c</a> <br />
+ netstack_app.c文件中有三个重要的函数，分别是 <a class="el" href="d7/d08/netstack__app_8h.html#ae8486318160b49cbc693c02594d818bb" title="APP层初始化 ">app_init</a>,<a class="el" href="d7/d08/netstack__app_8h.html#a344c7ec58519bcfd56d7dd9722e2f846" title="APP层处理来自网络层的数据包 ">app_input</a>,<a class="el" href="d7/d08/netstack__app_8h.html#ab096bdeec6ee3b81dbb8bfe818bb06db" title="APP层发送数据 ">app_output</a>. <br />
+ app_init函数是应用层的初始化函数， <br />
+ app_input函数由net层调用，用来处理指令， <br />
+ app_output函数是应用层用来发送数据的。 <br />
+</dd></dl>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者 &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>
