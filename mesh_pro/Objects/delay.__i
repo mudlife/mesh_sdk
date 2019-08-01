@@ -1,1 +1,0 @@
-"dev\delay.c" LARGE OPTIMIZE (6,SPEED) BROWSE INCDIR(.\app;.\dev;.\os;.\inc) DEFINE (LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\delay.lst) TABS (2) OBJECT(.\Objects\delay.obj)

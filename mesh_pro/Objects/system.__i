@@ -1,1 +1,0 @@
-"dev\system.c" LARGE OPTIMIZE (6,SPEED) BROWSE INCDIR(.\app;.\dev;.\os;.\inc) DEFINE (LOG,LIGHT) DEBUG OBJECTEXTEND PRINT(.\Listings\system.lst) TABS (2) OBJECT(.\Objects\system.obj)

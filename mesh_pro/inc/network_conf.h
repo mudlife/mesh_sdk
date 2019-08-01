@@ -9,7 +9,7 @@
 //网路配置文件
 extern struct netstack_local local_info;
 
-#define LOCAL_INFO_ADDR 0x3C00    //本地信息存储地址
+#define LOCAL_INFO_ADDR 0x3E00    //本地信息存储地址
 #define NETSTACK_GROUP_ADDR			(LOCAL_INFO_ADDR+256)  //组成员地址
 #define LOCAL_NAME_ADDR 				(NETSTACK_GROUP_ADDR+128)
 
@@ -60,7 +60,8 @@ extern struct netstack_local local_info;
 /** @} */
 
 
-
+#define REPEAT	10
+//#define CRC_TABEL
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  可修改配置  开始
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +73,14 @@ extern struct netstack_local local_info;
 
 #define DEFAULT_DEV_NAME	"LED" 
 #define DEFAULT_DEV_NAME_LEN	3
+
+
+#if (UUID == UUID_LIGHT)
+
+#define LED_WY		1
+#define LED_RGB		1
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  可修改配置  结束

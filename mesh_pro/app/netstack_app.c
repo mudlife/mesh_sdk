@@ -476,11 +476,11 @@ void F_CloseLed()
  * 
  * @return 无
  */
-void F_BrightUp()
+void F_BrightUp(void)
 {
 			if(r_c_needvalue>=r_c_nowvalue || r_w_needvalue>=r_w_nowvalue)
 			{
-				if((r_c_needvalue - r_c_nowvalue)<50 || (r_w_needvalue - r_w_nowvalue)<50)
+				if((r_c_needvalue!=0 &&(r_c_needvalue - r_c_nowvalue)<50) || (r_w_needvalue!=0 && (r_w_needvalue - r_w_nowvalue)<50))
 				{
 					r_bright = r_bright + 5;
 					if(r_bright>100)
@@ -500,16 +500,16 @@ void F_BrightUp()
  * 
  * @return 无
  */
-void F_BrightDown()
+void F_BrightDown(void)
 {
 		if(r_c_needvalue<=r_c_nowvalue || r_w_needvalue<=r_w_nowvalue)
 			{
-				if((r_c_nowvalue - r_c_needvalue)<50 || (r_w_nowvalue - r_w_needvalue)<50)
+				if( (r_c_needvalue!=0 && (r_c_nowvalue - r_c_needvalue)<50) ||(r_w_needvalue != 0 && (r_w_nowvalue - r_w_needvalue)<50))
 				{
-					r_bright = r_bright - 5;
-					if(r_bright<5)
+					r_bright = r_bright - 3;
+					if(r_bright<3)
 					{
-						r_bright = 5;
+						r_bright = 3;
 					}		
 					r_waittimes = 2;			
 					F_Countdata(r_bright,r_tone);					
@@ -526,16 +526,16 @@ void F_BrightDown()
  * 
  * @return 无
  */
-void F_ToneUp()
+void F_ToneUp(void)
 {
 
 		if(r_c_needvalue>=r_c_nowvalue || r_w_needvalue>=r_w_nowvalue)
 		{
 				
-				if((r_c_needvalue - r_c_nowvalue)<50 || (r_w_needvalue - r_w_nowvalue)<50)
+				if((r_c_needvalue!=0 && (r_c_needvalue - r_c_nowvalue)<50) || (r_w_needvalue != 0 && (r_w_needvalue - r_w_nowvalue)<50))
 				{
 					r_waittimes = 2;
-					r_tone = r_tone + 5;
+					r_tone = r_tone + 3;
 					if(r_tone>100)
 					{
 						r_tone = 100;
@@ -551,12 +551,12 @@ void F_ToneUp()
  * 
  * @return 无
  */
-void F_ToneDown()
+void F_ToneDown(void)
 {
 	if(r_c_needvalue<=r_c_nowvalue || r_w_needvalue<=r_w_nowvalue)
 		{
 				
-				if((r_c_nowvalue - r_c_needvalue)<50 || (r_w_nowvalue - r_w_needvalue)<50)
+				if((r_c_needvalue!= 0 && (r_c_nowvalue - r_c_needvalue)<50) || (r_w_needvalue!= 0 && (r_w_nowvalue - r_w_needvalue)<50))
 				{
 					r_tone = r_tone - 5;
 					if(r_tone<10)
