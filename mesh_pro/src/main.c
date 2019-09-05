@@ -40,7 +40,9 @@
 #include <string.h>
 #include "os.h"
 #include "spi.h"
-
+#include "delay.h"
+code u8 device_name_len = DEFAULT_DEV_NAME_LEN;
+code u8 device_name_buf[] = DEFAULT_DEV_NAME;
 /**
  * @brief 主函数
  *
@@ -48,14 +50,18 @@
  */
 void main()
 {
+	BORC = 0XC3;  //1100 0011  2.6V BOR
+	BORDBC = 0x01; //BOR 消抖 
+	delay_ms(30);
 	system_init(); //系统初始化
 	spi_init();   //SPI初始化
 	phy_init();  //物理层初始化
 	os_init();    //OS初始化
 	mac_init();  //MAC层初始化
-	net_init();  //网络层初始化
+	net_init(UUID);  //网络层初始化
 	app_init();  //应用层初始化
-	wdt_init();   //看门狗初始化
+
+//	wdt_init();   //看门狗初始化
 	
 	while(1){
 		WDTC |= 0x10;    //清狗

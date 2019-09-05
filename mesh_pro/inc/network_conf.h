@@ -9,10 +9,10 @@
 //网路配置文件
 extern struct netstack_local local_info;
 
-#define LOCAL_INFO_ADDR 0x3E00    //本地信息存储地址
+#define LOCAL_INFO_ADDR 0x3D80    //本地信息存储地址 0x3E00
 #define NETSTACK_GROUP_ADDR			(LOCAL_INFO_ADDR+256)  //组成员地址
-#define LOCAL_NAME_ADDR 				(NETSTACK_GROUP_ADDR+128)
-
+#define APP_ADDR								(NETSTACK_GROUP_ADDR+128)
+#define LOCAL_NAME_ADDR 				(APP_ADDR+128)
 #define NETSTACK_GROUP_MAX			10   //最大组数
 
 #define CHIP_ADDR 							0x0100	
@@ -46,6 +46,7 @@ extern struct netstack_local local_info;
 #define	FEATURE_LOW_POWER		0
 #define	FEATURE_NET					0
 #define FEATURE_LEARN				0
+#define FEATURE_FREE_PAIR		1
 
 
 /**
@@ -65,22 +66,27 @@ extern struct netstack_local local_info;
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  可修改配置  开始
 /////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(LIGHT)
+#define UUID	UUID_LIGHT   //设置当前的UUID为灯的UUID  
+#define DEFAULT_DEV_NAME	"LED" 
+#define DEFAULT_DEV_NAME_LEN	3
+#elif defined(PLUG)
+#define UUID	UUID_PLUG   //设置当前的UUID为插座的UUID    
+#define DEFAULT_DEV_NAME	"PLUG" 
+#define DEFAULT_DEV_NAME_LEN	4
+#elif defined(FAN)
+#define UUID	UUID_FAN   //设置当前的UUID为风扇的UUID    
+#define DEFAULT_DEV_NAME	"FAN" 
+#define DEFAULT_DEV_NAME_LEN	3
+#else
+#error "No defined UUID!"
+#endif
 
-
-#define UUID	UUID_LIGHT   //设置当前的UUID为灯的UUID    
 
 #define COMPANY_ID 	0x4E00  //公司ID， 用户可以自定义
 
-#define DEFAULT_DEV_NAME	"LED" 
-#define DEFAULT_DEV_NAME_LEN	3
 
 
-#if (UUID == UUID_LIGHT)
-
-#define LED_WY		1
-#define LED_RGB		1
-
-#endif
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  可修改配置  结束

@@ -125,40 +125,6 @@ DPH     DATA    83H
                 CSEG    AT      0
 ?C_STARTUP:     LJMP    STARTUP1
 
-				;ORG      0003H
-				;LJMP     2003H
-				;ORG      000BH
-				;LJMP     200BH
-				;ORG      0013H
-				;LJMP     2013H
-				;ORG      001BH
-				;LJMP     201BH
-				;ORG      0023H
-				;LJMP     2023H
-				;ORG      002BH
-				;LJMP     202BH
-				;ORG      0033H
-				;LJMP     2033H
-				;ORG      003BH
-				;LJMP     203BH	  
-				;ORG      0043H
-				;LJMP     2043H
-				;ORG      004BH
-				;LJMP     204BH
-				;ORG      0053H
-				;LJMP     2053H
-				;ORG      005BH
-				;LJMP     205BH
-				;ORG      0063H
-				;LJMP     2063H
-				;ORG      006BH
-				;LJMP     206BH
-				;ORG      0073H
-				;LJMP     2073H
-				;ORG      007BH
-				;LJMP     207BH
-				;ORG      0083H
-				;LJMP     2083H
 
                 RSEG    ?C_C51STARTUP
 

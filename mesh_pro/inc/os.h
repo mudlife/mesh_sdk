@@ -16,5 +16,6 @@ void os_init(void);
 u8 os_task_add(u16 time,taskfun fun);
 u8 os_task_remark(void);
 u8 os_task_process(void);
-
+u8 os_task_update_time(taskfun fun,u16 time);
+u8 os_task_delete(taskfun fun);
 #endif

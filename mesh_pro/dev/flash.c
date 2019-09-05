@@ -17,6 +17,7 @@
  * @return 无
  * @note 一次擦除128 byte
  */
+#pragma disable							//确保调整时不会进中断导致调整失败
 void flash_erase_section(u16 addr)
 {
 	EA = 0;
@@ -34,6 +35,7 @@ void flash_erase_section(u16 addr)
  * @param len 读取长度
  * @return 无
  */
+//#pragma disable							//确保调整时不会进中断导致调整失败
 void flash_read_buf(u16 addr,u8 *buf,u8 len)
 {
 
@@ -49,6 +51,7 @@ void flash_read_buf(u16 addr,u8 *buf,u8 len)
  * @return 无
  * @note 写之前要先判断是否需要擦除
  */
+#pragma disable							//确保调整时不会进中断导致调整失败
 void flash_write_buf(u16 addr,u8 *buf,u8 len)
 {
 	EA = 0;

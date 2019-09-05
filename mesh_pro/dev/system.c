@@ -7,17 +7,17 @@
  * 			上海晶曦微电子科技有限公司
  * @version 1.0.0
  * @date 2019-06-02
- */
+ */ 
 #include "system.h"
 #include "network_conf.h"
 
-data u32 g_time=0;          ///<全局时间
+data u16 g_time=0;          ///<全局时间
 //extern u8 adv_flag;
 extern u8 task_tick; 
 //extern u8 update_time_flag;
 
 
-extern void F_CWRunning(void);
+
 
 /**
  * @brief 系统初始化
@@ -54,6 +54,9 @@ void system_init(void)
 	TCON |= 0x10;						//使能T0
     
 	EA = 1;								//打开总中断
+	
+	P2M1 = (P2M1&0XF0)|0X0C;
+	P2_0 = 0;
 }
 
 /**
@@ -75,13 +78,14 @@ void wdt_init(void)
 void TIMER0_Rpt(void) interrupt TIMER0_VECTOR
 {
 	g_time++;
+	g_time = g_time%local_info.mod_time ;
 	task_tick = 1;
 	
 	if(g_time%50 == 0){
 		system_tdma();
 //		P0_0 = ~P0_0;
 	}
-	F_CWRunning();
+	
 }
 
 /**

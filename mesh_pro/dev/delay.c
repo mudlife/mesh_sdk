@@ -30,7 +30,7 @@ void delay_ms(u16 t)
 {
 	u16 i;
 	 for(i=0;i<t;i++)
-		delay_us(1380);
+		delay_us(1425);
 }
 /**
  * @brief 0.5毫秒延时

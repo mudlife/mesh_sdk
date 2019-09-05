@@ -128,8 +128,8 @@ void mac_load_packet(void);
 void mac_send_packet(u8 channel);
 void mac_listen_packet(u8 channel);
 void mac_process(void);
-void mac_set_power(u8 power);
-u8 mac_scan_rssi(u8 ch);
+//void mac_set_power(u8 power);
+//u8 mac_scan_rssi(u8 ch);
 void mac_direct_mode_enter(void);
 void mac_direct_mode_break(void);
 
