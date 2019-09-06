@@ -893,7 +893,9 @@ static void infrared_deal(void)
 		if( i== 5 && uart_rx_dat == 0x97){//开关指令重映射
 			pdu->dat.net_cmd.opcode = CTL_LED_ON + led_sta_t->led_sta&0x01;
 		}else if(i== 5 && uart_rx_dat == 0x5F){//定时关灯
-		
+			os_task_add(18000,F_CloseLed);  // 18000ms = 1800S = 30min
+			uart_rx_dat = 0x00;
+			return;
 		}else{
 			uart_rx_dat = 0x00;
 			return;
