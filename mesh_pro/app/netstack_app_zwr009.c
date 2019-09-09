@@ -339,9 +339,9 @@ u8 app_input(NET_PDU *net_pdu)
 {
 	u8 keytemp = 0; 
 	u8 res = 0;
-//	if(net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
-//		return 0;
-//	}
+	if(net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
+		return 0;
+	}
 	switch(net_pdu->dat.net_cmd.opcode){
 		case CTL_LED_FLASH://闪灯   当设备入网，移除网络，配对，取消配对时会进行闪灯   ，移除网络对码的闪灯需要在2S内完成
 			//net_pdu->dat.net_cmd.param[0]; 1---入网   2---移除网络   3---对码   4---取消对码
@@ -372,7 +372,7 @@ u8 app_input(NET_PDU *net_pdu)
 
 		break;
 		case CTL_BRIGHT_VAL://设置亮度
-			r_bright = net_pdu->dat.net_cmd.param[1];
+			r_bright = net_pdu->dat.net_cmd.param[3];
 			led_sta_t->led_bright = r_bright;
 			F_SetBrightToneValue();
 		  
@@ -387,7 +387,7 @@ u8 app_input(NET_PDU *net_pdu)
 		
 		break;
 		case CTL_TONE_VAL://设置色温
-			r_tone = net_pdu->dat.net_cmd.param[0];
+			r_tone = net_pdu->dat.net_cmd.param[2];
 			led_sta_t->led_tone = r_tone;
 			F_SetBrightToneValue();
 		break;
@@ -399,8 +399,8 @@ u8 app_input(NET_PDU *net_pdu)
 		break;
 		case CTL_KEY_BOARD://快捷键
 		led_sta_t->led_model &= 0xF0;
-		led_sta_t->led_model |= net_pdu->dat.net_cmd.param[0];			
-		keytemp = net_pdu->dat.net_cmd.param[0];
+		led_sta_t->led_model |= net_pdu->dat.net_cmd.param[2];			
+		keytemp = net_pdu->dat.net_cmd.param[2];
 			r_waittimes = 0;	
 			r_waittimes = 0;	
 			if(keytemp==0)//暖光

@@ -50,9 +50,10 @@ code u8 device_name_buf[] = DEFAULT_DEV_NAME;
  */
 void main()
 {
-	BORC = 0XC3;  //1100 0011  2.6V BOR
+	BORC = 0XC2;  //1100 0011  2.6V BOR
 	BORDBC = 0x01; //BOR 消抖 
 	delay_ms(30);
+	P0M1 = P0M1 & 0XF0;
 	system_init(); //系统初始化
 	spi_init();   //SPI初始化
 	phy_init();  //物理层初始化
