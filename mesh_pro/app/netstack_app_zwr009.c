@@ -341,6 +341,9 @@ u8 app_input(NET_PDU *net_pdu)
 {
 	u8 keytemp = 0; 
 	u8 res = 0;
+	if(net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
+		return 0;
+	}
 	switch(net_pdu->dat.net_cmd.opcode){
 		case CTL_LED_FLASH://闪灯   当设备入网，移除网络，配对，取消配对时会进行闪灯   ，移除网络对码的闪灯需要在2S内完成
 			//net_pdu->dat.net_cmd.param[0]; 1---入网   2---移除网络   3---对码   4---取消对码

@@ -545,7 +545,7 @@ u8 app_input(NET_PDU *net_pdu)
 	u8 keytemp = 0; 
 	u8 res = 0;
 	//判读UUID
-	if(net_pdu->dat.net_cmd.param[0] != local_info.uuid[0] || net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
+	if(net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
 		return 0;
 	}
 	switch(net_pdu->dat.net_cmd.opcode){
