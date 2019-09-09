@@ -539,7 +539,7 @@ u8 app_init(void)
  *  @retval 1 放设备广播
  * @note 由网络层调用，其他地方不能调用
  */
-#if 0
+
 u8 app_input(NET_PDU *net_pdu)
 {
 	u8 keytemp = 0; 
@@ -603,8 +603,8 @@ u8 app_input(NET_PDU *net_pdu)
 		if((led_sta_t->led_model&0x12) != 0x12){ // 不是 RGB手动模式
 					keytemp = net_pdu->dat.net_cmd.param[2];	
 				if(keytemp<6){
-					r_tone = led_key_model_val[keytemp][0];
-					r_bright = led_key_model_val[keytemp][1];
+					r_tone = led_key_model_val[keytemp][2];
+					r_bright = led_key_model_val[keytemp][3];
 					led_sta_t->led_bright =  r_bright;
 					led_sta_t->led_tone = r_tone;
 				}	
@@ -710,179 +710,6 @@ u8 app_input(NET_PDU *net_pdu)
 	r_runningflag = 1;
 	return res;
 }	
-#endif
-
-u8 app_input(NET_PDU *net_pdu)
-{
-	u8 keytemp = 0; 
-	u8 res = 0;
-	//判读UUID
-//	if(net_pdu->dat.net_cmd.param[0] != local_info.uuid[0] || net_pdu->dat.net_cmd.param[1] != local_info.uuid[1]){
-//		return 0;
-//	}
-	switch(net_pdu->dat.net_cmd.opcode){
-		case CTL_LED_FLASH://闪灯   当设备入网，移除网络，配对，取消配对时会进行闪灯   ，移除网络对码的闪灯需要在2S内完成
-			//net_pdu->dat.net_cmd.param[0]; 1---入网   2---移除网络   3---对码   4---取消对码
-		flash_count = net_pdu->dat.net_cmd.param[2];
-//		if(led_sta_t->led_sta == 0)
-//		{
-//			led_sta_t->led_sta = 1;
-//			F_OpenLed();
-//		}
-
-		os_task_add(1,led_flash);
-		break;
-		case CTL_LED_ON://开灯
-			F_OpenLed();
-		res = 1;
-		break;
-		case CTL_LED_OFF://关灯
-			F_CloseLed();
-		res = 1;
-
-		break;
-		case CTL_BRIGHT_VAL://设置亮度
-			r_bright = net_pdu->dat.net_cmd.param[1];
-			led_sta_t->led_bright = r_bright;
-			F_SetBrightToneValue();
-		break;
-		case CTL_BRIGHT_UP://亮度+
-				F_BrightUp();
-		#if LED_RGB
-			rgb_bright_ctl(1);
-		#endif
-		break;
-		case CTL_BRIGHT_DOWN://亮度-
-			F_BrightDown();
-		#if LED_RGB
-			rgb_bright_ctl(-1);
-		#endif
-		break;
-		case CTL_TONE_VAL://设置色温
-//			if((led_sta_t->led_sta&0x02) == 0)
-//				return res;
-			r_tone = net_pdu->dat.net_cmd.param[0];
-			led_sta_t->led_tone = r_tone;
-			F_SetBrightToneValue();
-		break;
-		case CTL_TONE_UP://色温+
-			F_ToneUp();
-		break;
-		case CTL_TONE_DOWN://色温-
-			F_ToneDown();
-		break;
-		case CTL_KEY_BOARD://快捷键
-		if((led_sta_t->led_model&0x12) != 0x12){ // 不是 RGB手动模式
-					keytemp = net_pdu->dat.net_cmd.param[0];	
-				if(keytemp<6){
-					r_tone = led_key_model_val[keytemp][0];
-					r_bright = led_key_model_val[keytemp][1];
-					led_sta_t->led_bright =  r_bright;
-					led_sta_t->led_tone = r_tone;
-				}	
-			F_SetBrightToneValue();	
-			app_set_def_pwm();
-				if((led_sta_t->led_model&0x30) == 0x10){
-					led_sta_t->led_model &= 0x0F;
-					led_sta_t->led_model |= 0x20;
-				}
-			led_sta_t->led_sta |= 1;
-		}
-	
-		break;
-		case CTL_LED_RGB://RGB
-#if LED_RGB
-			led_sta_t->rgb_model_dat.rgb_model = RGB_MODEL_RGB;
-			led_sta_t->rgb_model_dat.model_pram.rgb_val.r = net_pdu->dat.net_cmd.param[0];
-			led_sta_t->rgb_model_dat.model_pram.rgb_val.g = net_pdu->dat.net_cmd.param[1];
-			led_sta_t->rgb_model_dat.model_pram.rgb_val.b = net_pdu->dat.net_cmd.param[2];
-			led_sta_t->rgb_model_dat.rgb_model_old = led_sta_t->rgb_model_dat.rgb_model;
-#endif
-		break;
-		case CTL_RGB_OFF://关闭RGB
-			
-		break;
-		case CTL_NIGHT://夜灯
-			
-		break;
-		case CTL_TIMING://定时
-			
-		break;
-		case CTL_COUNT_DOWN://倒计时
-			
-		break;
-		case CTL_COLOUR_TEMP://色温开启状态
-			if(net_pdu->dat.net_cmd.param[0] == 0x01){
-				led_sta_t->led_sta |= (1<<1);
-			}else{
-				led_sta_t->led_sta &= ~(1<<1);
-			}
-		break;
-		case CTL_MUSIC://音乐开启状态
-			
-		break;
-		#if LED_RGB
-		case CTL_RGB_RUN://RGB变换  动态演示
-			if(led_sta_t->led_model != 0x11){
-				//关WY
-				led_sta_t->led_model = 0x11;   //RGB自动模式
-				F_SetBrightToneValue();
-				app_default_rgb_model_breath();
-			}else{ //保存颜色 
-				led_sta_t->rgb_model_dat.model_pram.breath_val.rgb_time_k = rgb_breath_time_clc();
-				led_sta_t->led_model = 0x10;   //RGB自动模式
-				F_SetBrightToneValue();
-			}
-		break;
-		case CTL_RGB_SWITCH://RGB手动切换
-			led_sta_t->led_model = 0x12;   //RGB手动模式
-		  F_SetBrightToneValue();
-			#if LED_RGB
-			led_sta_t->rgb_model_dat.rgb_model = net_pdu->dat.net_cmd.param[0];
-			memcpy(&led_sta_t->rgb_model_dat.percentage_k,&net_pdu->dat.net_cmd.param[1],6);
-		  led_sta_t->rgb_model_dat.rgb_model_old = led_sta_t->rgb_model_dat.rgb_model;
-			rgb_breath_clc();
-			#endif
-		break;
-		case CTL_WY_SWITCH:
-			led_sta_t->led_model = 0x00;
-			led_sta_t->rgb_model_dat.rgb_model = RGB_MODEL_OFF;
-		  led_sta_t->rgb_model_dat.rgb_model_old = led_sta_t->rgb_model_dat.rgb_model;
-			r_bright = led_sta_t->led_bright;
-		  F_SetBrightToneValue();
-		break;
-		case CTL_MEMORY_SAVE:
-		{
-			u8 b,t;
-			b = led_sta_t->led_bright;
-			t = led_sta_t->led_tone;
-			led_sta_t->led_bright =  r_bright;
-		  led_sta_t->led_tone = r_tone;
-			app_save_model(net_pdu->dat.net_cmd.param[0]);
-			led_sta_t->led_bright = b;
-			led_sta_t->led_tone = t;
-		}
-		break;
-		case CTL_MEMORY_READ:
-			app_read_model(net_pdu->dat.net_cmd.param[0]);
-		  r_bright = led_sta_t->led_bright;//获取灯的亮度
-			r_tone = led_sta_t->led_tone;		//获取色温值
-		  F_SetBrightToneValue();
-			rgb_breath_clc();
-		break;
-		#endif
-	}
-
-	if(os_task_update_time(app_save_task,3000) != 0){
-		os_task_add(3000,app_save_task);
-	}
-
-//	led_sta_t->led_bright = r_bright;
-//	led_sta_t->led_tone = r_tone;			
-	r_runningflag = 1;
-	return res;
-}	
-
 
 /**
  * @brief APP层发送数据
