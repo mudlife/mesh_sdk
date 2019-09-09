@@ -15,8 +15,7 @@ data u16 g_time=0;          ///<全局时间
 //extern u8 adv_flag;
 extern u8 task_tick; 
 //extern u8 update_time_flag;
-
-
+extern void F_CWRunning(void);
 
 
 /**
@@ -81,10 +80,7 @@ void TIMER0_Rpt(void) interrupt TIMER0_VECTOR
 	g_time = g_time%local_info.mod_time ;
 	task_tick = 1;
 	
-	if(g_time%50 == 0){
-		system_tdma();
-//		P0_0 = ~P0_0;
-	}
+	F_CWRunning();
 	
 }
 
@@ -95,7 +91,9 @@ void TIMER0_Rpt(void) interrupt TIMER0_VECTOR
  */
 void system_tdma(void)
 {
-	local_info.channel = ++local_info.channel%3;
+	if(g_time%50 == 0){
+		local_info.channel = ++local_info.channel%3;
+	}
 }
 
 

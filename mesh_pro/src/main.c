@@ -61,7 +61,7 @@ void main()
 	net_init(UUID);  //网络层初始化
 	app_init();  //应用层初始化
 
-//	wdt_init();   //看门狗初始化
+	wdt_init();   //看门狗初始化
 	
 	while(1){
 		WDTC |= 0x10;    //清狗
