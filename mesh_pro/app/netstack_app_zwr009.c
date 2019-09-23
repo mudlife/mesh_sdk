@@ -298,7 +298,7 @@ void led_flash(void)
 u8 app_init(void)
 {
 	//1.初始化LED灯
-
+	P0M1 = P0M1 & 0XF0;
 	r_c_nowvalue = 00;
 	r_w_nowvalue = 00;
 	r_c_needvalue = 00;
@@ -399,8 +399,8 @@ u8 app_input(NET_PDU *net_pdu)
 		break;
 		case CTL_KEY_BOARD://快捷键
 		led_sta_t->led_model &= 0xF0;
-		led_sta_t->led_model |= net_pdu->dat.net_cmd.param[2];			
-		keytemp = net_pdu->dat.net_cmd.param[2];
+		led_sta_t->led_model |= net_pdu->dat.net_cmd.param[0];			
+		keytemp = net_pdu->dat.net_cmd.param[0];
 			r_waittimes = 0;	
 			r_waittimes = 0;	
 			if(keytemp==0)//暖光
