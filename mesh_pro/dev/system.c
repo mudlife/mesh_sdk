@@ -18,6 +18,7 @@ extern u8 task_tick;
 extern void F_CWRunning(void);
 
 
+
 /**
  * @brief 系统初始化
  * 
@@ -79,8 +80,11 @@ void TIMER0_Rpt(void) interrupt TIMER0_VECTOR
 	g_time++;
 	g_time = g_time%local_info.mod_time ;
 	task_tick = 1;
-	
 	F_CWRunning();
+//	if(g_time%50 == 0){
+//		system_tdma();
+////		P0_0 = ~P0_0;
+//	}
 	
 }
 

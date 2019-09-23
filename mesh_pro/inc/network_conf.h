@@ -12,7 +12,7 @@ extern struct netstack_local local_info;
 #define LOCAL_INFO_ADDR 0x3D80    //本地信息存储地址 0x3E00
 #define NETSTACK_GROUP_ADDR			(LOCAL_INFO_ADDR+256)  //组成员地址
 #define APP_ADDR								(NETSTACK_GROUP_ADDR+128)
-#define LOCAL_NAME_ADDR 				(APP_ADDR+128)
+#define LOCAL_NAME_ADDR 				(APP_ADDR+128) //0X3F80
 #define NETSTACK_GROUP_MAX			10   //最大组数
 
 #define CHIP_ADDR 							0x0100	
@@ -46,8 +46,9 @@ extern struct netstack_local local_info;
 #define	FEATURE_LOW_POWER		0
 #define	FEATURE_NET					0
 #define FEATURE_LEARN				0
-#define FEATURE_FREE_PAIR		1
+#define FEATURE_FREE_PAIR		0
 
+//#define LOW_POWER
 
 /**
  * @name 设备类型 UUID ，该UUID由 上海晶曦微电子科技有限公司定义， 如果客户需要新的UUID，需要向上海晶曦微电子科技有限公司申请
@@ -62,7 +63,6 @@ extern struct netstack_local local_info;
 
 
 #define REPEAT	10
-
 //#define CRC_TABEL
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  可修改配置  开始
