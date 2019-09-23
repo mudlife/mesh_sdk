@@ -391,7 +391,7 @@ u8 app_init(void)
 {
 	//1.初始化LED灯
 	
-
+	P0M1 = P0M1 & 0XF0;
 	
 	r_c_nowvalue = 00;
 	r_w_nowvalue = 00;
@@ -1207,7 +1207,7 @@ static void PWM_Init(void)
 	
 	P0M0 = 0x88;
 	PWM01_MAP = 0x01;					//PWM01通道映射P23口
-	PWM0_MAP = 0x23;					//PWM0通道映射P01口	
+	PWM0_MAP = 0x00;					//PWM0通道映射P01口	
   P0_0 = 0;
 	P0_1 = 0;
   PWM0C 			= 0X01;           //  128分频
